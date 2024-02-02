@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -18,22 +18,21 @@
 **/
 
 #include "checks_internal.h"
-#include "zbxstats.h"
 
+#include "poller.h"
+
+#include "zbxstats.h"
 #include "checks_java.h"
 #include "zbxself.h"
 #include "zbxdiscovery.h"
 #include "zbxtrends.h"
-#include "../vmware/vmware.h"
+#include "zbxvmware.h"
 #include "../../libs/zbxsysinfo/common/zabbix_stats.h"
 #include "zbxavailability.h"
 #include "zbxnum.h"
 #include "zbxsysinfo.h"
 #include "zbx_host_constants.h"
 #include "zbxpreproc.h"
-
-extern unsigned char	program_type;
-extern int		CONFIG_FORKS[ZBX_PROCESS_TYPE_COUNT];
 
 static int	compare_interfaces(const void *p1, const void *p2)
 {
@@ -62,25 +61,24 @@ static int	compare_interfaces(const void *p1, const void *p2)
 
 /******************************************************************************
  *                                                                            *
- * Purpose: get data of all network interfaces for a host from configuration  *
- *          cache and pack into JSON for LLD                                  *
+ * Purpose: Gets data of all network interfaces for a host from configuration *
+ *          cache and packs it into JSON for LLD.                             *
  *                                                                            *
- * Parameter: hostid - [IN] the host identifier                               *
+ * Parameter: hostid - [IN]                                                   *
  *            j      - [OUT] JSON with interface data                         *
  *            error  - [OUT] error message                                    *
  *                                                                            *
  * Return value: SUCCEED - interface data in JSON                             *
  *               FAIL    - host not found, 'error' message allocated          *
  *                                                                            *
- * Comments: if host is found but has no interfaces (should not happen) an    *
- *           empty JSON {"data":[]} is returned                               *
+ * Comments: If host is found but has no interfaces (should not happen) an    *
+ *           empty JSON {"data":[]} is returned.                              *
  *                                                                            *
  ******************************************************************************/
 static int	zbx_host_interfaces_discovery(zbx_uint64_t hostid, struct zbx_json *j, char **error)
 {
 	zbx_dc_interface2_t	*interfaces = NULL;
 	int			n = 0;			/* number of interfaces */
-	int			i;
 
 	/* get interface data from configuration cache */
 
@@ -98,14 +96,14 @@ static int	zbx_host_interfaces_discovery(zbx_uint64_t hostid, struct zbx_json *j
 
 	/* repair 'addr' pointers broken by sorting */
 
-	for (i = 0; i < n; i++)
+	for (int i = 0; i < n; i++)
 		interfaces[i].addr = (1 == interfaces[i].useip ? interfaces[i].ip_orig : interfaces[i].dns_orig);
 
 	/* pack results into JSON */
 
 	zbx_json_initarray(j, ZBX_JSON_STAT_BUF_LEN);
 
-	for (i = 0; i < n; i++)
+	for (int i = 0; i < n; i++)
 	{
 		const char	*p;
 		char		buf[16];
@@ -236,22 +234,26 @@ out:
 	return ret;
 }
 
-/******************************************************************************
- *                                                                            *
- * Purpose: retrieve data from Zabbix server (internally supported items)     *
- *                                                                            *
- * Parameters: item                - [IN] item we are interested in           *
- *             result              - [OUT] value of the requested item        *
- *             config_comms        - [IN] Zabbix server/proxy configuration   *
- *                        for communication                                   *
- *             config_startup_time - [IN] program startup time                *
- *                                                                            *
- * Return value: SUCCEED - data successfully retrieved and stored in result   *
- *               NOTSUPPORTED - requested item is not supported               *
- *                                                                            *
- ******************************************************************************/
+/*********************************************************************************
+ *                                                                               *
+ * Purpose: retrieves data from Zabbix server (internally supported items)       *
+ *                                                                               *
+ * Parameters: item                     - [IN] item we are interested in         *
+ *             result                   - [OUT] value of requested item          *
+ *             config_comms             - [IN] Zabbix server/proxy configuration *
+ *                                             for communication                 *
+ *             config_startup_time      - [IN] program startup time              *
+ *             config_java_gateway      - [IN]                                   *
+ *             config_java_gateway_port - [IN]                                   *
+ *             get_config_forks         - [IN]                                   *
+ *                                                                               *
+ * Return value: SUCCEED - data successfully retrieved and stored in result      *
+ *               NOTSUPPORTED - requested item is not supported                  *
+ *                                                                               *
+ *********************************************************************************/
 int	get_value_internal(const zbx_dc_item_t *item, AGENT_RESULT *result, const zbx_config_comms_args_t *config_comms,
-		int config_startup_time)
+		int config_startup_time, const char *config_java_gateway, int config_java_gateway_port,
+		zbx_get_config_forks_f get_config_forks)
 {
 	AGENT_REQUEST	request;
 	int		ret = NOTSUPPORTED, nparams;
@@ -496,7 +498,8 @@ int	get_value_internal(const zbx_dc_item_t *item, AGENT_RESULT *result, const zb
 	else if (0 == strcmp(tmp, "java"))			/* zabbix["java",...] */
 	{
 		if (SUCCEED != get_value_java(ZBX_JAVA_GATEWAY_REQUEST_INTERNAL, item, result,
-				config_comms->config_timeout, config_comms->config_source_ip))
+				config_comms->config_timeout, config_comms->config_source_ip,
+				config_java_gateway, config_java_gateway_port))
 		{
 			tmp1 = get_rparam(&request, 2);
 			/* the default error code "NOTSUPPORTED" renders nodata() trigger function nonfunctional */
@@ -526,11 +529,11 @@ int	get_value_internal(const zbx_dc_item_t *item, AGENT_RESULT *result, const zb
 			case ZBX_PROCESS_TYPE_ESCALATOR:
 			case ZBX_PROCESS_TYPE_PROXYPOLLER:
 			case ZBX_PROCESS_TYPE_TIMER:
-				if (0 == (program_type & ZBX_PROGRAM_TYPE_SERVER))
+				if (0 == (poller_get_program_type()() & ZBX_PROGRAM_TYPE_SERVER))
 					process_type = ZBX_PROCESS_TYPE_UNKNOWN;
 				break;
 			case ZBX_PROCESS_TYPE_DATASENDER:
-				if (0 == (program_type & ZBX_PROGRAM_TYPE_PROXY))
+				if (0 == (poller_get_program_type()() & ZBX_PROGRAM_TYPE_PROXY))
 					process_type = ZBX_PROCESS_TYPE_UNKNOWN;
 				break;
 		}
@@ -541,7 +544,7 @@ int	get_value_internal(const zbx_dc_item_t *item, AGENT_RESULT *result, const zb
 			goto out;
 		}
 
-		process_forks = ZBX_PROCESS_TYPE_COUNT > process_type ? CONFIG_FORKS[process_type] : 0;
+		process_forks = ZBX_PROCESS_TYPE_COUNT > process_type ? get_config_forks(process_type) : 0;
 
 		if (NULL == (tmp = get_rparam(&request, 2)))
 			tmp = "";
@@ -675,7 +678,7 @@ int	get_value_internal(const zbx_dc_item_t *item, AGENT_RESULT *result, const zb
 		}
 		else if (0 == strcmp(tmp, "trend"))
 		{
-			if (0 == (program_type & ZBX_PROGRAM_TYPE_SERVER))
+			if (0 == (poller_get_program_type()() & ZBX_PROGRAM_TYPE_SERVER))
 			{
 				SET_MSG_RESULT(result, zbx_strdup(NULL, "Invalid second parameter."));
 				goto out;
@@ -857,8 +860,11 @@ int	get_value_internal(const zbx_dc_item_t *item, AGENT_RESULT *result, const zb
 
 				zbx_json_free(&json);
 			}
-			else if (SUCCEED != zbx_get_remote_zabbix_stats(ip, port_number, result))
+			else if (SUCCEED != zbx_get_remote_zabbix_stats(ip, port_number, sysinfo_get_config_timeout(),
+					result))
+			{
 				goto out;
+			}
 		}
 		else
 		{
@@ -904,7 +910,7 @@ int	get_value_internal(const zbx_dc_item_t *item, AGENT_RESULT *result, const zb
 					zbx_json_free(&json);
 				}
 				else if (SUCCEED != zbx_get_remote_zabbix_stats_queue(ip, port_number, tmp, tmp1,
-						result))
+						sysinfo_get_config_timeout(), result))
 				{
 					goto out;
 				}
@@ -950,7 +956,7 @@ int	get_value_internal(const zbx_dc_item_t *item, AGENT_RESULT *result, const zb
 		char		*error = NULL;
 		zbx_tfc_stats_t	stats;
 
-		if (0 == (program_type & ZBX_PROGRAM_TYPE_SERVER))
+		if (0 == (poller_get_program_type()() & ZBX_PROGRAM_TYPE_SERVER))
 		{
 			SET_MSG_RESULT(result, zbx_strdup(NULL, "Invalid first parameter."));
 			goto out;

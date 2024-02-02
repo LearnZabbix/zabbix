@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ import (
 	"zabbix.com/pkg/zbxregexp"
 )
 
-func (p *Plugin) exportRegexp(params []string) (result interface{}, err error) {
+func (p *Plugin) exportRegexp(params []string, timeout int) (result interface{}, err error) {
 	var startline, endline, curline uint64
 
 	start := time.Now()
@@ -94,7 +94,7 @@ func (p *Plugin) exportRegexp(params []string) (result interface{}, err error) {
 	for 0 < undecodedBufNumBytes || initial {
 		elapsed := time.Since(start)
 
-		if elapsed.Seconds() > float64(p.options.Timeout) {
+		if elapsed.Seconds() > float64(timeout) {
 			return nil, errors.New("Timeout while processing item.")
 		}
 

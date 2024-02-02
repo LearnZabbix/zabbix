@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@
 #define ZBX_SNMP_OID_TYPE_DYNAMIC	1
 #define ZBX_SNMP_OID_TYPE_MACRO		2
 #define ZBX_SNMP_OID_TYPE_WALK		3
+#define ZBX_SNMP_OID_TYPE_GET		4
 
 /* defines from dbconfig.c */
 #define ZBX_ITEM_COLLECTED		0x01
@@ -102,8 +103,9 @@ static unsigned char str2pollertype(const char *str)
 		_ZBX_MKMAP(ZBX_NO_POLLER),			_ZBX_MKMAP(ZBX_POLLER_TYPE_NORMAL),
 		_ZBX_MKMAP(ZBX_POLLER_TYPE_UNREACHABLE),	_ZBX_MKMAP(ZBX_POLLER_TYPE_IPMI),
 		_ZBX_MKMAP(ZBX_POLLER_TYPE_PINGER),		_ZBX_MKMAP(ZBX_POLLER_TYPE_JAVA),
-		_ZBX_MKMAP(ZBX_POLLER_TYPE_HISTORY), _ZBX_MKMAP(ZBX_POLLER_TYPE_ODBC),
-		_ZBX_MKMAP(ZBX_POLLER_TYPE_AGENT), _ZBX_MKMAP(ZBX_POLLER_TYPE_SNMP),
+		_ZBX_MKMAP(ZBX_POLLER_TYPE_HISTORY),		_ZBX_MKMAP(ZBX_POLLER_TYPE_ODBC),
+		_ZBX_MKMAP(ZBX_POLLER_TYPE_AGENT),		_ZBX_MKMAP(ZBX_POLLER_TYPE_SNMP),
+		_ZBX_MKMAP(ZBX_POLLER_TYPE_INTERNAL),
 		{ 0 }
 	};
 
@@ -241,8 +243,10 @@ void	zbx_mock_test_entry(void **state)
 
 			snmpitem->snmp_oid = zbx_strdup((char *)snmpitem->snmp_oid, snmp_oid);
 
-			if (0 == strncmp(snmpitem->snmp_oid, "walk[", 5))
+			if (0 == strncmp(snmpitem->snmp_oid, "walk[", ZBX_CONST_STRLEN("walk[")))
 				snmpitem->snmp_oid_type = ZBX_SNMP_OID_TYPE_WALK;
+			else if (0 == strncmp(snmpitem->snmp_oid, "get[", ZBX_CONST_STRLEN("get[")))
+				snmpitem->snmp_oid_type = ZBX_SNMP_OID_TYPE_GET;
 			else if (NULL != strchr(snmpitem->snmp_oid, '{'))
 				snmpitem->snmp_oid_type = ZBX_SNMP_OID_TYPE_MACRO;
 			else if (NULL != strchr(snmpitem->snmp_oid, '['))

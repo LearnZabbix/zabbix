@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -217,7 +217,10 @@ static int	regexp_compile(const char *pattern, int flags, zbx_regexp_t **regexp,
 
 /******************************************************************************
  *                                                                            *
- * Purpose: public wrapper to compile a regular expression                    *
+ * Purpose: Compile a regular expression with default options. Capture groups *
+ *          are disabled by default (if PCRE_NO_AUTO_CAPTURE is supported).   *
+ *          If you need to compile a regular expression that contains capture *
+ *          groups use function zbx_regexp_compile_ext() instead.             *
  *                                                                            *
  * Parameters:                                                                *
  *     pattern   - [IN] regular expression as a text string. Empty            *
@@ -240,7 +243,8 @@ int	zbx_regexp_compile(const char *pattern, zbx_regexp_t **regexp, char **err_ms
 
 /******************************************************************************
  *                                                                            *
- * Purpose: public wrapper for regexp_compile                                 *
+ * Purpose: Compile a regular expression with no or specified regular         *
+ *          expression compilation parameters.                                *
  *                                                                            *
  * Parameters:                                                                *
  *     pattern   - [IN] regular expression as a text string. Empty            *

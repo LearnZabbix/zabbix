@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -240,7 +240,8 @@ function getMenuPopupHost(options, trigger_element) {
 			});
 
 			// items
-			url = new Curl('items.php');
+			url = new Curl('zabbix.php');
+			url.setArgument('action', 'item.list');
 			url.setArgument('filter_set', '1');
 			url.setArgument('filter_hostids[]', options.hostid);
 			url.setArgument('context', 'host');
@@ -252,7 +253,8 @@ function getMenuPopupHost(options, trigger_element) {
 			});
 
 			// triggers
-			url = new Curl('triggers.php');
+			url = new Curl('zabbix.php');
+			url.setArgument('action', 'trigger.list');
 			url.setArgument('filter_set', '1');
 			url.setArgument('filter_hostids[]', options.hostid);
 			url.setArgument('context', 'host');
@@ -310,7 +312,7 @@ function getMenuPopupHost(options, trigger_element) {
 	if ('urls' in options) {
 		sections.push({
 			label: t('Links'),
-			items: getMenuPopupURLData(options.urls, trigger_element)
+			items: getMenuPopupURLData(options.urls, trigger_element, options.hostid, null)
 		});
 	}
 
@@ -319,7 +321,8 @@ function getMenuPopupHost(options, trigger_element) {
 		sections.push({
 			label: t('Scripts'),
 			items: getMenuPopupScriptData(options.scripts, trigger_element, options.hostid, options.eventid,
-				options.csrf_token)
+				options.csrf_token
+			)
 		});
 	}
 
@@ -514,14 +517,17 @@ function getMenuPopupMapElementTrigger(options) {
 		const item_urls = [];
 
 		for (const value of options.triggers) {
-			url = new Curl('triggers.php');
-			url.setArgument('form', 'update');
-			url.setArgument('triggerid', value.triggerid);
-			url.setArgument('context', 'host');
-
 			trigger_urls.push({
 				label: value.description,
-				url: url.getUrl()
+				clickCallback: function(e) {
+					e.preventDefault();
+					jQuery(this).closest('.menu-popup-top').menuPopup('close', null);
+
+					view.editTrigger({
+						triggerid: value.triggerid,
+						context: 'host'
+					});
+				}
 			});
 		}
 
@@ -532,17 +538,24 @@ function getMenuPopupMapElementTrigger(options) {
 
 		if (options.items.length) {
 			for (const item of options.items) {
-				url = new Curl('items.php');
-				url.setArgument('form', 'update');
-				url.setArgument('itemid', item.params.itemid);
-				url.setArgument('context', 'host');
-
-				item_urls.push({
-					label: item.name,
-					disabled: item.params.is_webitem,
-					url: url.getUrl()
-				});
-			}
+				if (item.params.is_webitem) {
+					item_urls.push({
+						label: item.name,
+						disabled: true
+					});
+				}
+				else {
+					item_urls.push({
+						label: item.name,
+						clickCallback: () => {
+							view.editItem(null, {
+								context: 'host',
+								itemid: item.params.itemid
+							});
+						}
+					});
+				}
+			};
 
 			config_urls.push({
 				label: t('Items'),
@@ -671,7 +684,10 @@ function getMenuPopupDashboard(options, trigger_element) {
 				clickCallback: function () {
 					jQuery(this).closest('.menu-popup').menuPopup('close', null);
 
-					PopUp('popup.scheduledreport.list', parameters, {trigger_element});
+					PopUp('popup.scheduledreport.list', parameters, {
+						dialogue_class: 'modal-popup-generic',
+						trigger_element
+					});
 				},
 				disabled: !options.has_related_reports
 			}
@@ -683,7 +699,10 @@ function getMenuPopupDashboard(options, trigger_element) {
 				clickCallback: function () {
 					jQuery(this).closest('.menu-popup').menuPopup('close', null);
 
-					PopUp('popup.scheduledreport.edit', parameters, {trigger_element});
+					PopUp('popup.scheduledreport.edit', parameters, {
+						dialogue_class: 'modal-popup-generic',
+						trigger_element
+					});
 				}
 			});
 		}
@@ -794,30 +813,38 @@ function getMenuPopupTrigger(options, trigger_element) {
 		const config_urls = [];
 		const item_urls = [];
 
-		url = new Curl('triggers.php');
-		url.setArgument('form', 'update');
-		url.setArgument('triggerid', options.triggerid);
-		url.setArgument('context', 'host');
-		url.setArgument('backurl', options.backurl);
-
 		config_urls.push({
 			label: t('Trigger'),
-			url: url.getUrl()
+			clickCallback: function(e) {
+				e.preventDefault();
+				jQuery(this).closest('.menu-popup').menuPopup('close', null);
+
+				view.editTrigger({
+					triggerid: options.triggerid,
+					context: 'host'
+				});
+			}
 		});
 
 		if (options.items.length) {
 			for (const item of options.items) {
-				url = new Curl('items.php');
-				url.setArgument('form', 'update');
-				url.setArgument('itemid', item.params.itemid);
-				url.setArgument('context', 'host');
-				url.setArgument('backurl', options.backurl);
-
-				item_urls.push({
-					label: item.name,
-					disabled: item.params.is_webitem,
-					url: url.getUrl()
-				});
+				if (item.params.is_webitem) {
+					item_urls.push({
+						label: item.name,
+						disabled: true
+					});
+				}
+				else {
+					item_urls.push({
+						label: item.name,
+						clickCallback: () => {
+							view.editItem(null, {
+								context: 'host',
+								itemid: item.params.itemid
+							});
+						}
+					});
+				}
 			}
 
 			config_urls.push({
@@ -954,7 +981,7 @@ function getMenuPopupTrigger(options, trigger_element) {
 	if ('urls' in options) {
 		sections.push({
 			label: t('Links'),
-			items: getMenuPopupURLData(options.urls, trigger_element)
+			items: getMenuPopupURLData(options.urls, trigger_element, null, options.eventid)
 		});
 	}
 
@@ -1050,16 +1077,14 @@ function getMenuPopupItem(options) {
 		};
 
 		if (options.isWriteable) {
-			url = new Curl('items.php');
-			url.setArgument('form', 'update');
-			url.setArgument('hostid', options.hostid);
-			url.setArgument('itemid', options.itemid);
-			url.setArgument('backurl', options.backurl);
-			url.setArgument('context', options.context);
-
 			config_urls.push({
 				label: t('Item'),
-				url: url.getUrl()
+				clickCallback: () => {
+					view.editItem(null, {
+						context: options.context,
+						itemid: options.itemid
+					});
+				}
 			});
 		}
 
@@ -1067,15 +1092,18 @@ function getMenuPopupItem(options) {
 			const trigger_items = [];
 
 			for (const value of options.triggers) {
-				url = new Curl('triggers.php');
-				url.setArgument('form', 'update');
-				url.setArgument('triggerid', value.triggerid);
-				url.setArgument('backurl', options.backurl);
-				url.setArgument('context', options.context);
-
 				trigger_items.push({
 					label: value.description,
-					url: url.getUrl()
+					clickCallback: function(e) {
+						e.preventDefault();
+						jQuery(this).closest('.menu-popup-top').menuPopup('close', null)
+
+						view.editTrigger({
+							triggerid: value.triggerid,
+							hostid: options.hostid,
+							context: options.context
+						});
+					}
 				});
 			}
 
@@ -1084,33 +1112,41 @@ function getMenuPopupItem(options) {
 
 		config_urls.push(config_triggers);
 
-		url = new Curl('triggers.php');
-		url.setArgument('form', 'create');
-		url.setArgument('hostid', options.hostid);
-		url.setArgument('description', options.name);
-		url.setArgument('expression', 'func(/' + options.host + '/' + options.key + ')');
-		url.setArgument('backurl', options.backurl);
-		url.setArgument('context', options.context);
-
 		config_urls.push({
 			label: t('Create trigger'),
-			url: url.getUrl(),
-			disabled: options.binary_value_type
+			disabled: options.binary_value_type,
+			clickCallback: function(e) {
+				e.preventDefault();
+				jQuery(this).closest('.menu-popup').menuPopup('close', null);
+
+				view.editTrigger({
+					hostid: options.hostid,
+					name: options.name,
+					expression: 'func(/' + options.host + '/' + options.key + ')',
+					context: options.context
+				});
+			}
 		});
 
-		url = new Curl('items.php');
-		url.setArgument('form', 'create');
-		url.setArgument('hostid', options.hostid);
-		url.setArgument('type', 18); // ITEM_TYPE_DEPENDENT
-		url.setArgument('master_itemid', options.itemid);
-		url.setArgument('backurl', options.backurl);
-		url.setArgument('context', options.context);
-
-		config_urls.push({
-			label: t('Create dependent item'),
-			url: url.getUrl(),
-			disabled: options.isDiscovery
-		});
+		if (options.isDiscovery) {
+			config_urls.push({
+				label: t('Create dependent item'),
+				disabled: true
+			});
+		}
+		else {
+			config_urls.push({
+				label: t('Create dependent item'),
+				clickCallback: () => {
+					view.editItem(null, {
+						context: options.context,
+						hostid: options.hostid,
+						master_itemid: options.itemid,
+						type: 18 // ITEM_TYPE_DEPENDENT
+					});
+				}
+			});
+		}
 
 		url = new Curl('host_discovery.php');
 		url.setArgument('form', 'create');
@@ -1133,20 +1169,22 @@ function getMenuPopupItem(options) {
 	}
 
 	if (options.context !== 'template') {
-		const execute = {
-			label: t('Execute now'),
-			disabled: !options.isExecutable
-		};
-
 		if (options.isExecutable) {
-			execute.clickCallback = function() {
-				jQuery(this).closest('.menu-popup').menuPopup('close', null);
+			actions.push({
+				label: t('Execute now'),
+				clickCallback: function() {
+					jQuery(this).closest('.menu-popup').menuPopup('close', null);
 
-				view.checkNow(options.itemid);
-			};
+					view.executeNow(null, {itemids: [options.itemid]});
+				}
+			})
 		}
-
-		actions.push(execute);
+		else {
+			actions.push({
+				label: t('Execute now'),
+				disabled: true
+			});
+		}
 
 		sections.push({
 			label: t('Actions'),
@@ -1183,31 +1221,33 @@ function getMenuPopupItemPrototype(options) {
 
 	let url;
 
-	url = new Curl('disc_prototypes.php');
-	url.setArgument('form', 'update');
-	url.setArgument('parent_discoveryid', options.parent_discoveryid);
-	url.setArgument('itemid', options.itemid);
-	url.setArgument('context', options.context);
-
 	config_urls.push({
 		label: t('Item prototype'),
-		url: url.getUrl()
+		clickCallback: () => {
+			view.editItemPrototype(null, {
+				context: options.context,
+				itemid: options.itemid,
+				parent_discoveryid: options.parent_discoveryid
+			});
+		}
 	});
 
 	if (options.trigger_prototypes.length) {
 		const trigger_prototypes = [];
 
 		for (const value of options.trigger_prototypes) {
-			url = new Curl('trigger_prototypes.php');
-			url.setArgument('form', 'update');
-			url.setArgument('parent_discoveryid', options.parent_discoveryid);
-			url.setArgument('triggerid', value.triggerid)
-			url.setArgument('context', options.context);
-			url.setArgument('backurl', options.backurl);
-
 			trigger_prototypes.push({
 				label: value.description,
-				url: url.getUrl()
+				clickCallback: function(e) {
+					e.preventDefault();
+					jQuery(this).closest('.menu-popup-top').menuPopup('close', null)
+
+					view.editTriggerPrototype({
+						triggerid: value.triggerid,
+						parent_discoveryid: options.parent_discoveryid,
+						context: options.context
+					});
+				}
 			});
 		}
 
@@ -1218,29 +1258,32 @@ function getMenuPopupItemPrototype(options) {
 
 	config_urls.push(config_triggers);
 
-	url = new Curl('trigger_prototypes.php');
-	url.setArgument('parent_discoveryid', options.parent_discoveryid);
-	url.setArgument('form', 'create');
-	url.setArgument('description', options.name);
-	url.setArgument('expression', 'func(/' + options.host + '/' + options.key + ')');
-	url.setArgument('context', options.context);
-	url.setArgument('backurl', options.backurl);
-
 	config_urls.push({
 		label: t('Create trigger prototype'),
-		url: url.getUrl()
-	});
+		clickCallback: function(e) {
+			e.preventDefault();
+			jQuery(this).closest('.menu-popup').menuPopup('close', null);
 
-	url = new Curl('disc_prototypes.php');
-	url.setArgument('form', 'create');
-	url.setArgument('parent_discoveryid', options.parent_discoveryid);
-	url.setArgument('type', 18);	// ITEM_TYPE_DEPENDENT
-	url.setArgument('master_itemid', options.itemid);
-	url.setArgument('context', options.context);
+			view.editTriggerPrototype({
+				parent_discoveryid: options.parent_discoveryid,
+				name: options.name,
+				hostid: options.hostid,
+				expression: 'func(/' + options.host + '/' + options.key + ')',
+				context: options.context
+			});
+		}
+	});
 
 	config_urls.push({
 		label: t('Create dependent item'),
-		url: url.getUrl()
+		clickCallback: () => {
+			view.editItemPrototype(null, {
+				context: options.context,
+				master_itemid: options.itemid,
+				parent_discoveryid: options.parent_discoveryid,
+				type: 18 // ITEM_TYPE_DEPENDENT
+			});
+		}
 	});
 
 	sections.push({
@@ -1382,6 +1425,7 @@ function getMenuPopupTriggerMacro(options) {
 				expressionInput.val(expression.string);
 
 				jQuery(this).closest('.menu-popup').menuPopup('close', null);
+				document.getElementById('expr_temp').dispatchEvent(new Event('change'));
 			}
 		};
 	});
@@ -1395,7 +1439,7 @@ function getMenuPopupTriggerMacro(options) {
 /**
  * Build script menu tree.
  *
- * @param {array}  scripts            Script names and nenu paths.
+ * @param {array}  scripts            Script names and menu paths.
  * @param {Node}   trigger_element    UI element which triggered opening of overlay dialogue.
  * @param {array}  hostid             Host ID.
  * @param {array}  eventid            Event ID.
@@ -1417,7 +1461,12 @@ function getMenuPopupScriptData(scripts, trigger_element, hostid, eventid, csrf_
 				scriptid: script.scriptid,
 				confirmation: script.confirmation,
 				hostid: hostid,
-				eventid: eventid
+				eventid: eventid,
+				manualinput: script.manualinput,
+				manualinput_prompt: script.manualinput_prompt,
+				manualinput_validator_type: script.manualinput_validator_type,
+				manualinput_validator: script.manualinput_validator,
+				manualinput_default_value: script.manualinput_default_value
 			});
 		}
 	}
@@ -1428,12 +1477,14 @@ function getMenuPopupScriptData(scripts, trigger_element, hostid, eventid, csrf_
 /**
  * Build URL menu tree.
  *
- * @param {array} urls             URL names and nenu paths.
- * @param {Node}  trigger_element  UI element which triggered opening of overlay dialogue.
+ * @param {array}        urls             URL names and menu paths.
+ * @param {Node}         trigger_element  UI element which triggered opening of overlay dialogue.
+ * @param {string|null}  hostid           ID of host which triggered opening of overlay dialogue.
+ * @param {string|null}  eventid          ID of event which triggered opening of overlay dialogue.
  *
  * @return {array}
  */
-function getMenuPopupURLData(urls, trigger_element) {
+function getMenuPopupURLData(urls, trigger_element, hostid, eventid) {
 	let tree = {};
 
 	// Parse URLs and create tree.
@@ -1447,7 +1498,14 @@ function getMenuPopupURLData(urls, trigger_element) {
 				url: url.url,
 				target: url.target,
 				confirmation: url.confirmation,
-				rel: url.rel,
+				manualinput: url.manualinput,
+				manualinput_prompt: url.manualinput_prompt,
+				manualinput_validator_type: url.manualinput_validator_type,
+				manualinput_validator: url.manualinput_validator,
+				manualinput_default_value: url.manualinput_default_value,
+				scriptid: url.scriptid,
+				hostid,
+				eventid
 			});
 		}
 	}
@@ -1505,15 +1563,17 @@ function getMenuPopupURLItems(tree, trigger_elm) {
 			}
 
 			if (typeof data.params !== 'undefined') {
-				item.url = data.params.url;
-				item.target = data.params.target;
-				item.rel = data.params.rel;
-
-				if (data.params.confirmation !== '') {
-					item.clickCallback = function(e) {
-						return confirm(data.params.confirmation);
-					}
-				}
+				item.clickCallback = function(e) {
+					jQuery(this)
+						.closest('.menu-popup-top')
+						.menuPopup('close', trigger_elm, false);
+					Script.openUrl(data.params.scriptid, data.params.confirmation, trigger_elm,
+						data.params.hostid, data.params.eventid, data.params.url, data.params.target,
+						data.params.manualinput, data.params.manualinput_prompt, data.params.manualinput_validator_type,
+						data.params.manualinput_validator, data.params.manualinput_default_value
+					);
+					cancelEvent(e);
+				};
 			}
 
 			items[items.length] = item;
@@ -1539,17 +1599,19 @@ function getMenuPopupScriptItems(tree, trigger_elm, csrf_token) {
 		Object.values(tree).map((data) => {
 			const item = {label: data.name};
 
-			if (typeof data.items !== 'undefined' && objectSize(data.items) > 0) {
+			if (data.items !== undefined && objectSize(data.items) > 0) {
 				item.items = getMenuPopupScriptItems(data.items, trigger_elm, csrf_token);
 			}
 
-			if (typeof data.params !== 'undefined' && typeof data.params.scriptid !== 'undefined') {
+			if (data.params !== undefined && data.params.scriptid !== undefined) {
 				item.clickCallback = function(e) {
 					jQuery(this)
 						.closest('.menu-popup-top')
 						.menuPopup('close', trigger_elm, false);
-					executeScript(data.params.scriptid, data.params.confirmation, trigger_elm, data.params.hostid,
-						data.params.eventid, csrf_token
+					Script.execute(data.params.scriptid, data.params.confirmation, trigger_elm, data.params.hostid,
+						data.params.eventid, csrf_token, data.params.manualinput, data.params.manualinput_prompt,
+						data.params.manualinput_validator_type, data.params.manualinput_validator,
+						data.params.manualinput_default_value
 					);
 					cancelEvent(e);
 				};

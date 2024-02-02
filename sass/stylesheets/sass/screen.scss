@@ -52,6 +52,7 @@ $browser-sprite: '../img/browser-sprite.png?20220722';
 @import "components/menu-main";
 @import "components/menu-user";
 @import "components/message-box";
+@import "components/multiselect";
 @import "components/radio-list-control";
 @import "components/range-control";
 @import "components/section";
@@ -60,6 +61,7 @@ $browser-sprite: '../img/browser-sprite.png?20220722';
 @import "components/subfilter";
 @import "components/svg-gauge";
 @import "components/svg-graph";
+@import "components/svg-piechart";
 @import "components/tabfilter";
 @import "components/tabs";
 @import "components/toc";
@@ -73,8 +75,8 @@ $browser-sprite: '../img/browser-sprite.png?20220722';
 @import "components/dashboard/widget-item";
 @import "components/dashboard/widget-map";
 @import "components/dashboard/widget-navtree";
+@import "components/dashboard/widget-piechart";
 @import "components/dashboard/widget-problemsbysv";
-@import "components/dashboard/widget-slareport";
 @import "components/dashboard/widget-svggraph";
 @import "components/dashboard/widget-tophosts";
 @import "components/dashboard/widget-url";
@@ -534,12 +536,6 @@ form {
 	word-break: break-word;
 }
 
-.overflow-table {
-	overflow-x: auto;
-	position: relative;
-	@extend %webkit-hor-scrollbar;
-}
-
 // Filters.
 .filter-btn-container {
 	position: relative;
@@ -547,10 +543,11 @@ form {
 }
 
 .filter-container {
+	position: relative;
+	padding: 10px 0;
+	margin-bottom: 8px;
 	background-color: $ui-bg-color;
 	border: 1px solid $ui-border-color;
-	padding: 10px 0;
-	position: relative;
 
 	.table {
 		border-bottom: 1px solid $table-border-color;
@@ -558,10 +555,6 @@ form {
 
 	.filter-forms {
 		padding: 0 10px;
-
-		.btn-grey {
-			vertical-align: baseline;
-		}
 	}
 
 	.list-table {
@@ -600,6 +593,10 @@ form {
 		button {
 			margin: 0;
 		}
+
+		table {
+			width: auto;
+		}
 	}
 
 	button {
@@ -628,191 +625,6 @@ form {
 		color: $form-disabled-font-color;
 		background-color: transparent;
 		border-color: transparent;
-	}
-}
-
-.multiselect-control {
-	display: flex;
-	position: relative;
-	vertical-align: top;
-	white-space: nowrap;
-}
-
-.multiselect {
-	@extend %form-input-style;
-	display: flex;
-	flex-direction: column;
-	position: relative;
-	margin-right: 3px;
-	min-height: 24px;
-	white-space: normal;
-
-	&.active {
-		border-color: $form-focus-border-color;
-	}
-
-	&[aria-disabled] {
-		@extend %form-disabled;
-	}
-
-	input[type="text"] {
-		border: 0;
-		background: none;
-		box-sizing: border-box;
-		width: 100%;
-		padding-bottom: 2px;
-		min-height: 20px;
-	}
-
-	&.search-disabled {
-		input[type="text"] {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 0;
-			padding: 0;
-			margin: 0;
-		}
-	}
-
-	.multiselect-list {
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		padding-left: 2px;
-		padding-bottom: 2px;
-
-		li {
-			display: block; // Override ".table-forms li".
-			padding-left: 0 !important;
-			margin: 2px 2px 0 0;
-			overflow: hidden;
-			white-space: nowrap;
-			cursor: default;
-
-			&.selected {
-				.subfilter-enabled {
-					background-color: $multiselect-selected-bg-color;
-				}
-			}
-		}
-
-		.subfilter-enabled {
-			padding-right: 0;
-			display: flex;
-			flex-direction: row;
-			line-height: 18px;
-
-			> span:first-child {
-				overflow: hidden;
-				text-overflow: ellipsis;
-			}
-
-			.btn-icon {
-				@extend %button-size-medium;
-
-				flex-shrink: 0;
-				margin-left: 0;
-				color: $ui-selected-color;
-
-				&:hover,
-				&:focus {
-					color: $ui-selected-hover-color;
-				}
-
-				&:active,
-				&:focus {
-					box-shadow: none;
-				}
-			}
-		}
-	}
-
-	.disabled {
-		background-color: $multiselect-disabled-bg-color;
-		opacity: 1;
-
-		.subfilter-enabled {
-			background-color: $multiselect-item-disabled-bg-color;
-			color: $multiselect-item-disabled-color;
-			-webkit-text-fill-color: $multiselect-item-disabled-color;
-
-			.btn-icon {
-				pointer-events: none;
-				color: $multiselect-item-disabled-color;
-				-webkit-text-fill-color: $multiselect-item-disabled-color;
-			}
-		}
-	}
-
-	div[aria-live] {
-		overflow: hidden;
-		position: absolute;
-		left: 0;
-		right: 0;
-		top: 0;
-		bottom: 0;
-		z-index: -1;
-	}
-}
-
-.multiselect-button {
-	vertical-align: top;
-}
-
-.multiselect-suggest {
-	padding: 0 5px;
-	white-space: normal;
-	color: $font-alt-color;
-	background-color: $form-bg-color;
-
-	li {
-		display: block;
-		height: inherit;
-		line-height: normal;
-		color: $font-color;
-		padding: .4em 5px;
-		margin: 0 -5px;
-		cursor: pointer;
-		overflow: hidden;
-		text-overflow: ellipsis;
-
-		@if $ui-transitions {
-			transition: background-color $ui-controls-transition-duration ease-out;
-		}
-
-		&.suggest-hover {
-			background-color: $action-hover-color;
-		}
-	}
-}
-
-.multiselect-matches {
-	padding: .4em 5px;
-	color: $font-color;
-	font-weight: bold;
-	@extend .multiselect-suggest;
-}
-
-.multiselect-available {
-	position: absolute;
-	z-index: 20000;
-	border: 1px solid $action-border-color;
-	overflow-y: auto;
-	@extend %webkit-scrollbar;
-	box-shadow: 0 6px 10px 0 $action-shadow-color;
-}
-
-.suggest-found {
-	font-weight: bold;
-	color: $dark-yellow;
-}
-
-.suggest-new {
-	border-top: 1px solid $form-border-color;
-
-	span:first-child {
-		font-weight: bold;
 	}
 }
 
@@ -880,6 +692,7 @@ form {
 	}
 
 	.table-forms-td-left {
+		position: relative;
 		display: table-cell;
 		padding: 5px 0;
 		text-align: right;
@@ -896,6 +709,12 @@ form {
 			.icon {
 				margin-left: 5px;
 			}
+		}
+
+		.checkbox-radio {
+			right: 0;
+			margin-right: 0;
+			margin-left: 0;
 		}
 	}
 
@@ -951,12 +770,11 @@ form {
 		.wrap-multiple-controls {
 			display: flex;
 		}
+	}
 
-		.table-forms-separator {
-			.radio-segmented + .multiselect-wrapper {
-				margin-top: 5px;
-			}
-		}
+	.table-subforms {
+		margin-top: -5px;
+		margin-bottom: -5px;
 	}
 
 	h4 {
@@ -1225,9 +1043,10 @@ select {
 	& + label {
 		span {
 			position: relative;
+			box-sizing: border-box;
 			display: inline-block;
-			width: 14px;
-			height: 14px;
+			width: 16px;
+			height: 16px;
 			margin-right: 4px;
 			vertical-align: text-bottom;
 			background-color: $form-bg-color;
@@ -1374,6 +1193,27 @@ select {
 		color: $input-placeholder-color;
 		-webkit-text-fill-color: $input-placeholder-color;
 		opacity: 1;
+	}
+}
+
+.radio-list-control {
+	&.severity {
+		vertical-align: top;
+
+		label {
+			max-width: 110px;
+			text-overflow: ellipsis;
+			overflow: hidden;
+		}
+	}
+}
+
+.table-forms {
+	// TODO: Should be removed after migration to the form-grid.
+	.radio-list-control {
+		&.severity {
+			vertical-align: middle;
+		}
 	}
 }
 
@@ -2043,10 +1883,10 @@ select {
 
 	.form-grid {
 		// 100px label column width for use in popup forms.
-		grid-template-columns: minmax(var(--label-width, 100px), max-content) auto;
+		grid-template-columns: minmax(var(--label-width, 100px), max-content) 1fr;
 
 		&.form-grid-1-1 {
-			grid-template-columns: repeat(2, minmax(100px, max-content) auto);
+			grid-template-columns: repeat(2, minmax(100px, max-content) 1fr);
 		}
 
 		&.form-grid-3-1 {
@@ -2649,8 +2489,8 @@ select {
 		}
 	}
 
-	&:last-child {
-		margin: 0;
+	&:last-of-type {
+		margin-right: 0;
 	}
 
 	&.green-bg {
@@ -2920,25 +2760,21 @@ span {
 	}
 }
 
-.menu-popup-preloader,
-.hintbox-preloader {
+.menu-popup-preloader {
 	background: $preloader-bg-color;
 	border: 1px solid $overlay-border-color;
 	box-shadow: 0 4px 20px 0 $action-shadow-color;
-	height: 128px;
-	width: 128px;
+	height: 50px;
+	width: 50px;
 	position: fixed;
 	right: auto;
 	bottom: auto;
 	z-index: 1010;
-
-	&::before {
-		background: $preloader-bg-color;
-	}
 }
 
 .hintbox-preloader {
-	position: absolute;
+	height: 50px;
+	width: 50px;
 }
 
 $browser-logos: (
@@ -3007,6 +2843,7 @@ $browser-logos: (
 
 	&::-webkit-scrollbar {
 		width: 9px;
+		height: 9px;
 	}
 
 	&::-webkit-scrollbar-track {
@@ -3017,15 +2854,6 @@ $browser-logos: (
 		background-color: $scrollbar-thumb-color;
 		border: 1px solid darken($scrollbar-thumb-color, $scrollbar-thumb-color-darken);
 	}
-}
-
-// TODO: Legacy
-%webkit-hor-scrollbar {
-	&::-webkit-scrollbar {
-		height: 9px;
-	}
-
-	@extend %webkit-scrollbar;
 }
 
 %cursor-drag {
@@ -3444,6 +3272,7 @@ svg {
 
 	&.ui-sortable-disabled {
 		.drag-icon {
+			cursor: default;
 			color: $btn-icon-disabled-color;
 		}
 	}
@@ -3474,6 +3303,24 @@ svg {
 #preprocessing-test-form {
 	.table-forms-separator {
 		margin-top: -2px;
+	}
+
+	.runtime-error-fields {
+		display: flex;
+		justify-content: space-between;
+
+		label {
+			width: auto;
+			padding-inline-end: 8px;
+		}
+
+		> div {
+			display: inline-flex;
+		}
+
+		.multilineinput-control {
+			width: 250px;
+		}
 	}
 }
 
@@ -3668,16 +3515,18 @@ svg {
 }
 
 .btn-split {
-	display: inline-block;
 	position: relative;
+	display: inline-block;
 	margin-right: 10px;
 
 	li {
 		display: inline-block;
 
-		&:first-child button {
-			border-top-right-radius: 0;
-			border-bottom-right-radius: 0;
+		&:first-child {
+			button {
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+			}
 		}
 
 		&:last-child {
@@ -3686,17 +3535,25 @@ svg {
 			button {
 				border-top-left-radius: 0;
 				border-bottom-left-radius: 0;
-
-				&[aria-expanded="true"] {
-					color: $btn-color;
-					background-color: $btn-hover-bg-color;
-					border-color: $btn-hover-border-color;
-				}
 			}
 		}
 
-		&:only-child button {
-			border-radius: 2px;
+		&:only-child {
+			button {
+				border-radius: 2px;
+			}
+		}
+	}
+
+	button {
+		&:focus {
+			z-index: 1;
+		}
+
+		&[aria-expanded="true"] {
+			color: $btn-color;
+			background-color: $btn-hover-bg-color;
+			border-color: $btn-hover-border-color;
 		}
 	}
 }
@@ -4064,7 +3921,6 @@ z-select {
 }
 
 .overlay-dialogue #templates-form {
-	#tagsFormList,
 	#macrosFormList {
 		.form-field {
 			grid-column-start: 1;
@@ -4175,6 +4031,11 @@ z-select {
 	&.disabled {
 		background-color: $white;
 		opacity: 1;
+
+		.geomap-filter-button {
+			cursor: default;
+			opacity: .4;
+		}
 	}
 }
 

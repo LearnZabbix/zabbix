@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -200,8 +200,7 @@ static int	system_swap_total(AGENT_RESULT *result)
 static int	system_swap_pfree(AGENT_RESULT *result)
 {
 	AGENT_RESULT	result_tmp;
-	zbx_uint64_t	tot_val = 0;
-	zbx_uint64_t	free_val = 0;
+	zbx_uint64_t	tot_val = 0, free_val = 0;
 
 	zbx_init_agent_result(&result_tmp);
 
@@ -230,8 +229,7 @@ static int	system_swap_pfree(AGENT_RESULT *result)
 static int	system_swap_pused(AGENT_RESULT *result)
 {
 	AGENT_RESULT	result_tmp;
-	zbx_uint64_t	tot_val = 0;
-	zbx_uint64_t	free_val = 0;
+	zbx_uint64_t	tot_val = 0, free_val = 0;
 
 	zbx_init_agent_result(&result_tmp);
 

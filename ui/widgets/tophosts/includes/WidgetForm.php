@@ -1,7 +1,7 @@
 <?php declare(strict_types = 0);
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ use Zabbix\Widgets\Fields\{
 	CWidgetFieldIntegerBox,
 	CWidgetFieldMultiSelectGroup,
 	CWidgetFieldMultiSelectHost,
+	CWidgetFieldMultiSelectOverrideHost,
 	CWidgetFieldRadioButtonList,
 	CWidgetFieldSelect,
 	CWidgetFieldTags
@@ -50,7 +51,7 @@ class WidgetForm extends CWidgetForm {
 	private array $field_column_values = [];
 
 	protected function normalizeValues(array $values): array {
-		$values = self::convertDottedKeys($values);
+		$values = parent::normalizeValues($values);
 
 		if (array_key_exists('columnsthresholds', $values)) {
 			foreach ($values['columnsthresholds'] as $column_index => $fields) {
@@ -136,7 +137,16 @@ class WidgetForm extends CWidgetForm {
 				)
 			)
 			->addField(
-				(new CWidgetFieldColumnsList('columns', _('Columns')))->setFlags(CWidgetField::FLAG_LABEL_ASTERISK)
+				(new CWidgetFieldColumnsList('columns', _('Columns')))
+					->setFlags(CWidgetField::FLAG_NOT_EMPTY | CWidgetField::FLAG_LABEL_ASTERISK)
+			)
+			->addField(
+				(new CWidgetFieldSelect('column', _('Order by'), $this->field_column_values))
+					->setDefault($this->field_column_values
+						? self::DEFAULT_ORDER_COLUMN
+						: CWidgetFieldSelect::DEFAULT_VALUE
+					)
+					->setFlags(CWidgetField::FLAG_LABEL_ASTERISK)
 			)
 			->addField(
 				(new CWidgetFieldRadioButtonList('order', _('Order'), [
@@ -144,21 +154,16 @@ class WidgetForm extends CWidgetForm {
 					Widget::ORDER_BOTTOM_N => _('Bottom N')
 				]))->setDefault(Widget::ORDER_TOP_N)
 			)
-			->addField(
-				(new CWidgetFieldSelect('column', _('Order column'), $this->field_column_values))
-					->setDefault($this->field_column_values
-						? self::DEFAULT_ORDER_COLUMN
-						: CWidgetFieldSelect::DEFAULT_VALUE
-					)
-					->setFlags(CWidgetField::FLAG_LABEL_ASTERISK)
-			)
 			->addField($this->isTemplateDashboard()
 				? null
-				: (new CWidgetFieldIntegerBox('show_lines', _('Host count'), ZBX_MIN_WIDGET_LINES,
+				: (new CWidgetFieldIntegerBox('show_lines', _('Host limit'), ZBX_MIN_WIDGET_LINES,
 					ZBX_MAX_WIDGET_LINES
 				))
 					->setDefault(self::DEFAULT_HOSTS_COUNT)
 					->setFlags(CWidgetField::FLAG_LABEL_ASTERISK)
+			)
+			->addField(
+				new CWidgetFieldMultiSelectOverrideHost()
 			);
 	}
 }

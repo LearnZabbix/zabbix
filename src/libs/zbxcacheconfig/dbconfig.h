@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 
 #include "zbxcacheconfig.h"
 #include "user_macro.h"
-
+#include "vps_monitor.h"
 #include "zbxmutexs.h"
 #include "zbxalgo.h"
 #include "zbxversion.h"
@@ -151,6 +151,7 @@ typedef struct
 	ZBX_DC_MASTERITEM	*master_item;
 
 	zbx_vector_ptr_t	tags;
+	const char		*timeout;
 }
 ZBX_DC_ITEM;
 
@@ -289,7 +290,6 @@ ZBX_DC_CALCITEM;
 typedef struct
 {
 	zbx_uint64_t	itemid;
-	const char	*timeout;
 	const char	*url;
 	const char	*query_fields;
 	const char	*status_codes;
@@ -318,7 +318,6 @@ typedef struct
 {
 	zbx_uint64_t		itemid;
 	const char		*script;
-	const char		*timeout;
 	zbx_vector_ptr_t	params;
 }
 ZBX_DC_SCRIPTITEM;
@@ -485,6 +484,9 @@ typedef struct
 #endif
 	const char			*address;
 	const char			*port;
+
+	unsigned char			custom_timeouts;
+	zbx_config_item_type_timeouts_t	item_timeouts;
 }
 ZBX_DC_PROXY;
 
@@ -541,6 +543,7 @@ typedef struct
 	unsigned char	reset_availability;
 	/* item statistics per interface */
 	int		items_num;
+	int		version;
 }
 ZBX_DC_INTERFACE;
 
@@ -613,12 +616,15 @@ typedef struct
 	unsigned char	autoreg_tls_accept;
 	const char	*default_timezone;
 	int		auditlog_enabled;
+	int		auditlog_mode;
 
 	/* database configuration data for ZBX_CONFIG_DB_EXTENSION_* extensions */
 	zbx_config_db_t	db;
 
 	/* housekeeping related configuration data */
 	zbx_config_hk_t	hk;
+
+	zbx_config_item_type_timeouts_t	item_timeouts;
 }
 ZBX_DC_CONFIG_TABLE;
 
@@ -652,14 +658,16 @@ typedef struct
 }
 zbx_dc_action_condition_t;
 
+ZBX_PTR_VECTOR_DECL(dc_action_condition_ptr, zbx_dc_action_condition_t *)
+
 typedef struct
 {
-	zbx_uint64_t		actionid;
-	const char		*formula;
-	unsigned char		eventsource;
-	unsigned char		evaltype;
-	unsigned char		opflags;
-	zbx_vector_ptr_t	conditions;
+	zbx_uint64_t				actionid;
+	const char				*formula;
+	unsigned char				eventsource;
+	unsigned char				evaltype;
+	unsigned char				opflags;
+	zbx_vector_dc_action_condition_ptr_t	conditions;
 }
 zbx_dc_action_t;
 
@@ -892,6 +900,8 @@ typedef struct
 	int				status;
 	int				tags_evaltype;
 	zbx_vector_dc_connector_tag_t	tags;
+	int				item_value_type;
+	const char			*attempt_interval;
 }
 zbx_dc_connector_t;
 
@@ -1001,6 +1011,7 @@ typedef struct
 	zbx_um_cache_t		*um_cache;
 	char			autoreg_psk_identity[HOST_TLS_PSK_IDENTITY_LEN_MAX];	/* autoregistration PSK */
 	char			autoreg_psk[HOST_TLS_PSK_LEN_MAX];
+	zbx_vps_monitor_t	vps_monitor;
 }
 ZBX_DC_CONFIG;
 
@@ -1057,10 +1068,10 @@ size_t	zbx_maintenance_update_flags_num(void);
 char	*dc_expand_user_macros_in_expression(const char *text, zbx_uint64_t *hostids, int hostids_num);
 char	*dc_expand_user_macros_in_func_params(const char *params, zbx_uint64_t itemid);
 char	*dc_expand_user_macros_in_calcitem(const char *formula, zbx_uint64_t hostid);
+char	*dc_expand_user_and_func_macros_dyn(const char *text, const zbx_uint64_t *hostids, int hostids_num, int env);
 
-char	*dc_expand_user_macros(const char *text, const zbx_uint64_t *hostids, int hostids_num);
+void	DCget_interface(zbx_dc_interface_t *dst_interface, const ZBX_DC_INTERFACE *src_interface);
 
-void		DCget_interface(zbx_dc_interface_t *dst_interface, const ZBX_DC_INTERFACE *src_interface);
 ZBX_DC_HOST	*DCfind_host(const char *host);
 ZBX_DC_ITEM	*DCfind_item(zbx_uint64_t hostid, const char *key);
 void		DCget_function(zbx_dc_function_t *dst_function, const ZBX_DC_FUNCTION *src_function);

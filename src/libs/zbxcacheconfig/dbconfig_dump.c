@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -18,14 +18,16 @@
 **/
 #include "zbxcacheconfig.h"
 #include "dbconfig.h"
+#include "user_macro.h"
 
-#include "zbxcommon.h"
+#include "zbx_host_constants.h"
+#include "zbx_trigger_constants.h"
 #include "zbxalgo.h"
+#include "zbxdbhigh.h"
+#include "zbxstr.h"
 
 static void	DCdump_config(void)
 {
-	int	i;
-
 	zabbix_log(LOG_LEVEL_TRACE, "In %s()", __func__);
 
 	if (NULL == config->config)
@@ -45,7 +47,7 @@ static void	DCdump_config(void)
 	zabbix_log(LOG_LEVEL_TRACE, "autoreg_tls_accept:%hhu", config->config->autoreg_tls_accept);
 
 	zabbix_log(LOG_LEVEL_TRACE, "severity names:");
-	for (i = 0; TRIGGER_SEVERITY_COUNT > i; i++)
+	for (int i = 0; TRIGGER_SEVERITY_COUNT > i; i++)
 		zabbix_log(LOG_LEVEL_TRACE, "  %s", config->config->severity_name[i]);
 
 	zabbix_log(LOG_LEVEL_TRACE, "housekeeping:");
@@ -72,6 +74,18 @@ static void	DCdump_config(void)
 	zabbix_log(LOG_LEVEL_TRACE, "  default timezone '%s'", config->config->default_timezone);
 
 	zabbix_log(LOG_LEVEL_TRACE, "  auditlog_enabled: %d", config->config->auditlog_enabled);
+	zabbix_log(LOG_LEVEL_TRACE, "  auditlog_mode: %d", config->config->auditlog_mode);
+
+	zabbix_log(LOG_LEVEL_TRACE, "item timeouts:");
+	zabbix_log(LOG_LEVEL_TRACE, "  agent:%s", config->config->item_timeouts.agent);
+	zabbix_log(LOG_LEVEL_TRACE, "  simple:%s", config->config->item_timeouts.simple);
+	zabbix_log(LOG_LEVEL_TRACE, "  snmp:%s", config->config->item_timeouts.snmp);
+	zabbix_log(LOG_LEVEL_TRACE, "  external:%s", config->config->item_timeouts.external);
+	zabbix_log(LOG_LEVEL_TRACE, "  odbc:%s", config->config->item_timeouts.odbc);
+	zabbix_log(LOG_LEVEL_TRACE, "  http:%s", config->config->item_timeouts.http);
+	zabbix_log(LOG_LEVEL_TRACE, "  ssh:%s", config->config->item_timeouts.ssh);
+	zabbix_log(LOG_LEVEL_TRACE, "  telnet:%s", config->config->item_timeouts.telnet);
+	zabbix_log(LOG_LEVEL_TRACE, "  script:%s", config->config->item_timeouts.script);
 out:
 	zabbix_log(LOG_LEVEL_TRACE, "End of %s()", __func__);
 }
@@ -383,12 +397,12 @@ static void	DCdump_interfaces(void)
 		zbx_snprintf_alloc(&if_msg, &alloc, &offset, "interfaceid:" ZBX_FS_UI64 " hostid:" ZBX_FS_UI64
 				" ip:'%s' dns:'%s' port:'%s' type:%u main:%u useip:%u"
 				" available:%u errors_from:%d disable_until:%d error:'%s' availability_ts:%d"
-				" reset_availability:%d items_num %d",
+				" reset_availability:%d version:%d items_num %d",
 				interface->interfaceid, interface->hostid, interface->ip, interface->dns,
 				interface->port, interface->type, interface->main, interface->useip,
 				interface->available, interface->errors_from, interface->disable_until,
 				interface->error, interface->availability_ts, interface->reset_availability,
-				interface->items_num);
+				interface->version, interface->items_num);
 
 		if (INTERFACE_TYPE_SNMP == interface->type &&
 				NULL != (snmp = (ZBX_DC_SNMPINTERFACE *)zbx_hashset_search(&config->interfaces_snmp,
@@ -463,10 +477,10 @@ static void	DCdump_httpitem(const ZBX_DC_HTTPITEM *httpitem)
 	zabbix_log(LOG_LEVEL_TRACE, "  http:[headers:'%s']", httpitem->headers);
 	zabbix_log(LOG_LEVEL_TRACE, "  http:[posts:'%s']", httpitem->posts);
 
-	zabbix_log(LOG_LEVEL_TRACE, "  http:[timeout:'%s' status codes:'%s' follow redirects:%u post type:%u"
-			" http proxy:'%s' retrieve mode:%u request method:%u output format:%u allow traps:%u"
+	zabbix_log(LOG_LEVEL_TRACE, "  http:[status codes:'%s' follow redirects:%u post type:%u http proxy:'%s'"
+			" retrieve mode:%u request method:%u output format:%u allow traps:%u"
 			" trapper_hosts:'%s']",
-			httpitem->timeout, httpitem->status_codes, httpitem->follow_redirects, httpitem->post_type,
+			httpitem->status_codes, httpitem->follow_redirects, httpitem->post_type,
 			httpitem->http_proxy, httpitem->retrieve_mode, httpitem->request_method,
 			httpitem->output_format, httpitem->allow_traps, httpitem->trapper_hosts);
 
@@ -481,7 +495,7 @@ static void	DCdump_scriptitem(const ZBX_DC_SCRIPTITEM *scriptitem)
 {
 	int	i;
 
-	zabbix_log(LOG_LEVEL_TRACE, "  script:[timeout:'%s' script:'%s']", scriptitem->timeout, scriptitem->script);
+	zabbix_log(LOG_LEVEL_TRACE, "  script:[script:'%s']", scriptitem->script);
 
 	for (i = 0; i < scriptitem->params.values_num; i++)
 	{
@@ -1539,6 +1553,8 @@ static void	DCdump_connectors(void)
 		zabbix_log(LOG_LEVEL_TRACE, "  ssl_key_password:'%s'", connector->ssl_key_password);
 		zabbix_log(LOG_LEVEL_TRACE, "  status:%d", connector->status);
 		zabbix_log(LOG_LEVEL_TRACE, "  tags_evaltype:%d", connector->tags_evaltype);
+		zabbix_log(LOG_LEVEL_TRACE, "  item_value_type:%d", connector->item_value_type);
+		zabbix_log(LOG_LEVEL_TRACE, "  attempt_interval:'%s'", connector->attempt_interval);
 
 		DCdump_connector_tags(connector);
 	}

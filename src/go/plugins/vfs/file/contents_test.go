@@ -2,7 +2,7 @@
 
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -42,7 +42,6 @@ var fileContents_UTF_8 = []byte{
 	0x00, 0x0d, 0x00, 0x0a}
 
 func TestFileContentsEncoding(t *testing.T) {
-	impl.options.Timeout = 3
 
 	fileContents_2_UTF_8 := []byte{
 		208, 176, 208, 178, 208, 179, 209, 131, 209, 129, 209, 130, 208, 176, 13, 10}

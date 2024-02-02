@@ -1,7 +1,7 @@
 <?php declare(strict_types = 0);
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -30,11 +30,15 @@ use Zabbix\Widgets\Fields\{
 	CWidgetFieldIntegerBox,
 	CWidgetFieldMultiSelectGroup,
 	CWidgetFieldMultiSelectHost,
+	CWidgetFieldMultiSelectOverrideHost,
 	CWidgetFieldRadioButtonList,
 	CWidgetFieldSeverities,
 	CWidgetFieldTags,
-	CWidgetFieldTextBox
+	CWidgetFieldTextBox,
+	CWidgetFieldTimePeriod
 };
+
+use CWidgetsData;
 
 /**
  * Top triggers data widget form.
@@ -69,11 +73,24 @@ class WidgetForm extends CWidgetForm {
 				new CWidgetFieldTags('tags')
 			)
 			->addField(
-				(new CWidgetFieldIntegerBox('show_lines', _('Trigger count'), ZBX_MIN_WIDGET_LINES,
+				(new CWidgetFieldIntegerBox('show_lines', _('Trigger limit'), ZBX_MIN_WIDGET_LINES,
 					ZBX_MAX_WIDGET_LINES
 				))
 					->setDefault(self::DEFAULT_TRIGGER_COUNT)
 					->setFlags(CWidgetField::FLAG_LABEL_ASTERISK)
+			)
+			->addField(
+				(new CWidgetFieldTimePeriod('time_period', _('Time period')))
+					->setDefault([
+						CWidgetField::FOREIGN_REFERENCE_KEY => CWidgetField::createTypedReference(
+							CWidgetField::REFERENCE_DASHBOARD, CWidgetsData::DATA_TYPE_TIME_PERIOD
+						)
+					])
+					->setDefaultPeriod(['from' => 'now-1h', 'to' => 'now'])
+					->setFlags(CWidgetField::FLAG_NOT_EMPTY | CWidgetField::FLAG_LABEL_ASTERISK)
+			)
+			->addField(
+				new CWidgetFieldMultiSelectOverrideHost()
 			);
 	}
 }

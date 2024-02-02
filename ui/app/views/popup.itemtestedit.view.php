@@ -1,7 +1,7 @@
 <?php
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -51,10 +51,9 @@ foreach ($data['inputs'] as $name => $value) {
 		continue;
 	}
 	elseif ($name === 'query_fields' || $name === 'headers' || $name === 'parameters') {
-		foreach (['name', 'value'] as $key) {
-			if (array_key_exists($key, $value)) {
-				$form->addVar($name.'['.$key.']', $value[$key]);
-			}
+		foreach ($value as $num => $row) {
+			$form->addVar($name.'['.$num.'][name]', $row['name']);
+			$form->addVar($name.'['.$num.'][value]', $row['value']);
 		}
 		continue;
 	}
@@ -289,8 +288,16 @@ $form_grid->addItem([
 
 	($data['test_type'] == CControllerPopupItemTestEdit::ZBX_TEST_TYPE_LLD)
 		? null
-		: (new CFormField((new CCheckBox('not_supported'))->setLabel(_('Not supported'))))
-			->addClass(CFormField::ZBX_STYLE_FORM_FIELD_FLUID),
+		: (new CFormField([
+			(new CCheckBox('not_supported'))->setLabel(_('Not supported'))->setChecked((bool) $data['not_supported']),
+			(new CDiv([
+				(new CLabel(_('Error'), 'runtime_error_match'))->setFor('runtime_error'),
+				(new CMultilineInput('runtime_error', '', ['readonly' => false]))
+			]))
+		]))
+			->addClass(CFormField::ZBX_STYLE_FORM_FIELD_FLUID)
+			->addClass('runtime-error-fields')
+			->addStyle('width: '.ZBX_TEXTAREA_STANDARD_WIDTH.'px;'),
 
 	new CLabel(_('Previous value'), 'prev_item_value'),
 	new CFormField(
@@ -398,7 +405,7 @@ $form->addItem([
 		(new CDiv(
 			(new CSpan('#{result}'))
 				->addClass(ZBX_STYLE_LINK_ACTION)
-				->setHint('#{result}', 'hintbox-wrap')
+				->setHint('#{result_hint}', 'hintbox-wrap')
 		))
 			->addStyle('max-width: '.ZBX_TEXTAREA_STANDARD_WIDTH.'px;')
 			->addClass(ZBX_STYLE_OVERFLOW_ELLIPSIS)
@@ -409,8 +416,8 @@ $form->addItem([
 			(new CDiv(
 				(new CSpan('#{failed}'))
 					->addClass(ZBX_STYLE_LINK_ACTION)
-					->setHint('#{failed}', 'hintbox-wrap')
-			))
+					->setHint('#{failed_hint}', 'hintbox-wrap')
+				))
 				->addStyle('max-width: '.ZBX_TEXTAREA_STANDARD_WIDTH.'px;')
 				->addClass(ZBX_STYLE_OVERFLOW_ELLIPSIS)
 				->addClass(ZBX_STYLE_REL_CONTAINER)

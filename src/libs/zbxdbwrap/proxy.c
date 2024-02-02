@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -1639,6 +1639,12 @@ int	zbx_process_sender_history_data(zbx_socket_t *sock, struct zbx_json_parse *j
 	int			ret;
 	zbx_dc_um_handle_t	*um_handle;
 
+	if (SUCCEED == zbx_vps_monitor_capped())
+	{
+		*info = zbx_strdup(*info, "data collection has been paused");
+		return FAIL;
+	}
+
 	um_handle = zbx_dc_open_user_macros();
 
 	ret = process_client_history_data(sock, jp, ts, sender_item_validator, &rights, info);
@@ -2037,7 +2043,7 @@ json_parse_return:
  * Purpose: parse autoregistration data contents and process it               *
  *                                                                            *
  * Parameters: jp_data         - [IN] JSON with autoregistration data         *
- *             proxyid    - [IN] proxy identifier from database          *
+ *             proxyid         - [IN] proxy identifier from database          *
  *             events_cbs      - [IN]                                         *
  *             error           - [OUT] address of a pointer to the info       *
  *                                     string (should be freed by the caller) *

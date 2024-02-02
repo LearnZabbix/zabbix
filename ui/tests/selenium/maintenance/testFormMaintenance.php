@@ -1,7 +1,7 @@
 <?php
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -19,8 +19,8 @@
 **/
 
 require_once dirname(__FILE__).'/../../include/CLegacyWebTest.php';
-require_once dirname(__FILE__).'/../traits/TableTrait.php';
 require_once dirname(__FILE__).'/../behaviors/CMessageBehavior.php';
+require_once dirname(__FILE__).'/../behaviors/CTableBehavior.php';
 
 use Facebook\WebDriver\WebDriverBy;
 
@@ -32,23 +32,51 @@ use Facebook\WebDriver\WebDriverBy;
  * - Clone maintenance.
  * - Delete maintenance.
  *
+ * @onBefore prepareMaintenanceData
+ *
  * @backup maintenances
  */
 class testFormMaintenance extends CLegacyWebTest {
 
-	use TableTrait;
-
 	/**
-	 * Attach MessageBehavior to the test.
+	 * Attach MessageBehavior and TableBehavior to the test.
 	 *
 	 * @return array
 	 */
 	public function getBehaviors() {
-		return [CMessageBehavior::class];
+		return [
+			CMessageBehavior::class,
+			CTableBehavior::class
+		];
 	}
 
 	public $name = 'Test maintenance';
 	public $periods_table = 'id:timeperiods';
+
+	public function prepareMaintenanceData() {
+		CDataHelper::call('maintenance.create', [
+			[
+				'name' => 'Maintenance for update (data collection)',
+				'maintenance_type' => MAINTENANCE_TYPE_NORMAL,
+				'active_since' => 1534885200,
+				'active_till' => 1534971600,
+				'description' => 'Test description update',
+				'groups' => [['groupid' => 4]], // Zabbix servers.
+				'tags_evaltype' => 2,
+				'tags' => [
+					['tag' => 'Tag1', 'operator' => MAINTENANCE_TAG_OPERATOR_LIKE, 'value' => 'A'],
+					['tag' => 'Tag2', 'operator' => MAINTENANCE_TAG_OPERATOR_EQUAL, 'value' => 'B']
+				],
+				'timeperiods' => [
+					[
+						'period' => 90000,
+						'timeperiod_type' => TIMEPERIOD_TYPE_ONETIME,
+						'start_date' => 1534950000
+					]
+				]
+			]
+		]);
+	}
 
 	/**
 	 * Create maintenance with periods and host group.
@@ -72,7 +100,7 @@ class testFormMaintenance extends CLegacyWebTest {
 				'fields' => [
 					'Period type' => 'Daily'
 				],
-				'result' => [['Period type' => 'Daily', 'Schedule' => 'At 00:00 every day']]
+				'result' => [['Period type' => 'Daily', 'Schedule' => 'At 00:00 every 1 day']]
 			],
 			[
 				'fields' => [
@@ -80,7 +108,7 @@ class testFormMaintenance extends CLegacyWebTest {
 					'Monday' => true,
 					'Sunday' => true
 				],
-				'result' => [['Period type' => 'Weekly', 'Schedule' => 'At 00:00 Monday, Sunday of every week']]
+				'result' => [['Period type' => 'Weekly', 'Schedule' => 'At 00:00 Monday, Sunday of every 1 week']]
 			],
 			[
 				'fields' => [
@@ -190,7 +218,7 @@ class testFormMaintenance extends CLegacyWebTest {
 					'Wednesday' => true,
 					'Friday' => true
 				],
-				'result' => [['Period type' => 'Weekly', 'Schedule' => 'At 00:00 Monday, Wednesday, Friday, Sunday of every week']]
+				'result' => [['Period type' => 'Weekly', 'Schedule' => 'At 00:00 Monday, Wednesday, Friday, Sunday of every 1 week']]
 			],
 			[
 				'schedule' => 'Monthly',

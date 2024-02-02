@@ -1,7 +1,7 @@
 <?php
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -18,22 +18,28 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **/
 
+
 require_once dirname(__FILE__).'/../../include/CWebTest.php';
+require_once dirname(__FILE__).'/../behaviors/CTableBehavior.php';
 require_once dirname(__FILE__).'/../behaviors/CMessageBehavior.php';
+require_once dirname(__FILE__).'/../common/testWidgets.php';
 
 /**
+ * @dataSource AllItemValueTypes
+ *
  * @backup widget, profiles
  */
-class testDashboardGraphPrototypeWidget extends CWebTest {
+class testDashboardGraphPrototypeWidget extends testWidgets {
 
 	/**
-	 * Attach MessageBehavior to the test.
+	 * Attach MessageBehavior and TableBehavior to the test.
 	 *
 	 * @return array
 	 */
 	public function getBehaviors() {
 		return [
-			'class' => CMessageBehavior::class
+			CMessageBehavior::class,
+			CTableBehavior::class
 		];
 	}
 
@@ -99,7 +105,7 @@ class testDashboardGraphPrototypeWidget extends CWebTest {
 						'Source' => 'Simple graph prototype',
 						'Item prototype' => 'testFormItemPrototype2',
 						'Show legend' => true,
-						'Enable host selection' => true,
+						'Override host' => 'Dashboard',
 						'Columns' => '3',
 						'Rows' => '2'
 					]
@@ -376,10 +382,11 @@ class testDashboardGraphPrototypeWidget extends CWebTest {
 		$type = array_key_exists('Item prototype', $data['fields']) ? 'Item prototype' : 'Graph prototype';
 
 		if (!array_key_exists('Graph prototype', $data['fields']) && !array_key_exists('Item prototype', $data['fields'])) {
-			$form->query('xpath:.//div[@id="graphid" or @id="itemid"]')->asMultiselect()->one()->clear();
+			$form->query('xpath:.//div[@id="graphid" or @id="itemid"]')->all()->filter(CElementFilter::VISIBLE)
+					->asMultiselect()->clear();
 		}
 
-		$values = $form->getFields()->asValues();
+		$values = $form->getFields()->filter(CElementFilter::VISIBLE)->asValues();
 		$form->submit();
 
 		switch ($data['expected']) {
@@ -426,12 +433,12 @@ class testDashboardGraphPrototypeWidget extends CWebTest {
 				$placeholders_count = $widget->query('class:dashboard-grid-iterator-placeholder')->count();
 				$this->assertEquals($expected_placeholders_count, $placeholders_count);
 				// Check Dynamic item setting on Dashboard.
-				if (CTestArrayHelper::get($data['fields'], 'Enable host selection')) {
+				if (CTestArrayHelper::get($data['fields'], 'Override host')) {
 					$this->assertTrue($dashboard->getControls()->query('xpath://form[@aria-label = '.
 						'"Main filter"]')->one()->isPresent());
 				}
 				// Check widget form fields and values.
-				$this->assertEquals($values, $widget->edit()->getFields()->asValues());
+				$this->assertEquals($values, $widget->edit()->getFields()->filter(CElementFilter::VISIBLE)->asValues());
 
 				// Write widget name to variable to use it in next Update test case.
 				if ($update) {
@@ -461,7 +468,7 @@ class testDashboardGraphPrototypeWidget extends CWebTest {
 			: $dashboard->edit()->addWidget()->asForm();
 
 		if ($update) {
-			$original_values = $form->getFields()->asValues();
+			$original_values = $form->getFields()->filter(CElementFilter::VISIBLE)->asValues();
 		}
 
 		$dialog = COverlayDialogElement::find()->one();
@@ -474,7 +481,7 @@ class testDashboardGraphPrototypeWidget extends CWebTest {
 					'Source' => 'Simple graph prototype',
 					'Item prototype' => 'testFormItemPrototype2',
 					'Show legend' => false,
-					'Enable host selection' => true,
+					'Override host' => 'Dashboard',
 					'Columns' => '3',
 					'Rows' => '2'
 				]);
@@ -492,12 +499,19 @@ class testDashboardGraphPrototypeWidget extends CWebTest {
 		$this->assertMessage(TEST_GOOD, 'Dashboard updated');
 
 		if ($update) {
-			$new_values = $dashboard->getWidget(self::$previous_widget_name)->edit()->getFields()->asValues();
+			$new_values = $dashboard->getWidget(self::$previous_widget_name)->edit()->getFields()
+					->filter(CElementFilter::VISIBLE)->asValues();
 			$this->assertEquals($original_values, $new_values);
 		}
 
 		$this->assertEquals($initial_values, CDBHelper::getHash($this->sql));
 	}
+
+	/**
+	 * Test function for assuring that binary items are not available in Graph prototype widget.
+	 */
+	public function testDashboardGraphPrototypeWidget_CheckAvailableItems() {
+		$url = 'zabbix.php?action=dashboard.view&dashboardid='.self::DASHBOARD_ID;
+		$this->checkAvailableItems($url, 'Graph prototype');
+	}
 }
-
-

@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -50,35 +50,6 @@ function delete_expression(id, type) {
 	}
 }
 
-/**
- * Insert expression part into input field.
- *
- * @param string id		Expression temporary ID.
- * @param number type	Expression (type = 0) or recovery expression (type = 1).
- */
-function copy_expression(id, type) {
-	// If type is expression.
-	if (type == 0) {
-		var element = document.getElementsByName('expr_temp')[0];
-	}
-	// Type is recovery expression.
-	else {
-		var element = document.getElementsByName('recovery_expr_temp')[0];
-	}
-
-	if (element.value.length > 0 && !confirm(t('Do you wish to replace the conditional expression?'))) {
-		return null;
-	}
-
-	var src = document.getElementById(id);
-	if (typeof src.textContent != 'undefined') {
-		element.value = src.textContent;
-	}
-	else {
-		element.value = src.innerText;
-	}
-}
-
 function testUserSound(idx) {
 	var element = document.getElementById(idx);
 	var sound = element.options[element.selectedIndex].value;
@@ -96,11 +67,13 @@ function testUserSound(idx) {
 	}
 }
 
-/**
- * Converts all HTML symbols into HTML entities.
- */
-jQuery.escapeHtml = function(html) {
-	return jQuery('<div>').text(html).html();
+function escapeHtml(string) {
+	return string
+		.replace(/&/g,'&amp;')
+		.replace(/</g,'&lt;')
+		.replace(/>/g,'&gt;')
+		.replace(/\"/g,'&quot;')
+		.replace(/\'/g,'&apos;');
 }
 
 function validateNumericBox(obj, allowempty, allownegative) {
@@ -544,67 +517,6 @@ function overlayDialogue(params, trigger_elmnt) {
 	return overlay;
 }
 
-/**
- * Execute script.
- *
- * @param string scriptid			Script ID.
- * @param string confirmation		Confirmation text.
- * @param {Node} trigger_element	UI element that was clicked to open overlay dialogue.
- * @param string hostid				Host ID.
- * @param string eventid			Event ID.
- * @param string csrf_token			CSRF token.
- */
-function executeScript(scriptid, confirmation, trigger_element, hostid = null, eventid = null, csrf_token) {
-	var execute = function() {
-		var popup_options = {scriptid: scriptid};
-
-		if (hostid !== null) {
-			popup_options.hostid = hostid;
-		}
-
-		if (eventid !== null) {
-			popup_options.eventid = eventid;
-		}
-
-		if (Object.keys(popup_options).length === 2) {
-			popup_options._csrf_token = csrf_token;
-
-			PopUp('popup.scriptexec', popup_options, {dialogue_class: 'modal-popup-medium', trigger_element});
-		}
-	};
-
-	if (confirmation.length > 0) {
-		overlayDialogue({
-			'title': t('Execution confirmation'),
-			'content': jQuery('<span>')
-				.addClass('confirmation-msg')
-				.text(confirmation),
-			'class': 'modal-popup modal-popup-small position-middle',
-			'buttons': [
-				{
-					'title': t('Cancel'),
-					'class': 'btn-alt',
-					'focused': (hostid === null && eventid === null),
-					'action': function() {}
-				},
-				{
-					'title': t('Execute'),
-					'enabled': (hostid !== null || eventid !== null),
-					'focused': (hostid !== null || eventid !== null),
-					'action': function() {
-						execute();
-					}
-				}
-			]
-		}, trigger_element);
-
-		return false;
-	}
-	else {
-		execute();
-	}
-}
-
 (function($) {
 	$.fn.serializeJSON = function() {
 		var json = {};
@@ -795,15 +707,16 @@ function toggleMessageBoxDetails(element) {
 }
 
 /**
- * Download svg graph as .png image.
+ * Download svg as .png image.
  *
  * @param {SVGElement} svg
  * @param {string}     file_name
+ * @param {string}     legend_class
  */
-function downloadSvgImage(svg, file_name) {
+function downloadSvgImage(svg, file_name, legend_class = '') {
 	var $dom_node = jQuery(svg),
 		canvas = document.createElement('canvas'),
-		labels = $dom_node.next('.svg-graph-legend'),
+		labels = $dom_node.next(legend_class),
 		$clone = $dom_node.clone(),
 		$container = $dom_node.closest('.dashboard-grid-widget-contents'),
 		image = new Image,
@@ -813,7 +726,7 @@ function downloadSvgImage(svg, file_name) {
 		labels_height = labels.length ? labels.height() : 0,
 		context2d;
 
-	// Clone only svg graph styles.
+	// Clone only svg styles.
 	style.innerText = jQuery.map(document.styleSheets[0].cssRules, function (rule) {
 		return rule.selectorText && rule.selectorText.substr(0, 5) == '.svg-' ? rule.cssText : '';
 	}).join('');
@@ -958,7 +871,7 @@ function getFormFields(form) {
 		for (let i = 0; i < key_parts.length; i++) {
 			const key_part = key_parts[i][0];
 
-			if (i == key_parts.length - 1) {
+			if (i === key_parts.length - 1) {
 				if (key_part === '[]') {
 					key_fields.push(value);
 				}

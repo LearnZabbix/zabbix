@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -19,10 +19,16 @@
 
 #include "zbxcacheconfig.h"
 #include "dbsync.h"
+#include "user_macro.h"
 
+#include "zbx_host_constants.h"
+#include "zbx_trigger_constants.h"
 #include "zbxcrypto.h"
 #include "zbxeval.h"
 #include "zbxnum.h"
+#include "zbxdbhigh.h"
+#include "zbxexpr.h"
+#include "zbxstr.h"
 
 /* global correlation constants */
 #define ZBX_CORRELATION_ENABLED				0
@@ -852,7 +858,7 @@ int	zbx_dbsync_compare_config(zbx_dbsync_t *sync)
 {
 	zbx_db_result_t	result;
 
-#define SELECTED_CONFIG_FIELD_COUNT	33	/* number of columns in the following zbx_db_select() */
+#define SELECTED_CONFIG_FIELD_COUNT	43	/* number of columns in the following zbx_db_select() */
 
 	if (NULL == (result = zbx_db_select("select discovery_groupid,snmptrap_logging,"
 				"severity_name_0,severity_name_1,severity_name_2,"
@@ -863,7 +869,9 @@ int	zbx_dbsync_compare_config(zbx_dbsync_t *sync)
 				"hk_history_mode,hk_history_global,hk_history,hk_trends_mode,"
 				"hk_trends_global,hk_trends,default_inventory_mode,db_extension,autoreg_tls_accept,"
 				"compression_status,compress_older,instanceid,default_timezone,hk_events_service,"
-				"auditlog_enabled"
+				"auditlog_enabled,timeout_zabbix_agent,timeout_simple_check,timeout_snmp_agent,"
+				"timeout_external_check,timeout_db_monitor,timeout_http_agent,timeout_ssh_agent,"
+				"timeout_telnet_agent,timeout_script,auditlog_mode"
 			" from config"
 			" order by configid")))	/* if you change number of columns in zbx_db_select(), */
 						/* adjust SELECTED_CONFIG_FIELD_COUNT */
@@ -1581,6 +1589,35 @@ static int	dbsync_compare_interface(const ZBX_DC_INTERFACE *interface, const zbx
 
 /******************************************************************************
  *                                                                            *
+ * Purpose: applies necessary preprocessing before row is compared/used       *
+ *                                                                            *
+ * Parameter: row - [IN] the row to preprocess                                *
+ *                                                                            *
+ * Return value: the preprocessed row                                         *
+ *                                                                            *
+ * Comments: The row preprocessing can be used to expand user macros in       *
+ *           some columns.                                                    *
+ *                                                                            *
+ ******************************************************************************/
+static char	**dbsync_interface_preproc_row(char **row)
+{
+	zbx_uint64_t	hostid;
+
+	/* get associated host identifier */
+	ZBX_STR2UINT64(hostid, row[1]);
+
+	/* expand user macros */
+	if (NULL != strstr(row[5], "{$"))
+		row[5] = dc_expand_user_and_func_macros_dyn(row[5], &hostid, 1, ZBX_MACRO_ENV_NONSECURE);
+
+	if (NULL != strstr(row[6], "{$"))
+		row[6] = dc_expand_user_and_func_macros_dyn(row[6], &hostid, 1, ZBX_MACRO_ENV_NONSECURE);
+
+	return row;
+}
+
+/******************************************************************************
+ *                                                                            *
  * Purpose: compares interfaces table with cached configuration data          *
  *                                                                            *
  * Parameter: sync - [OUT] the changeset                                      *
@@ -1609,7 +1646,7 @@ int	zbx_dbsync_compare_interfaces(zbx_dbsync_t *sync)
 		return FAIL;
 	}
 
-	dbsync_prepare(sync, 23, NULL);
+	dbsync_prepare(sync, 23, dbsync_interface_preproc_row);
 
 	if (ZBX_DBSYNC_INIT == sync->mode)
 	{
@@ -1623,17 +1660,20 @@ int	zbx_dbsync_compare_interfaces(zbx_dbsync_t *sync)
 	while (NULL != (dbrow = zbx_db_fetch(result)))
 	{
 		unsigned char	tag = ZBX_DBSYNC_ROW_NONE;
+		char		**row;
 
 		ZBX_STR2UINT64(rowid, dbrow[0]);
 		zbx_hashset_insert(&ids, &rowid, sizeof(rowid));
 
+		row = dbsync_preproc_row(sync, dbrow);
+
 		if (NULL == (interface = (ZBX_DC_INTERFACE *)zbx_hashset_search(&dbsync_env.cache->interfaces, &rowid)))
 			tag = ZBX_DBSYNC_ROW_ADD;
-		else if (FAIL == dbsync_compare_interface(interface, dbrow))
+		else if (FAIL == dbsync_compare_interface(interface, row))
 			tag = ZBX_DBSYNC_ROW_UPDATE;
 
 		if (ZBX_DBSYNC_ROW_NONE != tag)
-			dbsync_add_row(sync, rowid, tag, dbrow);
+			dbsync_add_row(sync, rowid, tag, row);
 	}
 
 	zbx_hashset_iter_reset(&dbsync_env.cache->interfaces, &iter);
@@ -3039,7 +3079,7 @@ int	zbx_dbsync_compare_host_groups(zbx_dbsync_t *sync)
 	zbx_uint64_t		rowid;
 	zbx_dc_hostgroup_t	*group;
 
-	if (NULL == (result = zbx_db_select("select groupid,name from hstgrp")))
+	if (NULL == (result = zbx_db_select("select groupid,name from hstgrp where type=%d", HOSTGROUP_TYPE_HOST)))
 		return FAIL;
 
 	dbsync_prepare(sync, 2, NULL);
@@ -3996,10 +4036,10 @@ int	zbx_dbsync_compare_connectors(zbx_dbsync_t *sync)
 	zbx_snprintf_alloc(&sql, &sql_alloc, &sql_offset, "select connectorid,protocol,data_type,url,max_records,"
 			"max_senders,timeout,max_attempts,token,http_proxy,authtype,username,password,verify_peer,"
 			"verify_host,ssl_cert_file,ssl_key_file,ssl_key_password,status,"
-			"tags_evaltype"
+			"tags_evaltype,item_value_type,attempt_interval"
 		" from connector");
 
-	dbsync_prepare(sync, 20, NULL);
+	dbsync_prepare(sync, 22, NULL);
 
 	if (ZBX_DBSYNC_INIT == sync->mode)
 	{
@@ -4051,12 +4091,15 @@ int	zbx_dbsync_compare_proxies(zbx_dbsync_t *sync)
 
 	zbx_snprintf_alloc(&sql, &sql_alloc, &sql_offset,
 			"select p.proxyid,p.name,p.operating_mode,p.tls_connect,p.tls_accept,p.tls_issuer,p.tls_subject,"
-				"p.tls_psk_identity,p.tls_psk,p.allowed_addresses,p.address,p.port,pr.lastaccess"
+				"p.tls_psk_identity,p.tls_psk,p.allowed_addresses,p.address,p.port,pr.lastaccess,"
+				"p.timeout_zabbix_agent,p.timeout_simple_check,p.timeout_snmp_agent,"
+				"p.timeout_external_check,p.timeout_db_monitor,p.timeout_http_agent,"
+				"p.timeout_ssh_agent,p.timeout_telnet_agent,p.timeout_script,p.custom_timeouts"
 			" from proxy p"
 			" join proxy_rtdata pr"
 				" on p.proxyid=pr.proxyid");
 
-	dbsync_prepare(sync, 13, NULL);
+	dbsync_prepare(sync, 23, NULL);
 
 	if (ZBX_DBSYNC_INIT == sync->mode)
 	{

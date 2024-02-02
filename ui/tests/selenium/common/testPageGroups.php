@@ -1,7 +1,7 @@
 <?php
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -21,22 +21,23 @@
 
 require_once dirname(__FILE__).'/../../include/CWebTest.php';
 require_once dirname(__FILE__).'/../behaviors/CMessageBehavior.php';
-require_once dirname(__FILE__).'/../traits/TableTrait.php';
+require_once dirname(__FILE__).'/../behaviors/CTableBehavior.php';
 
 /**
  * Base class for Host and Template groups page.
  */
 class testPageGroups extends CWebTest {
 
-	use TableTrait;
-
 	/**
-	 * Attach MessageBehavior to the test.
+	 * Attach MessageBehavior and TableBehavior to the test.
 	 *
 	 * @return array
 	 */
 	public function getBehaviors() {
-		return ['class' => CMessageBehavior::class];
+		return [
+			CMessageBehavior::class,
+			CTableBehavior::class
+		];
 	}
 
 	/**
@@ -117,10 +118,6 @@ class testPageGroups extends CWebTest {
 		);
 
 		// Check table headers.
-		$set_headers = ($this->object === 'host')
-			? ['' , 'Name', 'Count', 'Hosts', 'Info']
-			: ['' , 'Name', 'Count', 'Templates'];
-		$this->setColumnNames($set_headers);
 		$table = $this->getTable();
 		$headers = ($this->object === 'host') ? ['', 'Name', 'Hosts', 'Info'] : ['', 'Name', 'Templates'];
 		$this->assertEquals($headers, $table->getHeadersText());
@@ -181,7 +178,7 @@ class testPageGroups extends CWebTest {
 		$dialog->close();
 		$dialog->ensureNotPresent();
 
-		// Check link to hosts or templates page with selected group in filer.
+		// Check link to hosts or templates page with selected group in filter.
 		$group_id = CDBHelper::getValue('SELECT groupid FROM hstgrp WHERE name='.zbx_dbstr($links['name']));
 		$row->getColumn('Count')->query('link', $links['count'])->one()->click();
 		$this->assertStringContainsString((($this->object === 'host')
@@ -233,8 +230,19 @@ class testPageGroups extends CWebTest {
 		}
 
 		if ($this->object === 'host') {
-			$names[array_search(self::DISCOVERED_GROUP, $names)] = self::LLD.': '.self::DISCOVERED_GROUP;
-			$names[array_search(self::DISCOVERED_GROUP2, $names)] = self::LLD.': '.self::DISCOVERED_GROUP2;
+			$discovered_hosts = [
+				self::DISCOVERED_GROUP => self::LLD,
+				self::DISCOVERED_GROUP2 => self::LLD,
+				'Single prototype group KEY' => '17th LLD',
+				'グループプロトタイプ番号 1 KEY' => '1st LLD, ..., sixth LLD',
+				'Trešais grupu prototips KEY' => 'LLD number 8, ..., sevenths LLD',
+				'Two prototype group KEY' => '15th LLD 🙃^天!, 16th LLD',
+				'5 prototype group KEY' => '12th LLD, ..., Četrpadsmitais LLD'
+			];
+
+			foreach ($discovered_hosts as $group_name => $llds) {
+				$names[array_search($group_name, $names)] = $llds.': '.$group_name;
+			}
 		}
 
 		return $names;

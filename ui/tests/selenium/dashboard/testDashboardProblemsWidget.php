@@ -1,7 +1,7 @@
 <?php
 /*
 ** Zabbix
-** Copyright (C) 2001-2022 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -85,15 +85,15 @@ class testDashboardProblemsWidget extends CWebTest {
 								['type' => 0, 'name' => 'sort_triggers', 'value' => 15],
 								['type' => 0, 'name' => 'show_timeline', 'value' => 0],
 								['type' => 0, 'name' => 'tag_name_format', 'value' => 1],
-								['type' => 0, 'name' => 'tags.operator.0', 'value' => 1],
-								['type' => 0, 'name' => 'tags.operator.1', 'value' => 1],
+								['type' => 0, 'name' => 'tags.0.operator', 'value' => 1],
+								['type' => 0, 'name' => 'tags.1.operator', 'value' => 1],
 								['type' => 0, 'name' => 'acknowledgement_status', 'value' => 1],
 								['type' => 1, 'name' => 'problem', 'value' => 'test2'],
-								['type' => 1, 'name' => 'tags.value.0', 'value' => '2'],
-								['type' => 1, 'name' => 'tags.value.1', 'value' => '33'],
+								['type' => 1, 'name' => 'tags.0.value', 'value' => '2'],
+								['type' => 1, 'name' => 'tags.1.value', 'value' => '33'],
 								['type' => 1, 'name' => 'tag_priority', 'value' => '1,2'],
-								['type' => 1, 'name' => 'tags.tag.0', 'value' => 'tag2'],
-								['type' => 1, 'name' => 'tags.tag.1', 'value' => 'tagg33'],
+								['type' => 1, 'name' => 'tags.0.tag', 'value' => 'tag2'],
+								['type' => 1, 'name' => 'tags.1.tag', 'value' => 'tagg33'],
 								['type' => 2, 'name' => 'exclude_groupids', 'value' => 50014],
 								['type' => 2, 'name' => 'groupids', 'value' => 50005],
 								['type' => 3, 'name' => 'hostids', 'value' => 99026]
@@ -164,7 +164,8 @@ class testDashboardProblemsWidget extends CWebTest {
 			'Show operational data' => ['value' => 'None', 'enabled' => true],
 			'Show symptoms' => ['value' => false, 'enabled' => true],
 			'Show suppressed problems' => ['value' => false, 'enabled' => true],
-			'id:acknowledgement_status' => ['value' => 'all', 'enabled' => true],
+			'id:acknowledgement_status' => ['value' => 'All', 'enabled' => true],
+			'id:acknowledged_by_me' => ['value' => false, 'enabled' => false],
 			'Sort entries by' => ['value' => 'Time (descending)', 'enabled' => true],
 			'Show timeline' => ['value' => true, 'enabled' => true],
 			'Show lines' => ['value' => 25, 'enabled' => true, 'maxlength' => 3]
@@ -216,7 +217,8 @@ class testDashboardProblemsWidget extends CWebTest {
 			'Problem tags' => ['And/Or', 'Or'],
 			'Show tags' => ['None', '1', '2', '3'],
 			'Tag name' => ['Full', 'Shortened', 'None'],
-			'Show operational data' => ['None', 'Separately', 'With problem name']
+			'Show operational data' => ['None', 'Separately', 'With problem name'],
+			'Acknowledgement status' => ['All', 'Unacknowledged', 'Acknowledged']
 		];
 
 		foreach ($radios as $radio => $labels) {
@@ -228,6 +230,12 @@ class testDashboardProblemsWidget extends CWebTest {
 			$form->getField('Show tags')->asSegmentedRadio()->select($value);
 			$this->assertTrue($form->getField('Tag name')->isEnabled($status));
 			$this->assertTrue($form->getField('Tag display priority')->isEnabled($status));
+		}
+
+		// Check Acknowledgement status fields dependency.
+		foreach (['All' => false, 'Unacknowledged' => false, 'Acknowledged' => true] as $label => $status) {
+			$form->fill(['Acknowledgement status' => $label]);
+			$this->assertTrue($form->getField('id:acknowledged_by_me')->isEnabled($status));
 		}
 
 		// Check Show timeline checkbox editability.
@@ -433,7 +441,7 @@ class testDashboardProblemsWidget extends CWebTest {
 						'Show tags' => 'None',
 						'Show operational data' => 'None',
 						'Show suppressed problems' => false,
-						'Acknowledgement status' => 'all',
+						'Acknowledgement status' => 'All',
 						'Sort entries by' => 'Time (descending)',
 						'Show timeline' => false,
 						'Show lines' => 1

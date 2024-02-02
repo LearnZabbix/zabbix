@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -40,7 +40,8 @@
 #define	ZBX_POLLER_TYPE_HTTPAGENT	7
 #define	ZBX_POLLER_TYPE_AGENT		8
 #define	ZBX_POLLER_TYPE_SNMP		9
-#define	ZBX_POLLER_TYPE_COUNT		10	/* number of poller types */
+#define ZBX_POLLER_TYPE_INTERNAL	10
+#define	ZBX_POLLER_TYPE_COUNT		11	/* number of poller types */
 
 typedef enum
 {
@@ -82,6 +83,7 @@ typedef struct
 	int		disable_until;
 	char		error[ZBX_INTERFACE_ERROR_LEN_MAX];
 	int		errors_from;
+	int		version;
 }
 zbx_dc_interface_t;
 
@@ -111,6 +113,7 @@ typedef struct
 	char			host[ZBX_HOSTNAME_BUF_LEN];
 	zbx_dc_interface_t	interface;
 	int			ret;
+	int			version;
 	AGENT_RESULT		result;
 }
 zbx_dc_item_context_t;
@@ -191,7 +194,8 @@ typedef struct
 	char			password_orig[ZBX_ITEM_PASSWORD_LEN_MAX], *password;
 	char			snmpv3_contextname_orig[ZBX_ITEM_SNMPV3_CONTEXTNAME_LEN_MAX], *snmpv3_contextname;
 	char			jmx_endpoint_orig[ZBX_ITEM_JMX_ENDPOINT_LEN_MAX], *jmx_endpoint;
-	char			timeout_orig[ZBX_ITEM_TIMEOUT_LEN_MAX], *timeout;
+	char			timeout_orig[ZBX_ITEM_TIMEOUT_LEN_MAX];
+	int			timeout;
 	char			url_orig[ZBX_ITEM_URL_LEN_MAX], *url;
 	char			query_fields_orig[ZBX_ITEM_QUERY_FIELDS_LEN_MAX], *query_fields;
 	char			*posts;
@@ -393,14 +397,29 @@ zbx_dc_proxy_t;
 
 typedef struct
 {
-	zbx_uint64_t		actionid;
-	char			*formula;
-	unsigned char		eventsource;
-	unsigned char		evaltype;
-	unsigned char		opflags;
-	zbx_vector_ptr_t	conditions;
+	zbx_uint64_t			conditionid;
+	zbx_uint64_t			actionid;
+	char				*value;
+	char				*value2;
+	unsigned char			conditiontype;
+	unsigned char			op;
+	zbx_vector_uint64_t		eventids;
+}
+zbx_condition_t;
+ZBX_PTR_VECTOR_DECL(condition_ptr, zbx_condition_t *)
+
+typedef struct
+{
+	zbx_uint64_t			actionid;
+	char				*formula;
+	unsigned char			eventsource;
+	unsigned char			evaltype;
+	unsigned char			opflags;
+	zbx_vector_condition_ptr_t	conditions;
 }
 zbx_action_eval_t;
+
+ZBX_PTR_VECTOR_DECL(action_eval_ptr, zbx_action_eval_t *)
 
 typedef struct
 {
@@ -457,6 +476,7 @@ typedef struct
 	unsigned char	autoreg_tls_accept;
 	char		*default_timezone;
 	int		auditlog_enabled;
+	int		auditlog_mode;
 
 	/* database configuration data for ZBX_CONFIG_DB_EXTENSION_* extensions */
 	zbx_config_db_t	db;
@@ -475,6 +495,7 @@ zbx_config_t;
 #define ZBX_CONFIG_FLAGS_AUTOREG_TLS_ACCEPT		__UINT64_C(0x0000000000000080)
 #define ZBX_CONFIG_FLAGS_DEFAULT_TIMEZONE		__UINT64_C(0x0000000000000100)
 #define ZBX_CONFIG_FLAGS_AUDITLOG_ENABLED		__UINT64_C(0x0000000000000200)
+#define ZBX_CONFIG_FLAGS_AUDITLOG_MODE			__UINT64_C(0x0000000000000400)
 
 typedef struct
 {
@@ -554,7 +575,7 @@ typedef struct
 	zbx_hashset_t		conditions;
 
 	/* Configuration synchronization timestamp of the rules. */
-	/* Update the cache if this timesamp is less than the    */
+	/* Update the cache if this timestamp is less than the   */
 	/* current configuration synchronization timestamp.      */
 	int			sync_ts;
 }
@@ -628,7 +649,7 @@ typedef struct
 	char			*password_orig, *password;
 	unsigned char		verify_peer;
 	unsigned char		verify_host;
-	char			*ssl_cert_file_orig,*ssl_cert_file;
+	char			*ssl_cert_file_orig, *ssl_cert_file;
 	char			*ssl_key_file_orig, *ssl_key_file;
 	char			*ssl_key_password_orig, *ssl_key_password;
 
@@ -636,6 +657,9 @@ typedef struct
 	zbx_list_t		data_point_link_queue;
 	int			time_flush;
 	int			senders;
+
+	int			item_value_type;
+	char			*attempt_interval;
 }
 zbx_connector_t;
 
@@ -667,6 +691,7 @@ typedef struct
 	unsigned char	snmpv3_privprotocol;
 	char		*snmpv3_contextname;
 	unsigned char	allow_redirect;
+	int		timeout;
 }
 zbx_dc_dcheck_t;
 
@@ -731,11 +756,13 @@ zbx_synced_new_config_t;
 typedef struct zbx_dc_um_shared_handle zbx_dc_um_shared_handle_t;
 typedef struct zbx_um_cache zbx_um_cache_t;
 
-void	zbx_dc_sync_configuration(unsigned char mode, zbx_synced_new_config_t synced,
+zbx_uint64_t	zbx_dc_sync_configuration(unsigned char mode, zbx_synced_new_config_t synced,
 		zbx_vector_uint64_t *deleted_itemids, const zbx_config_vault_t *config_vault,
 		int proxyconfig_frequency);
 void	zbx_dc_sync_kvs_paths(const struct zbx_json_parse *jp_kvs_paths, const zbx_config_vault_t *config_vault,
-		const char *config_source_ip);
+		const char *config_source_ip, const char *config_ssl_ca_location, const char *config_ssl_cert_location,
+		const char *config_ssl_key_location);
+void	zbx_dc_config_get_hostids_by_revision(zbx_uint64_t new_revision, zbx_vector_uint64_t *hostids);
 int	zbx_init_configuration_cache(zbx_get_program_type_f get_program_type, zbx_get_config_forks_f get_config_forks,
 		zbx_uint64_t conf_cache_size, char **error);
 void	zbx_free_configuration_cache(void);
@@ -877,6 +904,7 @@ int	zbx_dc_interface_activate(zbx_uint64_t interfaceid, const zbx_timespec_t *ts
 int	zbx_dc_interface_deactivate(zbx_uint64_t interfaceid, const zbx_timespec_t *ts, int unavailable_delay,
 		int unreachable_period, int unreachable_delay, zbx_agent_availability_t *in,
 		zbx_agent_availability_t *out, const char *error_msg);
+void	zbx_dc_set_interface_version(zbx_uint64_t interfaceid, int version);
 
 #define ZBX_QUEUE_FROM_DEFAULT	6	/* default lower limit for delay (in seconds) */
 #define ZBX_QUEUE_TO_INFINITY	-1	/* no upper limit for delay */
@@ -922,7 +950,7 @@ int	zbx_dc_set_interfaces_availability(zbx_vector_availability_ptr_t *availabili
 
 int	zbx_dc_reset_interfaces_availability(zbx_vector_availability_ptr_t *interfaces);
 
-void	zbx_dc_config_history_sync_get_actions_eval(zbx_vector_ptr_t *actions, unsigned char opflags);
+void	zbx_dc_config_history_sync_get_actions_eval(zbx_vector_action_eval_ptr_t *actions, unsigned char opflags);
 
 int	zbx_dc_get_interfaces_availability(zbx_vector_ptr_t *interfaces, int *ts);
 void	zbx_dc_touch_interfaces_availability(const zbx_vector_uint64_t *interfaceids);
@@ -1058,6 +1086,10 @@ typedef struct
 #define ZBX_FLAG_HOST_MAINTENANCE_UPDATE_MAINTENANCE_STATUS	0x0004
 }
 zbx_host_maintenance_diff_t;
+/* NOTE: Do not forget to sync changes with zbx_host_maintenance_diff_free(). */
+
+ZBX_PTR_VECTOR_DECL(host_maintenance_diff_ptr, zbx_host_maintenance_diff_t*)
+void	zbx_host_maintenance_diff_free(zbx_host_maintenance_diff_t *hmd);
 
 /* event maintenance query data, used to get event maintenances from cache */
 typedef struct
@@ -1072,14 +1104,18 @@ typedef struct
 }
 zbx_event_suppress_query_t;
 
+ZBX_PTR_VECTOR_DECL(event_suppress_query_ptr, zbx_event_suppress_query_t*)
+
 #define ZBX_MAINTENANCE_UPDATE_TRUE	1
 #define ZBX_MAINTENANCE_UPDATE_FALSE	0
 
 void	zbx_event_suppress_query_free(zbx_event_suppress_query_t *query);
 int	zbx_dc_update_maintenances(void);
-void	zbx_dc_get_host_maintenance_updates(const zbx_vector_uint64_t *maintenanceids, zbx_vector_ptr_t *updates);
-void	zbx_dc_flush_host_maintenance_updates(const zbx_vector_ptr_t *updates);
-int	zbx_dc_get_event_maintenances(zbx_vector_ptr_t *event_queries, const zbx_vector_uint64_t *maintenanceids);
+void	zbx_dc_get_host_maintenance_updates(const zbx_vector_uint64_t *maintenanceids,
+		zbx_vector_host_maintenance_diff_ptr_t *updates);
+void	zbx_dc_flush_host_maintenance_updates(const zbx_vector_host_maintenance_diff_ptr_t *updates);
+int	zbx_dc_get_event_maintenances(zbx_vector_event_suppress_query_ptr_t *event_queries,
+		const zbx_vector_uint64_t *maintenanceids);
 int	zbx_dc_get_running_maintenanceids(zbx_vector_uint64_t *maintenanceids);
 
 void	zbx_dc_maintenance_set_update_flags(void);
@@ -1150,10 +1186,10 @@ void	zbx_dc_close_user_macros(zbx_dc_um_handle_t *um_handle);
 void	zbx_dc_get_user_macro(const zbx_dc_um_handle_t *um_handle, const char *macro, const zbx_uint64_t *hostids,
 		int hostids_num, char **value);
 
-int	zbx_dc_expand_user_macros(const zbx_dc_um_handle_t *um_handle, char **text, const zbx_uint64_t *hostids,
-		int hostids_num, char **error);
-int	zbx_dc_expand_user_macros_from_cache(zbx_um_cache_t *um_cache, char **text, const zbx_uint64_t *hostids,
-		int hostids_num, char **error);
+int	zbx_dc_expand_user_and_func_macros(const zbx_dc_um_handle_t *um_handle, char **text,
+		const zbx_uint64_t *hostids, int hostids_num, char **error);
+int	zbx_dc_expand_user_and_func_macros_from_cache(zbx_um_cache_t *um_cache, char **text,
+		const zbx_uint64_t *hostids, int hostids_num, unsigned char env, char **error);
 
 char	*zbx_dc_expand_user_macros_in_func_params(const char *params, zbx_uint64_t hostid);
 
@@ -1274,5 +1310,56 @@ zbx_maintenance_type_t;
 #define ZBX_RECALC_TIME_PERIOD_HISTORY	1
 #define ZBX_RECALC_TIME_PERIOD_TRENDS	2
 void	zbx_recalc_time_period(time_t *ts_from, int table_group);
+
+/* vps tracker */
+typedef struct
+{
+	zbx_uint64_t	overcommit_limit;
+	zbx_uint64_t	overcommit;
+	zbx_uint64_t	values_limit;
+	zbx_uint64_t	written_num;
+}
+zbx_vps_monitor_stats_t;
+
+void	zbx_vps_monitor_init(zbx_uint64_t vps_limit, zbx_uint64_t overcommit_limit);
+void	zbx_vps_monitor_add_collected(zbx_uint64_t values_num);
+void	zbx_vps_monitor_add_written(zbx_uint64_t values_num);
+int	zbx_vps_monitor_capped(void);
+void	zbx_vps_monitor_get_stats(zbx_vps_monitor_stats_t *stats);
+const char	*zbx_vps_monitor_status(void);
+
+typedef struct
+{
+	const char	*agent;
+	const char	*simple;
+	const char	*snmp;
+	const char	*external;
+	const char	*odbc;
+	const char	*http;
+	const char	*ssh;
+	const char	*telnet;
+	const char	*script;
+}
+zbx_config_item_type_timeouts_t;
+
+#define ZBX_ITEM_TYPE_TIMEOUT_LEN	255
+#define ZBX_ITEM_TYPE_TIMEOUT_LEN_MAX	(ZBX_ITEM_TYPE_TIMEOUT_LEN + 1)
+
+typedef struct
+{
+	char	agent[ZBX_ITEM_TYPE_TIMEOUT_LEN_MAX];
+	char	simple[ZBX_ITEM_TYPE_TIMEOUT_LEN_MAX];
+	char	snmp[ZBX_ITEM_TYPE_TIMEOUT_LEN_MAX];
+	char	external[ZBX_ITEM_TYPE_TIMEOUT_LEN_MAX];
+	char	odbc[ZBX_ITEM_TYPE_TIMEOUT_LEN_MAX];
+	char	http[ZBX_ITEM_TYPE_TIMEOUT_LEN_MAX];
+	char	ssh[ZBX_ITEM_TYPE_TIMEOUT_LEN_MAX];
+	char	telnet[ZBX_ITEM_TYPE_TIMEOUT_LEN_MAX];
+	char	script[ZBX_ITEM_TYPE_TIMEOUT_LEN_MAX];
+}
+zbx_dc_item_type_timeouts_t;
+
+void	zbx_dc_get_proxy_timeouts(zbx_uint64_t proxy_hostid, zbx_dc_item_type_timeouts_t *timeouts);
+char	*zbx_dc_get_global_item_type_timeout(unsigned char item_type);
 
 #endif

@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -518,10 +518,9 @@ int		zbx_db_validate_field_size(const char *tablename, const char *fieldname, co
 zbx_uint64_t	zbx_db_get_maxid_num(const char *tablename, int num);
 
 void	zbx_db_extract_version_info(struct zbx_db_version_info_t *version_info);
-void	zbx_db_extract_dbextension_info(struct zbx_db_version_info_t *version_info);
+int	zbx_db_check_extension(struct zbx_db_version_info_t *info, int allow_unsupported);
 void	zbx_db_flush_version_requirements(const char *version);
 #ifdef HAVE_POSTGRESQL
-int	zbx_db_check_tsdb_capabilities(struct zbx_db_version_info_t *db_version_info, int allow_unsupported_ver);
 char	*zbx_db_get_schema_esc(void);
 #endif
 
@@ -597,6 +596,7 @@ typedef struct
 	zbx_uint64_t		connectorid;
 	int			tags_evaltype;
 	zbx_vector_match_tags_t	connector_tags;
+	int			item_value_type;
 }
 zbx_connector_filter_t;
 
@@ -671,6 +671,7 @@ int	zbx_db_lock_ids(const char *table_name, const char *field_name, zbx_vector_u
 #define zbx_db_lock_triggerids(ids)		zbx_db_lock_records("triggers", ids)
 #define zbx_db_lock_itemids(ids)		zbx_db_lock_records("items", ids)
 #define zbx_db_lock_group_prototypeids(ids)	zbx_db_lock_records("group_prototype", ids)
+#define zbx_db_lock_hgsetids(ids)		zbx_db_lock_records("hgset", ids)
 
 void	zbx_db_select_uint64(const char *sql, zbx_vector_uint64_t *ids);
 
@@ -714,9 +715,13 @@ typedef struct
 	int			value;
 	int			severity;
 
-	zbx_vector_ptr_t	tags;
+	zbx_vector_tags_t	tags;
+	int			suppressed;
+	int			mtime;
 }
 zbx_event_t;
+
+ZBX_PTR_VECTOR_DECL(events_ptr, zbx_event_t *)
 
 int	zbx_db_get_user_by_active_session(const char *sessionid, zbx_user_t *user);
 int	zbx_db_get_user_by_auth_token(const char *formatted_auth_token_hash, zbx_user_t *user);
@@ -901,7 +906,7 @@ int	zbx_get_proxy_protocol_version_int(const char *version_str);
 #define ZBX_CONDITION_TYPE_HOST_GROUP			0
 #define ZBX_CONDITION_TYPE_HOST				1
 #define ZBX_CONDITION_TYPE_TRIGGER			2
-#define ZBX_CONDITION_TYPE_TRIGGER_NAME			3
+#define ZBX_CONDITION_TYPE_EVENT_NAME			3
 #define ZBX_CONDITION_TYPE_TRIGGER_SEVERITY		4
 /* #define ZBX_CONDITION_TYPE_TRIGGER_VALUE		5	deprecated */
 #define ZBX_CONDITION_TYPE_TIME_PERIOD			6

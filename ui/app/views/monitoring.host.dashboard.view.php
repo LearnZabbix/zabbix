@@ -1,7 +1,7 @@
 <?php
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ if (array_key_exists('no_data', $data)) {
 	return;
 }
 
+$this->addJsFile('d3.v7.min.js');
 $this->addJsFile('flickerfreescreen.js');
 $this->addJsFile('gtlc.js');
 $this->addJsFile('leaflet.js');
@@ -50,6 +51,7 @@ $this->addJsFile('class.widget-base.js');
 $this->addJsFile('class.widget.js');
 $this->addJsFile('class.widget.inaccessible.js');
 $this->addJsFile('class.widget.iterator.js');
+$this->addJsFile('class.widget.misconfigured.js');
 $this->addJsFile('class.widget.paste-placeholder.js');
 $this->addJsFile('class.form.fieldset.collapsible.js');
 $this->addJsFile('class.calendar.js');
@@ -57,8 +59,9 @@ $this->addJsFile('layout.mode.js');
 $this->addJsFile('class.csvggraph.js');
 $this->addJsFile('class.svg.canvas.js');
 $this->addJsFile('class.svg.map.js');
-$this->addJsFile('class.csvggauge.js');
 $this->addJsFile('class.sortable.js');
+$this->addJsFile('items.js');
+$this->addJsFile('multilineinput.js');
 
 $this->includeJsFile('monitoring.host.dashboard.view.js.php');
 
@@ -119,7 +122,7 @@ $navigation = (new CDiv())
 				(new CSpan())->addItem(
 					new CLink(_('All hosts'), (new CUrl('zabbix.php'))->setArgument('action', 'host.view'))
 				),
-				(new CSpan())->addItem($data['host']['name'])
+				(new CSpan())->addItem($data['dashboard_host']['name'])
 			])
 		)
 	);
@@ -149,12 +152,12 @@ if ($web_layout_mode != ZBX_LAYOUT_KIOSKMODE) {
 	$navigation->addItem($dashboard_tabs);
 }
 
-if ($data['has_time_selector']) {
+if (array_key_exists(CWidgetsData::DATA_TYPE_TIME_PERIOD, $data['broadcast_requirements'])) {
 	$navigation->addItem(
 		(new CFilter())
-			->setProfile($data['time_period']['profileIdx'], $data['time_period']['profileIdx2'])
+			->setProfile($data['dashboard_time_period']['profileIdx'], $data['dashboard_time_period']['profileIdx2'])
 			->setActiveTab($data['active_tab'])
-			->addTimeSelector($data['time_period']['from'], $data['time_period']['to'],
+			->addTimeSelector($data['dashboard_time_period']['from'], $data['dashboard_time_period']['to'],
 				$web_layout_mode != ZBX_LAYOUT_KIOSKMODE
 			)
 	);
@@ -217,13 +220,14 @@ else {
 
 (new CScriptTag('
 	view.init('.json_encode([
-		'host' => $data['host'],
+		'host_dashboards' => $data['host_dashboards'],
 		'dashboard' => $data['dashboard'],
 		'widget_defaults' => $data['widget_defaults'],
 		'configuration_hash' => $data['configuration_hash'],
-		'time_period' => $data['time_period'],
-		'web_layout_mode' => $web_layout_mode,
-		'host_dashboards' => $data['host_dashboards']
+		'broadcast_requirements' => $data['broadcast_requirements'],
+		'dashboard_host' => $data['dashboard_host'],
+		'dashboard_time_period' => $data['dashboard_time_period'],
+		'web_layout_mode' => $web_layout_mode
 	]).');
 '))
 	->setOnDocumentReady()

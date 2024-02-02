@@ -1,7 +1,7 @@
 <?php declare(strict_types = 0);
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -222,7 +222,7 @@ $group_prototype_template = (new CTemplateTag('groupPrototypeRow'))->addItem(
 		new CCol([
 			(new CTextBox('group_prototypes[#{i}][name]', '#{name}'))
 				->addStyle('width: 448px')
-				->setAttribute('placeholder', '{$MACRO}'),
+				->setAttribute('placeholder', '{#MACRO}'),
 			new CInput('hidden', 'group_prototypes[#{i}][group_prototypeid]', '#{group_prototypeid}')
 		]),
 		(new CCol(

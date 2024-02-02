@@ -1,7 +1,7 @@
 <?php
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -238,7 +238,7 @@ class CMultiselectElement extends CElement {
 			}
 
 			$content = CXPathHelper::escapeQuotes($value);
-			$prefix = '//div[@data-opener='.$id.']/ul[@class="multiselect-suggest"]/li';
+			$prefix = '//div[@data-opener='.$id.']/ul[contains(@class, "multiselect-suggest")]/li';
 			$query = $this->query('xpath', implode('|', [
 				$prefix.'[@data-label='.$content.']',
 				$prefix.'[contains(@data-label,'.$content.')]/span[contains(@class, "suggest-found") and text()='.$content.']',
@@ -380,7 +380,7 @@ class CMultiselectElement extends CElement {
 	 */
 	public function getSuggestionsText() {
 		$id = CXPathHelper::escapeQuotes($this->query('class:multiselect')->one()->getAttribute('id'));
-		return $this->query('xpath://div[@data-opener='.$id.']/ul[@class="multiselect-suggest"]')->waitUntilVisible()
-				->query('xpath:./li[not(@class="suggest-hover")]')->all()->asText();
+		return $this->query('xpath://div[@data-opener='.$id.']/ul[contains(@class, "multiselect-suggest")]')
+				->waitUntilVisible()->query('xpath:./li[not(@class="suggest-hover")]')->all()->asText();
 	}
 }

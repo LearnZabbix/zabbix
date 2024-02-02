@@ -1,7 +1,7 @@
 <?php
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 
 require_once dirname(__FILE__).'/../../include/CWebTest.php';
 require_once dirname(__FILE__).'/../behaviors/CMessageBehavior.php';
-require_once dirname(__FILE__).'/../traits/TableTrait.php';
+require_once dirname(__FILE__).'/../behaviors/CTableBehavior.php';
 
 /**
  * @backup maintenances
@@ -32,16 +32,15 @@ require_once dirname(__FILE__).'/../traits/TableTrait.php';
  */
 class testPageMaintenance extends CWebTest {
 
-	use TableTrait;
-
 	/**
-	 * Attach MessageBehavior to the test.
+	 * Attach MessageBehavior and TableBehavior to the test.
 	 *
 	 * @return array
 	 */
 	public function getBehaviors() {
 		return [
-			'class' => CMessageBehavior::class
+			CMessageBehavior::class,
+			CTableBehavior::class
 		];
 	}
 
@@ -53,6 +52,10 @@ class testPageMaintenance extends CWebTest {
 	const FILTER_NAME_MAINTENANCE = 'Maintenance для фильтра - ʍąɨɲţ€ɲąɲc€🙂';
 	const ACTIVE_MAINTENANCE = 'Active maintenance';
 	const DESCRIPTION_MAINTENANCE = 'Description maintenance';
+	const MAINTENANCE_WITH_DATA = 'Maintenance period 1 (data collection)';
+	const MAINTENANCE_NO_DATA = 'Maintenance period 2 (no data collection)';
+	const MAINTENANCE_UPDATE = 'Maintenance for update (data collection)';
+	const ZABBIX_SERVERS_GROUPID = 4;
 
 	public function prepareMaintenanceData() {
 		CDataHelper::call('maintenance.create', [
@@ -61,11 +64,7 @@ class testPageMaintenance extends CWebTest {
 				'maintenance_type' => MAINTENANCE_TYPE_NODATA,
 				'active_since' => 2017008000,
 				'active_till' => 2019600000,
-				'groups' => [
-					[
-						'groupid' => CDataHelper::get('HostTemplateGroups.hostgroups.Group for Maintenance')
-					]
-				],
+				'groups' => [['groupid' => CDataHelper::get('HostTemplateGroups.hostgroups.Group for Maintenance')]],
 				'timeperiods' => [[]]
 			],
 			[
@@ -75,7 +74,7 @@ class testPageMaintenance extends CWebTest {
 				'active_till' => 1420070400,
 				'groups' => [
 					[
-						'groupid' => 4
+						'groupid' => self::ZABBIX_SERVERS_GROUPID
 					],
 					[
 						'groupid' => 5 // "Discovered hosts" group
@@ -88,11 +87,7 @@ class testPageMaintenance extends CWebTest {
 				'maintenance_type' => MAINTENANCE_TYPE_NORMAL,
 				'active_since' => 1577836800,
 				'active_till' => 1577923200,
-				'hosts' => [
-					[
-						'hostid' => 10084
-					]
-				],
+				'hosts' => [['hostid' => 10084]],
 				'timeperiods' => [[]]
 			],
 			[
@@ -100,11 +95,7 @@ class testPageMaintenance extends CWebTest {
 				'maintenance_type' =>  MAINTENANCE_TYPE_NORMAL,
 				'active_since' => 1686009600,
 				'active_till' => 1688601600,
-				'groups' => [
-					[
-						'groupid' => 4
-					]
-				],
+				'groups' => [['groupid' => self::ZABBIX_SERVERS_GROUPID]],
 				'timeperiods' => [[]]
 			],
 			[
@@ -112,11 +103,7 @@ class testPageMaintenance extends CWebTest {
 				'maintenance_type' => MAINTENANCE_TYPE_NORMAL,
 				'active_since' => 1688601600,
 				'active_till' => 2019600000,
-				'groups' => [
-					[
-						'groupid' => 4
-					]
-				],
+				'groups' => [['groupid' => self::ZABBIX_SERVERS_GROUPID]],
 				'timeperiods' => [[]]
 			],
 			[
@@ -125,12 +112,116 @@ class testPageMaintenance extends CWebTest {
 				'active_since' => 1640995200,
 				'active_till' => 1640998800,
 				'description' => 'Test description of the maintenance',
-				'groups' => [
-					[
-						'groupid' => 4
-					]
-				],
+				'groups' => [['groupid' => self::ZABBIX_SERVERS_GROUPID]],
 				'timeperiods' => [[]]
+			],
+			[
+				'name' => self::MAINTENANCE_WITH_DATA,
+				'maintenance_type' => MAINTENANCE_TYPE_NORMAL,
+				'active_since' => 1294760280,
+				'active_till' => 1294846680,
+				'description' => 'Test description 1',
+				'groups' => [['groupid' => self::ZABBIX_SERVERS_GROUPID]],
+				'timeperiods' => [
+					[
+						'period' => 184200,
+						'timeperiod_type' => TIMEPERIOD_TYPE_ONETIME,
+						'start_date' => 1294760340
+					],
+					[
+						'period' => 93780,
+						'timeperiod_type' => TIMEPERIOD_TYPE_DAILY,
+						'start_time' => 43200,
+						'every' => 2
+					],
+					[
+						'period' => 300,
+						'timeperiod_type' => TIMEPERIOD_TYPE_WEEKLY,
+						'start_time' => 85800,
+						'every' => 2,
+						'dayofweek' => 85
+					],
+					[
+						'period' => 183840,
+						'timeperiod_type' => TIMEPERIOD_TYPE_MONTHLY,
+						'start_time' => 84600,
+						'every' => 1,
+						'month' => 1365,
+						'day' => 15
+					],
+					[
+						'period' => 1800,
+						'timeperiod_type' => TIMEPERIOD_TYPE_MONTHLY,
+						'start_time' => 84600,
+						'every' => 1,
+						'month' => 2730,
+						'dayofweek' => 85
+					]
+				]
+			],
+			[
+				'name' => self::MAINTENANCE_NO_DATA,
+				'maintenance_type' => MAINTENANCE_TYPE_NODATA,
+				'active_since' => 1294760280,
+				'active_till' => 1294846680,
+				'description' => 'Test description 2',
+				'groups' => [['groupid' => self::ZABBIX_SERVERS_GROUPID]],
+				'timeperiods' => [
+					[
+						'period' => 184200,
+						'timeperiod_type' => TIMEPERIOD_TYPE_ONETIME,
+						'start_date' => 1294760340
+					],
+					[
+						'period' => 93780,
+						'timeperiod_type' => TIMEPERIOD_TYPE_DAILY,
+						'start_time' => 43200,
+						'every' => 2
+					],
+					[
+						'period' => 300,
+						'timeperiod_type' => TIMEPERIOD_TYPE_WEEKLY,
+						'start_time' => 85800,
+						'every' => 2,
+						'dayofweek' => 85
+					],
+					[
+						'period' => 183840,
+						'timeperiod_type' => TIMEPERIOD_TYPE_MONTHLY,
+						'start_time' => 37500,
+						'every' => 1,
+						'month' => 1365,
+						'day' => 15
+					],
+					[
+						'period' => 1800,
+						'timeperiod_type' => TIMEPERIOD_TYPE_MONTHLY,
+						'start_time' => 84600,
+						'every' => 1,
+						'month' => 2730,
+						'dayofweek' => 85
+					]
+				]
+			],
+			[
+				'name' => self::MAINTENANCE_UPDATE,
+				'maintenance_type' => MAINTENANCE_TYPE_NORMAL,
+				'active_since' => 1534885200,
+				'active_till' => 1534971600,
+				'description' => 'Test description update',
+				'groups' => [['groupid' => self::ZABBIX_SERVERS_GROUPID]],
+				'tags_evaltype' => 2,
+				'tags' => [
+					['tag' => 'Tag1', 'operator' => MAINTENANCE_TAG_OPERATOR_LIKE, 'value' => 'A'],
+					['tag' => 'Tag2', 'operator' => MAINTENANCE_TAG_OPERATOR_EQUAL, 'value' => 'B']
+				],
+				'timeperiods' => [
+					[
+						'period' => 90000,
+						'timeperiod_type' => TIMEPERIOD_TYPE_ONETIME,
+						'start_date' => 1534950000
+					]
+				]
 			]
 		]);
 	}

@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright (C) 2001-2023 Zabbix SIA
+** Copyright (C) 2001-2024 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -33,13 +33,13 @@
  *                                                                            *
  * Purpose: processes program type (server) specific internal checks          *
  *                                                                            *
- * Parameters: param1  - [IN] the first parameter                             *
- *             request - [IN] the request                                     *
- *             result  - [OUT] the result                                     *
+ * Parameters: param1  - [IN] first parameter                                 *
+ *             request - [IN]                                                 *
+ *             result  - [OUT]                                                *
  *                                                                            *
  * Return value: SUCCEED - data successfully retrieved and stored in result   *
  *               NOTSUPPORTED - requested item is not supported               *
- *               FAIL - not a server specific internal check                  *
+ *               FAIL - not server specific internal check                    *
  *                                                                            *
  * Comments: This function is used to process server specific internal checks *
  *           before generic internal checks are processed.                    *
@@ -114,8 +114,8 @@ int	zbx_get_value_internal_ext(const char *param1, const AGENT_REQUEST *request,
 				param2 = get_rparam(request, 1);
 
 				if (SUCCEED == (res = zbx_dc_get_proxy_delay_by_name(param2, &tmp, &error)) &&
-						SUCCEED == (res = zbx_dc_get_proxy_lastaccess_by_name(param2, &lastaccess,
-						&error)))
+						SUCCEED == (res = zbx_dc_get_proxy_lastaccess_by_name(param2,
+						&lastaccess, &error)))
 				{
 					value = tmp + time(NULL) - lastaccess;
 				}
@@ -268,6 +268,85 @@ int	zbx_get_value_internal_ext(const char *param1, const AGENT_REQUEST *request,
 
 		SET_TEXT_RESULT(result, nodes);
 	}
+	else if (0 == strcmp(param1, "vps"))
+	{
+		zbx_vps_monitor_stats_t	stats;
+		const char		*param3;
+
+		zbx_vps_monitor_get_stats(&stats);
+
+		param2 = get_rparam(request, 1);
+
+		if (2 == nparams)
+		{
+			if (0 == strcmp(param2, "status"))
+			{
+				zbx_uint64_t	value = (SUCCEED == zbx_vps_monitor_capped() ? 1 : 0);
+				SET_UI64_RESULT(result, value);
+				ret = SUCCEED;
+
+				goto out;
+			}
+			else if (0 == strcmp(param2, "limit"))
+			{
+				SET_UI64_RESULT(result, stats.values_limit);
+				ret = SUCCEED;
+
+				goto out;
+			}
+		}
+
+		if (3 < nparams)
+		{
+			SET_MSG_RESULT(result, zbx_strdup(NULL, "Invalid number of parameters."));
+			goto out;
+		}
+
+		param3 = get_rparam(request, 2);
+
+		if (0 == strcmp(param2, "written"))
+		{
+			if (NULL == param3 || '\0' == *param3 || 0 == strcmp(param3, "total"))
+			{
+				SET_UI64_RESULT(result, stats.written_num);
+				ret = SUCCEED;
+			}
+			else
+				SET_MSG_RESULT(result, zbx_strdup(NULL, "Invalid third parameter."));
+
+			goto out;
+		}
+		else if (0 != strcmp(param2, "overcommit"))
+		{
+			SET_MSG_RESULT(result, zbx_strdup(NULL, "Invalid second parameter."));
+			goto out;
+		}
+
+		if (0 == stats.values_limit)
+		{
+			SET_MSG_RESULT(result, zbx_strdup(NULL, "VPS throttling is disabled."));
+			goto out;
+		}
+
+		if (NULL == param3 || '\0' == *param3 || 0 == strcmp(param3, "pavailable"))
+		{
+			SET_DBL_RESULT(result, (double)(stats.overcommit_limit - stats.overcommit) * 100 /
+					stats.overcommit_limit);
+		}
+		else if (0 == strcmp(param3, "available"))
+		{
+			SET_UI64_RESULT(result, stats.overcommit_limit - stats.overcommit);
+		}
+		else if (0 == strcmp(param3, "limit"))
+		{
+			SET_UI64_RESULT(result, stats.overcommit_limit);
+		}
+		else
+		{
+			SET_MSG_RESULT(result, zbx_strdup(NULL, "Invalid third parameter."));
+			goto out;
+		}
+	}
 	else
 	{
 		ret = FAIL;
@@ -275,6 +354,7 @@ int	zbx_get_value_internal_ext(const char *param1, const AGENT_REQUEST *request,
 	}
 
 	ret = SUCCEED;
+
 out:
 	return ret;
 }
@@ -292,4 +372,3 @@ void	zbx_pb_get_state_info(zbx_pb_state_info_t *info)
 {
 	memset(info, 0, sizeof(zbx_pb_state_info_t));
 }
-
