@@ -1,0 +1,4255 @@
+.
+├── aclocal.m4
+├── AUTHORS
+├── autom4te.cache
+│   ├── output.0
+│   ├── output.1
+│   ├── requests
+│   ├── traces.0
+│   └── traces.1
+├── bin
+│   ├── win32
+│   │   └── dev
+│   │       └── zabbix_sender.h
+│   └── win64
+│       └── dev
+│           └── zabbix_sender.h
+├── bootstrap.sh
+├── build
+│   ├── mingw
+│   │   ├── Makefile
+│   │   ├── output
+│   │   └── winmeta.h
+│   ├── win32
+│   │   ├── examples
+│   │   │   └── zabbix_sender
+│   │   ├── include
+│   │   │   └── common
+│   │   └── project
+│   │       ├── Makefile
+│   │       ├── Makefile_agent
+│   │       ├── Makefile_common.inc
+│   │       ├── Makefile_get
+│   │       ├── Makefile_modbus.inc
+│   │       ├── Makefile_pcre.inc
+│   │       ├── Makefile_sender
+│   │       ├── Makefile_sender_dll
+│   │       ├── Makefile_targets.inc
+│   │       ├── Makefile_tls.inc
+│   │       ├── messages.mc
+│   │       ├── resource.h
+│   │       ├── resource.rc
+│   │       ├── zabbix_agent2_desc.h
+│   │       ├── zabbix_agent_desc.h
+│   │       ├── zabbix_get_desc.h
+│   │       └── zabbix_sender_desc.h
+│   └── win64
+│       └── README
+├── build-backend.xml
+├── build.xml
+├── ChangeLog
+├── ChangeLog.d
+│   ├── bugfix
+│   │   ├── ZBX-22130
+│   │   ├── ZBX-22433
+│   │   ├── ZBX-23232
+│   │   ├── ZBX-23320
+│   │   ├── ZBX-23587
+│   │   ├── ZBX-23638
+│   │   ├── ZBX-23640
+│   │   ├── ZBX-23659
+│   │   ├── ZBX-23684
+│   │   ├── ZBX-23701
+│   │   └── ZBX-23986
+│   └── feature
+│       └── ZBXNEXT-8762
+├── ChangeLog.legend
+├── compile -> /usr/share/automake-1.16/compile
+├── conf
+│   ├── zabbix_agentd
+│   │   ├── userparameter_examples.conf
+│   │   └── userparameter_mysql.conf
+│   ├── zabbix_agentd.conf
+│   ├── zabbix_agentd.win.conf
+│   ├── zabbix_proxy.conf
+│   └── zabbix_server.conf
+├── config.guess -> /usr/share/automake-1.16/config.guess
+├── config.log
+├── config.status
+├── config.sub -> /usr/share/automake-1.16/config.sub
+├── configure
+├── configure.ac
+├── COPYING
+├── create
+│   ├── bin
+│   │   ├── export_data.sh
+│   │   ├── gen_data.pl
+│   │   ├── gen_history_upgrade.pl
+│   │   ├── gen_php.php
+│   │   ├── gen_schema.pl
+│   │   └── gen_top_passwords.php
+│   └── src
+│       ├── dashboards.tmpl
+│       ├── data.tmpl
+│       ├── schema.tmpl
+│       └── templates.tmpl
+├── database
+│   ├── elasticsearch
+│   │   └── elasticsearch.map
+│   ├── Makefile
+│   ├── Makefile.am
+│   ├── Makefile.in
+│   ├── mysql
+│   │   ├── images.sql
+│   │   ├── Makefile
+│   │   ├── Makefile.am
+│   │   ├── Makefile.in
+│   │   └── option-patches
+│   │       ├── Makefile
+│   │       ├── Makefile.am
+│   │       └── Makefile.in
+│   ├── oracle
+│   │   ├── images.sql
+│   │   ├── Makefile
+│   │   ├── Makefile.am
+│   │   ├── Makefile.in
+│   │   └── option-patches
+│   │       ├── items_nvarchar_prepare.sql
+│   │       ├── Makefile
+│   │       ├── Makefile.am
+│   │       └── Makefile.in
+│   ├── postgresql
+│   │   ├── images.sql
+│   │   ├── Makefile
+│   │   ├── Makefile.am
+│   │   ├── Makefile.in
+│   │   ├── option-patches
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   └── timescaledb
+│   │       ├── Makefile
+│   │       ├── Makefile.am
+│   │       ├── Makefile.in
+│   │       └── option-patches
+│   └── sqlite3
+│       ├── images.sql
+│       ├── Makefile
+│       ├── Makefile.am
+│       └── Makefile.in
+├── depcomp -> /usr/share/automake-1.16/depcomp
+├── include
+│   ├── audit
+│   │   ├── zbxaudit_graph.h
+│   │   ├── zbxaudit.h
+│   │   ├── zbxaudit_ha.h
+│   │   ├── zbxaudit_host.h
+│   │   ├── zbxaudit_httptest.h
+│   │   ├── zbxaudit_item.h
+│   │   ├── zbxaudit_proxy.h
+│   │   ├── zbxaudit_settings.h
+│   │   └── zbxaudit_trigger.h
+│   ├── cfg.h
+│   ├── common
+│   │   ├── config.h
+│   │   ├── config.h.in
+│   │   ├── stamp-h1
+│   │   ├── zbxsysinc.h
+│   │   └── zbxtypes.h
+│   ├── Makefile
+│   ├── Makefile.am
+│   ├── Makefile.in
+│   ├── module.h
+│   ├── version.h
+│   ├── zbxagentget.h
+│   ├── zbxalerter.h
+│   ├── zbxalgo.h
+│   ├── zbxasynchttppoller.h
+│   ├── zbxasyncpoller.h
+│   ├── zbxautoreg.h
+│   ├── zbx_availability_constants.h
+│   ├── zbxavailability.h
+│   ├── zbxcacheconfig.h
+│   ├── zbxcachehistory.h
+│   ├── zbxcachehistory_proxy.h
+│   ├── zbxcachevalue.h
+│   ├── zbxcommon.h
+│   ├── zbxcomms.h
+│   ├── zbxcommshigh.h
+│   ├── zbxcompress.h
+│   ├── zbxconnector.h
+│   ├── zbxcrypto.h
+│   ├── zbxdbconfigworker.h
+│   ├── zbxdb.h
+│   ├── zbxdbhigh.h
+│   ├── zbxdbschema.h
+│   ├── zbxdbsyncer.h
+│   ├── zbxdbupgrade.h
+│   ├── zbx_dbversion_constants.h
+│   ├── zbxdbwrap.h
+│   ├── zbxdiag.h
+│   ├── zbx_discoverer_constants.h
+│   ├── zbxdiscovery.h
+│   ├── zbxembed.h
+│   ├── zbxeval.h
+│   ├── zbxevent.h
+│   ├── zbxexec.h
+│   ├── zbxexport.h
+│   ├── zbx_expression_constants.h
+│   ├── zbxexpression.h
+│   ├── zbxexpr.h
+│   ├── zbxfile.h
+│   ├── zbxgetopt.h
+│   ├── zbxhash.h
+│   ├── zbxhistory.h
+│   ├── zbx_host_constants.h
+│   ├── zbxhttp.h
+│   ├── zbxicmpping.h
+│   ├── zbxipcservice.h
+│   ├── zbxip.h
+│   ├── zbxipmi.h
+│   ├── zbx_item_constants.h
+│   ├── zbxjson.h
+│   ├── zbxkvs.h
+│   ├── zbxlog.h
+│   ├── zbxmedia.h
+│   ├── zbxmodules.h
+│   ├── zbxmutexs.h
+│   ├── zbxnix.h
+│   ├── zbxnum.h
+│   ├── zbxodbc.h
+│   ├── zbxparam.h
+│   ├── zbxpoller.h
+│   ├── zbxpreprocbase.h
+│   ├── zbxpreproc.h
+│   ├── zbxprof.h
+│   ├── zbxprometheus.h
+│   ├── zbxproxybuffer.h
+│   ├── zbxregexp.h
+│   ├── zbx_rtc_constants.h
+│   ├── zbxrtc.h
+│   ├── zbx_scripts_constants.h
+│   ├── zbxscripts.h
+│   ├── zbxself.h
+│   ├── zbxserialize.h
+│   ├── zbxservice.h
+│   ├── zbxshmem.h
+│   ├── zbxsnmptrapper.h
+│   ├── zbxstats.h
+│   ├── zbxstr.h
+│   ├── zbxsysinfo.h
+│   ├── zbxtagfilter.h
+│   ├── zbxtasks.h
+│   ├── zbxthreads.h
+│   ├── zbxtime.h
+│   ├── zbxtimekeeper.h
+│   ├── zbxtrends.h
+│   ├── zbx_trigger_constants.h
+│   ├── zbxvariant.h
+│   ├── zbxvault.h
+│   ├── zbxversion.h
+│   ├── zbxvmware.h
+│   ├── zbxwin32.h
+│   ├── zbxwinservice.h
+│   └── zbxxml.h
+├── INSTALL
+├── install-sh -> /usr/share/automake-1.16/install-sh
+├── m4
+│   ├── ax_ld_check_flag.m4
+│   ├── ax_lib_mysql.m4
+│   ├── ax_lib_oracle_oci.m4
+│   ├── ax_lib_postgresql.m4
+│   ├── ax_lib_sqlite3.m4
+│   ├── check_enum.m4
+│   ├── cmocka.m4
+│   ├── iconv.m4
+│   ├── ldap.m4
+│   ├── libcurl.m4
+│   ├── libevent.m4
+│   ├── libgnutls.m4
+│   ├── libmodbus.m4
+│   ├── libopenssl.m4
+│   ├── libssh2.m4
+│   ├── libssh.m4
+│   ├── libunixodbc.m4
+│   ├── libxml2.m4
+│   ├── libyaml.m4
+│   ├── netsnmp.m4
+│   ├── openipmi.m4
+│   ├── pcre2.m4
+│   ├── pcre.m4
+│   ├── pthread.m4
+│   ├── resolv.m4
+│   ├── times.m4
+│   └── zlib.m4
+├── makefile
+├── Makefile
+├── Makefile.am
+├── Makefile.in
+├── man
+│   ├── Makefile
+│   ├── Makefile.am
+│   ├── Makefile.in
+│   ├── zabbix_agent2.man
+│   ├── zabbix_agentd.man
+│   ├── zabbix_get.man
+│   ├── zabbix_js.man
+│   ├── zabbix_proxy.man
+│   ├── zabbix_sender.man
+│   ├── zabbix_server.man
+│   └── zabbix_web_service.man
+├── misc
+│   ├── debug
+│   │   └── sender.pl
+│   ├── images
+│   │   ├── images_oracle_end.txt
+│   │   ├── images_oracle_start.txt
+│   │   ├── png_classic
+│   │   │   ├── Hub.png
+│   │   │   ├── Hub_small.png
+│   │   │   ├── Network.png
+│   │   │   ├── Network_small.png
+│   │   │   ├── Notebook.png
+│   │   │   ├── Notebook_small.png
+│   │   │   ├── Phone.png
+│   │   │   ├── Phone_small.png
+│   │   │   ├── Printer.png
+│   │   │   ├── Printer_small.png
+│   │   │   ├── README
+│   │   │   ├── Router.png
+│   │   │   ├── Router_small.png
+│   │   │   ├── Satellite.png
+│   │   │   ├── Satellite_small.png
+│   │   │   ├── Server.png
+│   │   │   ├── Server_small.png
+│   │   │   ├── UPS.png
+│   │   │   ├── UPS_small.png
+│   │   │   ├── Workstation.png
+│   │   │   └── Workstation_small.png
+│   │   ├── png_modern
+│   │   │   ├── Cloud_(128).png
+│   │   │   ├── Cloud_(24).png
+│   │   │   ├── Cloud_(48).png
+│   │   │   ├── Cloud_(64).png
+│   │   │   ├── Cloud_(96).png
+│   │   │   ├── Crypto-router_(128).png
+│   │   │   ├── Crypto-router_(24).png
+│   │   │   ├── Crypto-router_(48).png
+│   │   │   ├── Crypto-router_(64).png
+│   │   │   ├── Crypto-router_(96).png
+│   │   │   ├── Crypto-router_symbol_(128).png
+│   │   │   ├── Crypto-router_symbol_(24).png
+│   │   │   ├── Crypto-router_symbol_(48).png
+│   │   │   ├── Crypto-router_symbol_(64).png
+│   │   │   ├── Crypto-router_symbol_(96).png
+│   │   │   ├── Disk_array_2D_(128).png
+│   │   │   ├── Disk_array_2D_(24).png
+│   │   │   ├── Disk_array_2D_(48).png
+│   │   │   ├── Disk_array_2D_(64).png
+│   │   │   ├── Disk_array_2D_(96).png
+│   │   │   ├── Disk_array_3D_(128).png
+│   │   │   ├── Disk_array_3D_(24).png
+│   │   │   ├── Disk_array_3D_(48).png
+│   │   │   ├── Disk_array_3D_(64).png
+│   │   │   ├── Disk_array_3D_(96).png
+│   │   │   ├── Firewall_(128).png
+│   │   │   ├── Firewall_(24).png
+│   │   │   ├── Firewall_(48).png
+│   │   │   ├── Firewall_(64).png
+│   │   │   ├── Firewall_(96).png
+│   │   │   ├── House_(128).png
+│   │   │   ├── House_(24).png
+│   │   │   ├── House_(48).png
+│   │   │   ├── House_(64).png
+│   │   │   ├── House_(96).png
+│   │   │   ├── Hub_(128).png
+│   │   │   ├── Hub_(24).png
+│   │   │   ├── Hub_(48).png
+│   │   │   ├── Hub_(64).png
+│   │   │   ├── Hub_(96).png
+│   │   │   ├── IP_PBX_(128).png
+│   │   │   ├── IP_PBX_(24).png
+│   │   │   ├── IP_PBX_(48).png
+│   │   │   ├── IP_PBX_(64).png
+│   │   │   ├── IP_PBX_(96).png
+│   │   │   ├── IP_PBX_symbol_(128).png
+│   │   │   ├── IP_PBX_symbol_(24).png
+│   │   │   ├── IP_PBX_symbol_(48).png
+│   │   │   ├── IP_PBX_symbol_(64).png
+│   │   │   ├── IP_PBX_symbol_(96).png
+│   │   │   ├── Modem_(128).png
+│   │   │   ├── Modem_(24).png
+│   │   │   ├── Modem_(48).png
+│   │   │   ├── Modem_(64).png
+│   │   │   ├── Modem_(96).png
+│   │   │   ├── Network_(128).png
+│   │   │   ├── Network_(24).png
+│   │   │   ├── Network_(48).png
+│   │   │   ├── Network_(64).png
+│   │   │   ├── Network_(96).png
+│   │   │   ├── Network_adapter_(128).png
+│   │   │   ├── Network_adapter_(24).png
+│   │   │   ├── Network_adapter_(48).png
+│   │   │   ├── Network_adapter_(64).png
+│   │   │   ├── Network_adapter_(96).png
+│   │   │   ├── Notebook_(128).png
+│   │   │   ├── Notebook_(24).png
+│   │   │   ├── Notebook_(48).png
+│   │   │   ├── Notebook_(64).png
+│   │   │   ├── Notebook_(96).png
+│   │   │   ├── PBX_(128).png
+│   │   │   ├── PBX_(24).png
+│   │   │   ├── PBX_(48).png
+│   │   │   ├── PBX_(64).png
+│   │   │   ├── PBX_(96).png
+│   │   │   ├── Phone_(128).png
+│   │   │   ├── Phone_(24).png
+│   │   │   ├── Phone_(48).png
+│   │   │   ├── Phone_(64).png
+│   │   │   ├── Phone_(96).png
+│   │   │   ├── Printer_(128).png
+│   │   │   ├── Printer_(24).png
+│   │   │   ├── Printer_(48).png
+│   │   │   ├── Printer_(64).png
+│   │   │   ├── Printer_(96).png
+│   │   │   ├── Rack_42_(128).png
+│   │   │   ├── Rack_42_(64).png
+│   │   │   ├── Rack_42_(96).png
+│   │   │   ├── Rack_42_with_door_(128).png
+│   │   │   ├── Rack_42_with_door_(64).png
+│   │   │   ├── Rack_42_with_door_(96).png
+│   │   │   ├── Rackmountable_1U_server_2D_(128).png
+│   │   │   ├── Rackmountable_1U_server_2D_(64).png
+│   │   │   ├── Rackmountable_1U_server_2D_(96).png
+│   │   │   ├── Rackmountable_1U_server_3D_(128).png
+│   │   │   ├── Rackmountable_1U_server_3D_(64).png
+│   │   │   ├── Rackmountable_1U_server_3D_(96).png
+│   │   │   ├── Rackmountable_2U_server_2D_(128).png
+│   │   │   ├── Rackmountable_2U_server_2D_(64).png
+│   │   │   ├── Rackmountable_2U_server_2D_(96).png
+│   │   │   ├── Rackmountable_2U_server_3D_(128).png
+│   │   │   ├── Rackmountable_2U_server_3D_(64).png
+│   │   │   ├── Rackmountable_2U_server_3D_(96).png
+│   │   │   ├── Rackmountable_3U_server_2D_(128).png
+│   │   │   ├── Rackmountable_3U_server_2D_(64).png
+│   │   │   ├── Rackmountable_3U_server_2D_(96).png
+│   │   │   ├── Rackmountable_3U_server_3D_(128).png
+│   │   │   ├── Rackmountable_3U_server_3D_(64).png
+│   │   │   ├── Rackmountable_3U_server_3D_(96).png
+│   │   │   ├── Rackmountable_4U_server_2D_(128).png
+│   │   │   ├── Rackmountable_4U_server_2D_(64).png
+│   │   │   ├── Rackmountable_4U_server_2D_(96).png
+│   │   │   ├── Rackmountable_4U_server_3D_(128).png
+│   │   │   ├── Rackmountable_4U_server_3D_(64).png
+│   │   │   ├── Rackmountable_4U_server_3D_(96).png
+│   │   │   ├── Rackmountable_5U_server_2D_(128).png
+│   │   │   ├── Rackmountable_5U_server_2D_(64).png
+│   │   │   ├── Rackmountable_5U_server_2D_(96).png
+│   │   │   ├── Rackmountable_5U_server_3D_(128).png
+│   │   │   ├── Rackmountable_5U_server_3D_(64).png
+│   │   │   ├── Rackmountable_5U_server_3D_(96).png
+│   │   │   ├── Router_(128).png
+│   │   │   ├── Router_(24).png
+│   │   │   ├── Router_(48).png
+│   │   │   ├── Router_(64).png
+│   │   │   ├── Router_(96).png
+│   │   │   ├── Router_symbol_(128).png
+│   │   │   ├── Router_symbol_(24).png
+│   │   │   ├── Router_symbol_(48).png
+│   │   │   ├── Router_symbol_(64).png
+│   │   │   ├── Router_symbol_(96).png
+│   │   │   ├── SAN_(128).png
+│   │   │   ├── SAN_(24).png
+│   │   │   ├── SAN_(48).png
+│   │   │   ├── SAN_(64).png
+│   │   │   ├── SAN_(96).png
+│   │   │   ├── Satellite_(128).png
+│   │   │   ├── Satellite_(24).png
+│   │   │   ├── Satellite_(48).png
+│   │   │   ├── Satellite_(64).png
+│   │   │   ├── Satellite_(96).png
+│   │   │   ├── Satellite_antenna_(128).png
+│   │   │   ├── Satellite_antenna_(24).png
+│   │   │   ├── Satellite_antenna_(48).png
+│   │   │   ├── Satellite_antenna_(64).png
+│   │   │   ├── Satellite_antenna_(96).png
+│   │   │   ├── Server_(128).png
+│   │   │   ├── Server_(24).png
+│   │   │   ├── Server_(48).png
+│   │   │   ├── Server_(64).png
+│   │   │   ├── Server_(96).png
+│   │   │   ├── Switch_(128).png
+│   │   │   ├── Switch_(24).png
+│   │   │   ├── Switch_(48).png
+│   │   │   ├── Switch_(64).png
+│   │   │   ├── Switch_(96).png
+│   │   │   ├── UPS_(128).png
+│   │   │   ├── UPS_(24).png
+│   │   │   ├── UPS_(48).png
+│   │   │   ├── UPS_(64).png
+│   │   │   ├── UPS_(96).png
+│   │   │   ├── UPS_rackmountable_2D_(128).png
+│   │   │   ├── UPS_rackmountable_2D_(24).png
+│   │   │   ├── UPS_rackmountable_2D_(48).png
+│   │   │   ├── UPS_rackmountable_2D_(64).png
+│   │   │   ├── UPS_rackmountable_2D_(96).png
+│   │   │   ├── UPS_rackmountable_3D_(128).png
+│   │   │   ├── UPS_rackmountable_3D_(24).png
+│   │   │   ├── UPS_rackmountable_3D_(48).png
+│   │   │   ├── UPS_rackmountable_3D_(64).png
+│   │   │   ├── UPS_rackmountable_3D_(96).png
+│   │   │   ├── Video_terminal_(128).png
+│   │   │   ├── Video_terminal_(24).png
+│   │   │   ├── Video_terminal_(48).png
+│   │   │   ├── Video_terminal_(64).png
+│   │   │   ├── Video_terminal_(96).png
+│   │   │   ├── Workstation_(128).png
+│   │   │   ├── Workstation_(24).png
+│   │   │   ├── Workstation_(48).png
+│   │   │   ├── Workstation_(64).png
+│   │   │   ├── Workstation_(96).png
+│   │   │   ├── Zabbix_server_2D_(128).png
+│   │   │   ├── Zabbix_server_2D_(64).png
+│   │   │   ├── Zabbix_server_2D_(96).png
+│   │   │   ├── Zabbix_server_3D_(128).png
+│   │   │   ├── Zabbix_server_3D_(64).png
+│   │   │   └── Zabbix_server_3D_(96).png
+│   │   ├── png_to_sql.sh
+│   │   ├── png_to_xml.sh
+│   │   ├── README
+│   │   ├── README.dev
+│   │   ├── strip_inkscape_attributes.xslt
+│   │   ├── svg
+│   │   │   ├── elements
+│   │   │   └── equipment_rack
+│   │   └── svg_to_png.sh
+│   ├── init.d
+│   │   ├── aix
+│   │   │   └── zabbix_agentd
+│   │   ├── debian
+│   │   │   ├── zabbix-agent
+│   │   │   └── zabbix-server
+│   │   ├── fedora
+│   │   │   ├── core
+│   │   │   └── core5
+│   │   ├── freebsd
+│   │   │   ├── zabbix_agentd
+│   │   │   └── zabbix_server
+│   │   ├── gentoo
+│   │   │   ├── zabbix-agentd
+│   │   │   └── zabbix-server
+│   │   ├── README
+│   │   ├── suse
+│   │   │   ├── 9.1
+│   │   │   ├── 9.2
+│   │   │   └── 9.3
+│   │   ├── tru64
+│   │   │   ├── zabbix_agentd
+│   │   │   └── zabbix_server
+│   │   └── ubuntu
+│   │       ├── zabbix-agent.conf
+│   │       └── zabbix-server.conf
+│   ├── Makefile
+│   ├── Makefile.am
+│   ├── Makefile.in
+│   └── snmptrap
+│       ├── snmptrap.sh
+│       └── zabbix_trap_receiver.pl
+├── missing -> /usr/share/automake-1.16/missing
+├── NEWS
+├── README
+├── sass
+│   ├── apple-touch-icon-120x120-precomposed.png
+│   ├── apple-touch-icon-152x152-precomposed.png
+│   ├── apple-touch-icon-180x180-precomposed.png
+│   ├── apple-touch-icon-76x76-precomposed.png
+│   ├── favicon.ico
+│   ├── icons
+│   │   ├── dist
+│   │   │   ├── index.html
+│   │   │   ├── zabbix-icons.css
+│   │   │   ├── zabbix-icons.svg
+│   │   │   ├── zabbix-icons.ttf
+│   │   │   ├── zabbix-icons.woff
+│   │   │   └── zabbix-icons.woff2
+│   │   ├── images
+│   │   │   ├── duplicates.png
+│   │   │   ├── grid.png
+│   │   │   ├── icons.png
+│   │   │   ├── names.png
+│   │   │   └── sprites.png
+│   │   ├── package.json
+│   │   ├── package-lock.json
+│   │   ├── README.md
+│   │   ├── svg
+│   │   │   ├── alert-check.svg
+│   │   │   ├── alert-more.svg
+│   │   │   ├── alert.svg
+│   │   │   ├── alert-x.svg
+│   │   │   ├── arrow-back.svg
+│   │   │   ├── arrow-down.svg
+│   │   │   ├── arrow-forward.svg
+│   │   │   ├── arrow-left.svg
+│   │   │   ├── arrow-right.svg
+│   │   │   ├── arrow-right-top.svg
+│   │   │   ├── arrows-left-right.svg
+│   │   │   ├── arrows-top-bottom.svg
+│   │   │   ├── arrow-top-right.svg
+│   │   │   ├── arrow-up.svg
+│   │   │   ├── bell-off.svg
+│   │   │   ├── bell.svg
+│   │   │   ├── bullet-alt-down.svg
+│   │   │   ├── bullet-alt-left.svg
+│   │   │   ├── bullet-alt-right.svg
+│   │   │   ├── bullet-alt-up.svg
+│   │   │   ├── bullet-down.svg
+│   │   │   ├── bullet-left.svg
+│   │   │   ├── bullet-right.svg
+│   │   │   ├── bullet-up.svg
+│   │   │   ├── calendar-check.svg
+│   │   │   ├── calendar.svg
+│   │   │   ├── calendar-warning.svg
+│   │   │   ├── checkbox.svg
+│   │   │   ├── check.svg
+│   │   │   ├── chevron-double-down.svg
+│   │   │   ├── chevron-double-left.svg
+│   │   │   ├── chevron-double-right.svg
+│   │   │   ├── chevron-double-up.svg
+│   │   │   ├── chevron-down.svg
+│   │   │   ├── chevron-left.svg
+│   │   │   ├── chevron-right.svg
+│   │   │   ├── chevron-up.svg
+│   │   │   ├── circle-check-filled.svg
+│   │   │   ├── circle-check.svg
+│   │   │   ├── circle-info-filled.svg
+│   │   │   ├── circle-info.svg
+│   │   │   ├── circle-question-filled.svg
+│   │   │   ├── circle-question.svg
+│   │   │   ├── circle-warning-filled.svg
+│   │   │   ├── circle-warning.svg
+│   │   │   ├── clock.svg
+│   │   │   ├── cog-filled.svg
+│   │   │   ├── cog.svg
+│   │   │   ├── collapse.svg
+│   │   │   ├── command.svg
+│   │   │   ├── copy.svg
+│   │   │   ├── dashboard.svg
+│   │   │   ├── download.svg
+│   │   │   ├── drag-handle.svg
+│   │   │   ├── envelope-filled.svg
+│   │   │   ├── envelope.svg
+│   │   │   ├── expand.svg
+│   │   │   ├── eye-alt-off.svg
+│   │   │   ├── eye-alt.svg
+│   │   │   ├── eye-off.svg
+│   │   │   ├── eye.svg
+│   │   │   ├── filter-filled.svg
+│   │   │   ├── filter.svg
+│   │   │   ├── fullscreen.svg
+│   │   │   ├── help.svg
+│   │   │   ├── hierarchy.svg
+│   │   │   ├── home.svg
+│   │   │   ├── i.svg
+│   │   │   ├── list.svg
+│   │   │   ├── lock.svg
+│   │   │   ├── maximize.svg
+│   │   │   ├── menu.svg
+│   │   │   ├── minimize.svg
+│   │   │   ├── more.svg
+│   │   │   ├── pause.svg
+│   │   │   ├── pencil.svg
+│   │   │   ├── picture.svg
+│   │   │   ├── play.svg
+│   │   │   ├── plus.svg
+│   │   │   ├── reference.svg
+│   │   │   ├── reload.svg
+│   │   │   ├── remove.svg
+│   │   │   ├── report.svg
+│   │   │   ├── search.svg
+│   │   │   ├── signout.svg
+│   │   │   ├── slash.svg
+│   │   │   ├── speaker-off.svg
+│   │   │   ├── speaker.svg
+│   │   │   ├── star-filled.svg
+│   │   │   ├── star.svg
+│   │   │   ├── stop-sign.svg
+│   │   │   ├── support.svg
+│   │   │   ├── text.svg
+│   │   │   ├── time-period.svg
+│   │   │   ├── trash.svg
+│   │   │   ├── tree-top-bottom.svg
+│   │   │   ├── tree-top-right-bottom.svg
+│   │   │   ├── tree-top-right.svg
+│   │   │   ├── triangle-flipped-warning.svg
+│   │   │   ├── triangle-warning.svg
+│   │   │   ├── uncheck.svg
+│   │   │   ├── user-filled.svg
+│   │   │   ├── users-filled.svg
+│   │   │   ├── users.svg
+│   │   │   ├── user.svg
+│   │   │   ├── widget-add.svg
+│   │   │   ├── widget-resize.svg
+│   │   │   ├── wrench-alt.svg
+│   │   │   ├── wrench.svg
+│   │   │   └── z.svg
+│   │   └── templates
+│   │       ├── styles
+│   │       └── template.ejs
+│   ├── img
+│   │   ├── browser-sprite.png
+│   │   ├── zabbix-logo-compact.svg
+│   │   └── zabbix-logo.svg
+│   ├── ms-tile-144x144.png
+│   ├── stylesheets
+│   │   └── sass
+│   │       ├── base
+│   │       ├── components
+│   │       ├── dark-theme.scss
+│   │       ├── hc-dark.scss
+│   │       ├── hc-light.scss
+│   │       ├── layout
+│   │       ├── screen.scss
+│   │       └── utils
+│   └── touch-icon-192x192.png
+├── sonar-project.properties
+├── src
+│   ├── go
+│   │   ├── bin
+│   │   ├── cmd
+│   │   │   ├── mock_server
+│   │   │   ├── zabbix_agent2
+│   │   │   └── zabbix_web_service
+│   │   ├── conf
+│   │   │   ├── mock_server.conf
+│   │   │   ├── zabbix_agent2.conf
+│   │   │   ├── zabbix_agent2.d
+│   │   │   ├── zabbix_agent2.win.conf
+│   │   │   └── zabbix_web_service.conf
+│   │   ├── go.mod
+│   │   ├── go.sum
+│   │   ├── internal
+│   │   │   ├── agent
+│   │   │   └── monitor
+│   │   ├── LICENSE
+│   │   ├── Makefile
+│   │   ├── Makefile.am
+│   │   ├── Makefile.in
+│   │   ├── pkg
+│   │   │   ├── glexpr
+│   │   │   ├── itemutil
+│   │   │   ├── pdh
+│   │   │   ├── pidfile
+│   │   │   ├── procfs
+│   │   │   ├── tls
+│   │   │   ├── version
+│   │   │   ├── watch
+│   │   │   ├── web
+│   │   │   ├── wildcard
+│   │   │   ├── win32
+│   │   │   ├── wmi
+│   │   │   ├── zbxcmd
+│   │   │   ├── zbxcomms
+│   │   │   ├── zbxlib
+│   │   │   ├── zbxnet
+│   │   │   ├── zbxregexp
+│   │   │   └── zbxtest
+│   │   ├── plugins
+│   │   │   ├── ceph
+│   │   │   ├── debug
+│   │   │   ├── docker
+│   │   │   ├── external
+│   │   │   ├── kernel
+│   │   │   ├── log
+│   │   │   ├── memcached
+│   │   │   ├── modbus
+│   │   │   ├── mqtt
+│   │   │   ├── mysql
+│   │   │   ├── net
+│   │   │   ├── oracle
+│   │   │   ├── plugins_darwin.go
+│   │   │   ├── plugins_linux.go
+│   │   │   ├── plugins_windows.go
+│   │   │   ├── proc
+│   │   │   ├── redis
+│   │   │   ├── smart
+│   │   │   ├── system
+│   │   │   ├── systemd
+│   │   │   ├── systemrun
+│   │   │   ├── vfs
+│   │   │   ├── vm
+│   │   │   ├── web
+│   │   │   ├── windows
+│   │   │   └── zabbix
+│   │   └── util
+│   │       └── uname.go
+│   ├── libs
+│   │   ├── Makefile
+│   │   ├── Makefile.am
+│   │   ├── Makefile.in
+│   │   ├── zbxagentget
+│   │   │   ├── agent_get.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxalerter
+│   │   │   ├── alert.c
+│   │   │   ├── alerter.c
+│   │   │   ├── alerter_defs.h
+│   │   │   ├── alerter_protocol.c
+│   │   │   ├── alerter_protocol.h
+│   │   │   ├── alert_manager.c
+│   │   │   ├── alert_syncer.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxalgo
+│   │   │   ├── algodefs.c
+│   │   │   ├── algodefs.h
+│   │   │   ├── binaryheap.c
+│   │   │   ├── hashmap.c
+│   │   │   ├── hashset.c
+│   │   │   ├── int128.c
+│   │   │   ├── linked_list.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── prediction.c
+│   │   │   ├── queue.c
+│   │   │   └── vector.c
+│   │   ├── zbxasynchttppoller
+│   │   │   ├── asynchttppoller.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxasyncpoller
+│   │   │   ├── asyncpoller.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxaudit
+│   │   │   ├── audit.c
+│   │   │   ├── audit_graph.c
+│   │   │   ├── audit.h
+│   │   │   ├── audit_ha.c
+│   │   │   ├── audit_host.c
+│   │   │   ├── audit_httptest.c
+│   │   │   ├── audit_item.c
+│   │   │   ├── audit_proxy.c
+│   │   │   ├── audit_settings.c
+│   │   │   ├── audit_trigger.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxautoreg
+│   │   │   ├── autoreg_proxy.c
+│   │   │   ├── autoreg_server.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxavailability
+│   │   │   ├── availability.c
+│   │   │   ├── avail_manager.c
+│   │   │   ├── avail_protocol.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxcacheconfig
+│   │   │   ├── dbconfig.c
+│   │   │   ├── dbconfig_dump.c
+│   │   │   ├── dbconfig.h
+│   │   │   ├── dbconfig_maintenance.c
+│   │   │   ├── dbhistoryconfig.c
+│   │   │   ├── dbsync.c
+│   │   │   ├── dbsync.h
+│   │   │   ├── lld_macro.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── trigger.c
+│   │   │   ├── user_macro.c
+│   │   │   ├── user_macro.h
+│   │   │   ├── vps_monitor.c
+│   │   │   └── vps_monitor.h
+│   │   ├── zbxcachehistory
+│   │   │   ├── dbcache.c
+│   │   │   ├── dbcache.h
+│   │   │   ├── dbcache_proxy.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxcachevalue
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── valuecache.c
+│   │   ├── zbxcommon
+│   │   │   ├── common_log.c
+│   │   │   ├── common_str.c
+│   │   │   ├── components_strings_representations.c
+│   │   │   ├── cuid.c
+│   │   │   ├── libc_wrappers.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── misc.c
+│   │   │   └── setproctitle.c
+│   │   ├── zbxcomms
+│   │   │   ├── comms.c
+│   │   │   ├── comms.h
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── telnet.c
+│   │   │   ├── tls.c
+│   │   │   ├── tls.h
+│   │   │   ├── tls_validate.c
+│   │   │   └── tls_version.c
+│   │   ├── zbxcommshigh
+│   │   │   ├── commshigh.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxcompress
+│   │   │   ├── compress.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxconf
+│   │   │   ├── cfg.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxconnector
+│   │   │   ├── connector.c
+│   │   │   ├── connector_protocol.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxcrypto
+│   │   │   ├── aes.c
+│   │   │   ├── aes.h
+│   │   │   ├── base64.c
+│   │   │   ├── crypto.c
+│   │   │   ├── endian.c
+│   │   │   ├── hmac.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── rsa.c
+│   │   ├── zbxdb
+│   │   │   ├── db.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxdbconfigworker
+│   │   │   ├── dbconfig_worker.c
+│   │   │   ├── dbconfig_worker_protocol.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxdbhigh
+│   │   │   ├── db.c
+│   │   │   ├── item.c
+│   │   │   ├── item_param.c
+│   │   │   ├── lld_override.c
+│   │   │   ├── maintenance.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── mediatype.c
+│   │   │   ├── proxy.c
+│   │   │   ├── tag.c
+│   │   │   └── trigger.c
+│   │   ├── zbxdbschema
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxdbsyncer
+│   │   │   ├── dbsyncer.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxdbupgrade
+│   │   │   ├── dbupgrade_2010.c
+│   │   │   ├── dbupgrade_2020.c
+│   │   │   ├── dbupgrade_2030.c
+│   │   │   ├── dbupgrade_2040.c
+│   │   │   ├── dbupgrade_2050.c
+│   │   │   ├── dbupgrade_3000.c
+│   │   │   ├── dbupgrade_3010.c
+│   │   │   ├── dbupgrade_3020.c
+│   │   │   ├── dbupgrade_3030.c
+│   │   │   ├── dbupgrade_3040.c
+│   │   │   ├── dbupgrade_3050.c
+│   │   │   ├── dbupgrade_4000.c
+│   │   │   ├── dbupgrade_4010.c
+│   │   │   ├── dbupgrade_4020.c
+│   │   │   ├── dbupgrade_4030.c
+│   │   │   ├── dbupgrade_4040.c
+│   │   │   ├── dbupgrade_4050.c
+│   │   │   ├── dbupgrade_5000.c
+│   │   │   ├── dbupgrade_5010.c
+│   │   │   ├── dbupgrade_5020.c
+│   │   │   ├── dbupgrade_5030.c
+│   │   │   ├── dbupgrade_5040.c
+│   │   │   ├── dbupgrade_5050.c
+│   │   │   ├── dbupgrade_6000.c
+│   │   │   ├── dbupgrade_6010.c
+│   │   │   ├── dbupgrade_6020.c
+│   │   │   ├── dbupgrade_6030.c
+│   │   │   ├── dbupgrade_6040.c
+│   │   │   ├── dbupgrade_6050.c
+│   │   │   ├── dbupgrade.c
+│   │   │   ├── dbupgrade_common.c
+│   │   │   ├── dbupgrade_common.h
+│   │   │   ├── dbupgrade.h
+│   │   │   ├── dbupgrade_macros.c
+│   │   │   ├── dbupgrade_macros.h
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxdbwrap
+│   │   │   ├── event.c
+│   │   │   ├── graph_linking.c
+│   │   │   ├── graph_linking.h
+│   │   │   ├── host.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── permission.c
+│   │   │   ├── proxy.c
+│   │   │   ├── template.h
+│   │   │   ├── template_item_audit.c
+│   │   │   ├── template_item.c
+│   │   │   ├── trigger.c
+│   │   │   ├── trigger_dep_linking.c
+│   │   │   ├── trigger_dep_linking.h
+│   │   │   ├── trigger_linking.c
+│   │   │   ├── trigger_linking.h
+│   │   │   └── user.c
+│   │   ├── zbxdiag
+│   │   │   ├── diag.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxdiscovery
+│   │   │   ├── discovery.c
+│   │   │   ├── discovery_proxy.c
+│   │   │   ├── discovery_server.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxembed
+│   │   │   ├── console.c
+│   │   │   ├── console.h
+│   │   │   ├── duk_config.h
+│   │   │   ├── duktape.c
+│   │   │   ├── duktape.h
+│   │   │   ├── embed.c
+│   │   │   ├── embed.h
+│   │   │   ├── embed_xml.c
+│   │   │   ├── embed_xml.h
+│   │   │   ├── global.c
+│   │   │   ├── global.h
+│   │   │   ├── httprequest.c
+│   │   │   ├── httprequest.h
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── zabbix.c
+│   │   │   └── zabbix.h
+│   │   ├── zbxeval
+│   │   │   ├── calc.c
+│   │   │   ├── count_pattern.c
+│   │   │   ├── eval.h
+│   │   │   ├── execute.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── misc.c
+│   │   │   ├── parse.c
+│   │   │   └── query.c
+│   │   ├── zbxevent
+│   │   │   ├── event.c
+│   │   │   ├── event_db.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxexec
+│   │   │   ├── execute.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxexport
+│   │   │   ├── export.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxexpr
+│   │   │   ├── expr.c
+│   │   │   ├── function.c
+│   │   │   ├── host.c
+│   │   │   ├── interval.c
+│   │   │   ├── macro.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── token.c
+│   │   ├── zbxexpression
+│   │   │   ├── anomalystl.c
+│   │   │   ├── anomalystl.h
+│   │   │   ├── datafunc.c
+│   │   │   ├── datafunc.h
+│   │   │   ├── evalfunc.c
+│   │   │   ├── evalfunc.h
+│   │   │   ├── evalsimple.c
+│   │   │   ├── expression.c
+│   │   │   ├── expression.h
+│   │   │   ├── expression_names.c
+│   │   │   ├── expr_eval.c
+│   │   │   ├── funcparam.c
+│   │   │   ├── funcparam.h
+│   │   │   ├── lldfunc.c
+│   │   │   ├── macrofunc.c
+│   │   │   ├── macrofunc.h
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── triggerfunc.c
+│   │   ├── zbxfile
+│   │   │   ├── file.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── win32
+│   │   ├── zbxgetopt
+│   │   │   ├── getopt.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxhash
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── md5.c
+│   │   │   ├── sha256crypt.c
+│   │   │   ├── sha512crypt.c
+│   │   │   └── zbxhash.c
+│   │   ├── zbxhistory
+│   │   │   ├── history.c
+│   │   │   ├── history_elastic.c
+│   │   │   ├── history.h
+│   │   │   ├── history_sql.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxhttp
+│   │   │   ├── charset.c
+│   │   │   ├── http.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── punycode.c
+│   │   │   ├── punycode.h
+│   │   │   └── urlencode.c
+│   │   ├── zbxicmpping
+│   │   │   ├── icmpping.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxip
+│   │   │   ├── ip.c
+│   │   │   ├── iprange.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxipcservice
+│   │   │   ├── ipcservice.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxipmi
+│   │   │   ├── checks_ipmi.c
+│   │   │   ├── checks_ipmi.h
+│   │   │   ├── ipmi.c
+│   │   │   ├── ipmi.h
+│   │   │   ├── ipmi_manager.c
+│   │   │   ├── ipmi_poller.c
+│   │   │   ├── ipmi_protocol.c
+│   │   │   ├── ipmi_protocol.h
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxjson
+│   │   │   ├── json.c
+│   │   │   ├── json.h
+│   │   │   ├── jsonobj.c
+│   │   │   ├── jsonobj.h
+│   │   │   ├── json_parser.c
+│   │   │   ├── json_parser.h
+│   │   │   ├── jsonpath.c
+│   │   │   ├── jsonpath.h
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxkvs
+│   │   │   ├── kvs.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxlog
+│   │   │   ├── log.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── zbxmedia
+│   │   │   ├── email.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── sms.c
+│   │   ├── zbxmodules
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── modules.c
+│   │   ├── zbxmutexs
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── mutexs.c
+│   │   ├── zbxnix
+│   │   │   ├── control.c
+│   │   │   ├── control.h
+│   │   │   ├── coredump.c
+│   │   │   ├── daemon.c
+│   │   │   ├── dshm.c
+│   │   │   ├── fatal.c
+│   │   │   ├── fatal.h
+│   │   │   ├── ipc.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── nix_internal.c
+│   │   │   ├── nix_internal.h
+│   │   │   ├── pid.c
+│   │   │   ├── pid.h
+│   │   │   ├── sigcommon.h
+│   │   │   └── sighandler.c
+│   │   ├── zbxnum
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── num.c
+│   │   ├── zbxodbc
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── odbc.c
+│   │   ├── zbxparam
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── param.c
+│   │   ├── zbxpoller
+│   │   │   ├── checks_agent.c
+│   │   │   ├── checks_ssh.c
+│   │   │   ├── checks_telnet.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── poller.c
+│   │   │   ├── ssh2_run.c
+│   │   │   ├── ssh_run.c
+│   │   │   ├── ssh_run.h
+│   │   │   ├── telnet_run.c
+│   │   │   └── telnet_run.h
+│   │   ├── zbxpreproc
+│   │   │   ├── item_preproc.c
+│   │   │   ├── item_preproc.h
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── pp_cache.c
+│   │   │   ├── pp_cache.h
+│   │   │   ├── pp_diag.c
+│   │   │   ├── pp_error.c
+│   │   │   ├── pp_error.h
+│   │   │   ├── pp_execute.c
+│   │   │   ├── pp_execute.h
+│   │   │   ├── pp_history.c
+│   │   │   ├── pp_item.c
+│   │   │   ├── pp_manager.c
+│   │   │   ├── pp_manager.h
+│   │   │   ├── pp_protocol.c
+│   │   │   ├── pp_protocol.h
+│   │   │   ├── pp_queue.c
+│   │   │   ├── pp_queue.h
+│   │   │   ├── pp_stats.c
+│   │   │   ├── pp_task.c
+│   │   │   ├── pp_task.h
+│   │   │   ├── pp_worker.c
+│   │   │   ├── pp_worker.h
+│   │   │   ├── preproc_snmp.c
+│   │   │   └── preproc_snmp.h
+│   │   ├── zbxprof
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── prof.c
+│   │   ├── zbxprometheus
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── zbxprometheus.c
+│   │   ├── zbxproxybuffer
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── pb_autoreg.c
+│   │   │   ├── pb_autoreg.h
+│   │   │   ├── pb_discovery.c
+│   │   │   ├── pb_discovery.h
+│   │   │   ├── pb_history.c
+│   │   │   ├── pb_history.h
+│   │   │   ├── proxybuffer.c
+│   │   │   └── proxybuffer.h
+│   │   ├── zbxregexp
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── zbxregexp.c
+│   │   ├── zbxrtc
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── rtc.c
+│   │   │   ├── rtc_client.c
+│   │   │   ├── rtc.h
+│   │   │   └── rtc_service.c
+│   │   ├── zbxscripts
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── scripts.c
+│   │   ├── zbxself
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── selfmon.c
+│   │   ├── zbxserialize
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── serialize.c
+│   │   ├── zbxservice
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── service.c
+│   │   │   └── service_protocol.c
+│   │   ├── zbxshmem
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── memalloc.c
+│   │   ├── zbxsnmptrapper
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── snmptrapper.c
+│   │   ├── zbxstats
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── stats.c
+│   │   ├── zbxstr
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── str.c
+│   │   ├── zbxsysinfo
+│   │   │   ├── agent
+│   │   │   ├── aix
+│   │   │   ├── alias
+│   │   │   ├── common
+│   │   │   ├── freebsd
+│   │   │   ├── hpux
+│   │   │   ├── linux
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── netbsd
+│   │   │   ├── openbsd
+│   │   │   ├── osf
+│   │   │   ├── osx
+│   │   │   ├── simple
+│   │   │   ├── solaris
+│   │   │   ├── specsysinfo.h
+│   │   │   ├── sysinfo.c
+│   │   │   ├── sysinfo.h
+│   │   │   ├── unknown
+│   │   │   └── win32
+│   │   ├── zbxtagfilter
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── tagfilter.c
+│   │   ├── zbxtasks
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── task.c
+│   │   ├── zbxthreads
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── threads.c
+│   │   ├── zbxtime
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── time.c
+│   │   ├── zbxtimekeeper
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── timekeeper.c
+│   │   ├── zbxtrends
+│   │   │   ├── baseline.c
+│   │   │   ├── cache.c
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── trends.c
+│   │   │   └── trends.h
+│   │   ├── zbxvariant
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── variant.c
+│   │   │   └── variant_misc.c
+│   │   ├── zbxvault
+│   │   │   ├── cyberark.c
+│   │   │   ├── cyberark.h
+│   │   │   ├── hashicorp.c
+│   │   │   ├── hashicorp.h
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── vault.c
+│   │   ├── zbxversion
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   └── version.c
+│   │   ├── zbxvmware
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── vmware.c
+│   │   │   ├── vmware_ds.c
+│   │   │   ├── vmware_ds.h
+│   │   │   ├── vmware_event.c
+│   │   │   ├── vmware_event.h
+│   │   │   ├── vmware_hv.c
+│   │   │   ├── vmware_hv.h
+│   │   │   ├── vmware_internal.h
+│   │   │   ├── vmware_manager.c
+│   │   │   ├── vmware_perfcntr.c
+│   │   │   ├── vmware_perfcntr.h
+│   │   │   ├── vmware_rest.c
+│   │   │   ├── vmware_service_cfglists.c
+│   │   │   ├── vmware_service_cfglists.h
+│   │   │   ├── vmware_shmem.c
+│   │   │   ├── vmware_shmem.h
+│   │   │   ├── vmware_stats.c
+│   │   │   ├── vmware_vm.c
+│   │   │   └── vmware_vm.h
+│   │   ├── zbxwin32
+│   │   │   ├── disk.c
+│   │   │   ├── fatal.c
+│   │   │   ├── perfmon.c
+│   │   │   └── symbols.c
+│   │   ├── zbxwinservice
+│   │   │   └── service.c
+│   │   └── zbxxml
+│   │       ├── Makefile
+│   │       ├── Makefile.am
+│   │       ├── Makefile.in
+│   │       └── xml.c
+│   ├── Makefile
+│   ├── Makefile.am
+│   ├── Makefile.in
+│   ├── modules
+│   │   └── dummy
+│   │       ├── dummy.c
+│   │       ├── Makefile
+│   │       └── README
+│   ├── zabbix_agent
+│   │   ├── active_checks
+│   │   │   ├── active_checks.c
+│   │   │   ├── active_checks.h
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── agent_conf
+│   │   │   ├── agent_conf.c
+│   │   │   ├── agent_conf.h
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── eventlog
+│   │   │   ├── eventlog.c
+│   │   │   ├── process_eventslog6.c
+│   │   │   ├── process_eventslog6.h
+│   │   │   ├── process_eventslog.c
+│   │   │   ├── process_eventslog.h
+│   │   │   └── severity_constants.h
+│   │   ├── listener
+│   │   │   ├── listener.c
+│   │   │   ├── listener.h
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── logfiles
+│   │   │   ├── logfiles.c
+│   │   │   ├── logfiles.h
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── persistent_state.c
+│   │   │   └── persistent_state.h
+│   │   ├── Makefile
+│   │   ├── Makefile.am
+│   │   ├── Makefile.in
+│   │   ├── metrics.h
+│   │   └── zabbix_agentd.c
+│   ├── zabbix_get
+│   │   ├── Makefile
+│   │   ├── Makefile.am
+│   │   ├── Makefile.in
+│   │   └── zabbix_get.c
+│   ├── zabbix_java
+│   │   ├── bin
+│   │   ├── lib
+│   │   │   ├── android-json-4.3_r3.1.jar
+│   │   │   ├── logback-classic-1.2.9.jar
+│   │   │   ├── logback-classic-1.2.9.jar.md5
+│   │   │   ├── logback-console.xml
+│   │   │   ├── logback-core-1.2.9.jar
+│   │   │   ├── logback-core-1.2.9.jar.md5
+│   │   │   ├── logback.xml
+│   │   │   ├── README
+│   │   │   ├── slf4j-api-1.7.32.jar
+│   │   │   └── slf4j-api-1.7.32.jar.md5
+│   │   ├── Makefile
+│   │   ├── Makefile.am
+│   │   ├── Makefile.in
+│   │   ├── settings.sh
+│   │   ├── shutdown.sh
+│   │   ├── src
+│   │   │   └── com
+│   │   ├── startup.sh
+│   │   └── tests
+│   │       ├── com
+│   │       └── junit-4.8.2.jar
+│   ├── zabbix_js
+│   │   ├── Makefile
+│   │   ├── Makefile.am
+│   │   ├── Makefile.in
+│   │   └── zabbix_js.c
+│   ├── zabbix_proxy
+│   │   ├── datasender
+│   │   │   ├── datasender.c
+│   │   │   ├── datasender.h
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── diag
+│   │   │   ├── diag_proxy.c
+│   │   │   ├── diag_proxy.h
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── housekeeper
+│   │   │   ├── housekeeper.c
+│   │   │   ├── housekeeper.h
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   └── Makefile.in
+│   │   ├── Makefile
+│   │   ├── Makefile.am
+│   │   ├── Makefile.in
+│   │   ├── preproc
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── preproc_proxy.c
+│   │   │   └── preproc_proxy.h
+│   │   ├── proxy.c
+│   │   ├── proxyconfig
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── proxyconfig.c
+│   │   │   └── proxyconfig.h
+│   │   ├── proxyconfigwrite
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── proxyconfig_write.c
+│   │   │   └── proxyconfig_write.h
+│   │   ├── rtc
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── rtc_proxy.c
+│   │   │   └── rtc_proxy.h
+│   │   ├── stats
+│   │   │   ├── Makefile
+│   │   │   ├── Makefile.am
+│   │   │   ├── Makefile.in
+│   │   │   ├── proxy_stats.c
+│   │   │   └── zabbix_stats.h
+│   │   └── taskmanager
+│   │       ├── Makefile
+│   │       ├── Makefile.am
+│   │       ├── Makefile.in
+│   │       ├── server_tasks.c
+│   │       ├── taskmanager_proxy.c
+│   │       └── taskmanager_proxy.h
+│   ├── zabbix_sender
+│   │   ├── Makefile
+│   │   ├── Makefile.am
+│   │   ├── Makefile.in
+│   │   ├── win32
+│   │   │   ├── zabbix_sender.c
+│   │   │   └── zabbix_sender.h
+│   │   └── zabbix_sender.c
+│   └── zabbix_server
+│       ├── actions
+│       │   ├── actions.c
+│       │   ├── actions.h
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   └── Makefile.in
+│       ├── connector
+│       │   ├── connector_manager.c
+│       │   ├── connector_manager.h
+│       │   ├── connector_worker.c
+│       │   ├── connector_worker.h
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   └── Makefile.in
+│       ├── dbconfig
+│       │   ├── dbconfig.c
+│       │   ├── dbconfig.h
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   └── Makefile.in
+│       ├── dbconfigworker
+│       │   ├── dbconfig_worker.c
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   └── Makefile.in
+│       ├── db_lengths_constants.h
+│       ├── diag
+│       │   ├── diag_server.c
+│       │   ├── diag_server.h
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   └── Makefile.in
+│       ├── discoverer
+│       │   ├── discoverer.c
+│       │   ├── discoverer.h
+│       │   ├── discoverer_job.c
+│       │   ├── discoverer_job.h
+│       │   ├── discoverer_queue.c
+│       │   ├── discoverer_queue.h
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   └── Makefile.in
+│       ├── escalator
+│       │   ├── escalator.c
+│       │   ├── escalator.h
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   └── Makefile.in
+│       ├── events
+│       │   ├── events.c
+│       │   ├── events.h
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   └── Makefile.in
+│       ├── ha
+│       │   ├── ha.c
+│       │   ├── ha.h
+│       │   ├── ha_manager.c
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   └── Makefile.in
+│       ├── housekeeper
+│       │   ├── history_compress.c
+│       │   ├── history_compress.h
+│       │   ├── housekeeper.c
+│       │   ├── housekeeper.h
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   ├── Makefile.in
+│       │   ├── trigger_housekeeper.c
+│       │   └── trigger_housekeeper.h
+│       ├── httppoller
+│       │   ├── httpmacro.c
+│       │   ├── httpmacro.h
+│       │   ├── httppoller.c
+│       │   ├── httppoller.h
+│       │   ├── httptest.c
+│       │   ├── httptest.h
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   └── Makefile.in
+│       ├── lld
+│       │   ├── lld_audit.c
+│       │   ├── lld_audit.h
+│       │   ├── lld.c
+│       │   ├── lld_common.c
+│       │   ├── lld_graph.c
+│       │   ├── lld.h
+│       │   ├── lld_host.c
+│       │   ├── lld_item.c
+│       │   ├── lld_manager.c
+│       │   ├── lld_manager.h
+│       │   ├── lld_protocol.c
+│       │   ├── lld_protocol.h
+│       │   ├── lld_trigger.c
+│       │   ├── lld_worker.c
+│       │   ├── lld_worker.h
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   └── Makefile.in
+│       ├── Makefile
+│       ├── Makefile.am
+│       ├── Makefile.in
+│       ├── operations
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   ├── Makefile.in
+│       │   ├── operations.c
+│       │   └── operations.h
+│       ├── pinger
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   ├── Makefile.in
+│       │   ├── pinger.c
+│       │   └── pinger.h
+│       ├── poller
+│       │   ├── async_agent.c
+│       │   ├── async_agent.h
+│       │   ├── async_httpagent.c
+│       │   ├── async_httpagent.h
+│       │   ├── async_manager.c
+│       │   ├── async_manager.h
+│       │   ├── async_poller.c
+│       │   ├── async_poller.h
+│       │   ├── async_queue.c
+│       │   ├── async_queue.h
+│       │   ├── async_worker.c
+│       │   ├── async_worker.h
+│       │   ├── checks_calculated.c
+│       │   ├── checks_calculated.h
+│       │   ├── checks_db.c
+│       │   ├── checks_db.h
+│       │   ├── checks_external.c
+│       │   ├── checks_external.h
+│       │   ├── checks_http.c
+│       │   ├── checks_http.h
+│       │   ├── checks_internal.c
+│       │   ├── checks_internal.h
+│       │   ├── checks_internal_proxy.c
+│       │   ├── checks_internal_server.c
+│       │   ├── checks_java.c
+│       │   ├── checks_java.h
+│       │   ├── checks_script.c
+│       │   ├── checks_script.h
+│       │   ├── checks_simple.c
+│       │   ├── checks_simple.h
+│       │   ├── checks_simple_vmware.c
+│       │   ├── checks_simple_vmware.h
+│       │   ├── checks_snmp.c
+│       │   ├── checks_snmp.h
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   ├── Makefile.in
+│       │   ├── poller.c
+│       │   └── poller.h
+│       ├── postinit
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   ├── Makefile.in
+│       │   ├── postinit.c
+│       │   └── postinit.h
+│       ├── preproc
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   ├── Makefile.in
+│       │   ├── preproc_server.c
+│       │   └── preproc_server.h
+│       ├── proxyconfigread
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   ├── Makefile.in
+│       │   ├── proxyconfig_read.c
+│       │   └── proxyconfig_read.h
+│       ├── proxypoller
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   ├── Makefile.in
+│       │   ├── proxypoller.c
+│       │   └── proxypoller.h
+│       ├── reporter
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   ├── Makefile.in
+│       │   ├── report_manager.c
+│       │   ├── report_manager.h
+│       │   ├── report_protocol.c
+│       │   ├── report_protocol.h
+│       │   ├── report_writer.c
+│       │   └── report_writer.h
+│       ├── rtc
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   ├── Makefile.in
+│       │   ├── rtc_server.c
+│       │   └── rtc_server.h
+│       ├── server.c
+│       ├── server_constants.h
+│       ├── service
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   ├── Makefile.in
+│       │   ├── service_actions.c
+│       │   ├── service_actions.h
+│       │   ├── service_manager.c
+│       │   ├── service_manager.h
+│       │   └── service_manager_impl.h
+│       ├── stats
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   ├── Makefile.in
+│       │   ├── server_stats.c
+│       │   └── zabbix_stats.h
+│       ├── taskmanager
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   ├── Makefile.in
+│       │   ├── proxy_tasks.c
+│       │   ├── taskmanager_server.c
+│       │   └── taskmanager_server.h
+│       ├── timer
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   ├── Makefile.in
+│       │   ├── timer.c
+│       │   └── timer.h
+│       ├── trapper
+│       │   ├── active.c
+│       │   ├── active.h
+│       │   ├── Makefile
+│       │   ├── Makefile.am
+│       │   ├── Makefile.in
+│       │   ├── nodecommand.c
+│       │   ├── nodecommand.h
+│       │   ├── proxydata.c
+│       │   ├── proxydata.h
+│       │   ├── trapper_auth.c
+│       │   ├── trapper_auth.h
+│       │   ├── trapper.c
+│       │   ├── trapper_expressions_evaluate.c
+│       │   ├── trapper_expressions_evaluate.h
+│       │   ├── trapper.h
+│       │   ├── trapper_history_push.c
+│       │   ├── trapper_history_push.h
+│       │   ├── trapper_item_test.c
+│       │   ├── trapper_item_test.h
+│       │   ├── trapper_preproc.c
+│       │   ├── trapper_preproc.h
+│       │   ├── trapper_proxy.c
+│       │   ├── trapper_request.h
+│       │   └── trapper_server.c
+│       └── zbxreport.h
+├── templates
+│   ├── app
+│   │   ├── acronis
+│   │   │   ├── README.md
+│   │   │   └── template_app_acronis_cyber_protect_cloud_http.yaml
+│   │   ├── activemq_jmx
+│   │   │   ├── README.md
+│   │   │   └── template_app_activemq_jmx.yaml
+│   │   ├── apache_agent
+│   │   │   ├── README.md
+│   │   │   └── template_app_apache_agent.yaml
+│   │   ├── apache_http
+│   │   │   ├── README.md
+│   │   │   └── template_app_apache_http.yaml
+│   │   ├── aranet_http
+│   │   │   ├── README.md
+│   │   │   └── template_app_aranet_http.yaml
+│   │   ├── ceph_agent2
+│   │   │   ├── README.md
+│   │   │   └── template_app_ceph_agent2.yaml
+│   │   ├── certificate_agent2
+│   │   │   ├── README.md
+│   │   │   └── template_app_certificate_agent2.yaml
+│   │   ├── cloudflare_http
+│   │   │   ├── README.md
+│   │   │   └── template_app_cloudflare_http.yaml
+│   │   ├── consul_http
+│   │   │   ├── consul
+│   │   │   └── consul_cluster
+│   │   ├── controlm_http
+│   │   │   ├── README.md
+│   │   │   └── template_app_controlm_http.yaml
+│   │   ├── docker
+│   │   │   ├── README.md
+│   │   │   └── template_app_docker.yaml
+│   │   ├── elasticsearch_http
+│   │   │   ├── README.md
+│   │   │   └── template_app_elasticsearch_http.yaml
+│   │   ├── envoy_proxy_http
+│   │   │   ├── README.md
+│   │   │   └── template_app_envoy_proxy_http.yaml
+│   │   ├── etcd_http
+│   │   │   ├── README.md
+│   │   │   └── template_app_etcd_http.yaml
+│   │   ├── exchange
+│   │   │   ├── README.md
+│   │   │   └── template_app_exchange.yaml
+│   │   ├── exchange_active
+│   │   │   ├── README.md
+│   │   │   └── template_app_exchange_active.yaml
+│   │   ├── generic_java_jmx
+│   │   │   ├── README.md
+│   │   │   └── template_app_generic_java_jmx.yaml
+│   │   ├── gitlab_http
+│   │   │   ├── README.md
+│   │   │   └── template_app_gitlab_http.yaml
+│   │   ├── hadoop_http
+│   │   │   ├── README.md
+│   │   │   └── template_app_hadoop_http.yaml
+│   │   ├── haproxy_agent
+│   │   │   ├── README.md
+│   │   │   └── template_app_haproxy_agent.yaml
+│   │   ├── haproxy_http
+│   │   │   ├── README.md
+│   │   │   └── template_app_haproxy_http.yaml
+│   │   ├── iis_agent
+│   │   │   ├── README.md
+│   │   │   └── template_app_iis_agent.yaml
+│   │   ├── iis_agent_active
+│   │   │   ├── README.md
+│   │   │   └── template_app_iis_agent_active.yaml
+│   │   ├── jenkins
+│   │   │   ├── README.md
+│   │   │   └── template_app_jenkins.yaml
+│   │   ├── kafka_jmx
+│   │   │   ├── README.md
+│   │   │   └── template_app_kafka_jmx.yaml
+│   │   ├── kubernetes_http
+│   │   │   ├── kubernetes_api_server_http
+│   │   │   ├── kubernetes_controller_manager_http
+│   │   │   ├── kubernetes_kubelet_http
+│   │   │   ├── kubernetes_nodes_http
+│   │   │   ├── kubernetes_scheduler_http
+│   │   │   ├── kubernetes_state_http
+│   │   │   └── README.md
+│   │   ├── mantisbt_http
+│   │   │   ├── README.md
+│   │   │   └── template_app_mantisbt_http.yaml
+│   │   ├── memcached
+│   │   │   ├── README.md
+│   │   │   └── template_app_memcached.yaml
+│   │   ├── nextcloud
+│   │   │   ├── README.md
+│   │   │   └── template_nextcloud_http.yaml
+│   │   ├── nginx_agent
+│   │   │   ├── README.md
+│   │   │   └── template_app_nginx_agent.yaml
+│   │   ├── nginx_http
+│   │   │   ├── README.md
+│   │   │   └── template_app_nginx_http.yaml
+│   │   ├── nginx_plus_http
+│   │   │   ├── README.md
+│   │   │   └── template_app_nginx_plus_http.yaml
+│   │   ├── nomad
+│   │   │   ├── README.md
+│   │   │   └── template_app_nomad_http.yaml
+│   │   ├── openweathermap_http
+│   │   │   ├── README.md
+│   │   │   └── template_app_openweathermap_http.yaml
+│   │   ├── opnsense_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_app_opnsense_snmp.yaml
+│   │   ├── pfsense_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_app_pfsense_snmp.yaml
+│   │   ├── php-fpm_agent
+│   │   │   ├── README.md
+│   │   │   └── template_app_php-fpm_agent.yaml
+│   │   ├── php-fpm_http
+│   │   │   ├── README.md
+│   │   │   └── template_app_php-fpm_http.yaml
+│   │   ├── process
+│   │   │   ├── README.md
+│   │   │   └── template_module_process.yaml
+│   │   ├── proxmox
+│   │   │   ├── README.md
+│   │   │   └── template_app_proxmox.yaml
+│   │   ├── rabbitmq_agent
+│   │   │   ├── README.md
+│   │   │   └── template_app_rabbitmq_agent.yaml
+│   │   ├── rabbitmq_http
+│   │   │   ├── README.md
+│   │   │   └── template_app_rabbitmq_http.yaml
+│   │   ├── sharepoint_http
+│   │   │   ├── README.md
+│   │   │   └── template_app_sharepoint_http.yaml
+│   │   ├── squid_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_app_squid_snmp.yaml
+│   │   ├── systemd
+│   │   │   ├── README.md
+│   │   │   └── template_app_systemd.yaml
+│   │   ├── tomcat_jmx
+│   │   │   ├── README.md
+│   │   │   └── template_app_tomcat_jmx.yaml
+│   │   ├── travis_ci_http
+│   │   │   ├── README.md
+│   │   │   └── template_app_travis_ci_http.yaml
+│   │   ├── truenas_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_app_truenas_core_snmp.yaml
+│   │   ├── vault_http
+│   │   │   ├── README.md
+│   │   │   └── template_app_vault_http.yaml
+│   │   ├── veeam
+│   │   │   ├── backup_replication_http
+│   │   │   └── enterprise_manager_http
+│   │   ├── vmware
+│   │   │   ├── README.md
+│   │   │   └── template_app_vmware.yaml
+│   │   ├── vmware_fqdn
+│   │   │   ├── README.md
+│   │   │   └── template_app_vmware_fqdn.yaml
+│   │   ├── wildfly_domain_jmx
+│   │   │   ├── README.md
+│   │   │   └── template_app_wildfly_domain_jmx.yaml
+│   │   ├── wildfly_server_jmx
+│   │   │   ├── README.md
+│   │   │   └── template_app_wildfly_server_jmx.yaml
+│   │   ├── zabbix_agent
+│   │   │   ├── README.md
+│   │   │   └── template_module_zabbix_agent.yaml
+│   │   ├── zabbix_proxy
+│   │   │   ├── README.md
+│   │   │   └── template_app_zabbix_proxy.yaml
+│   │   ├── zabbix_proxy_remote
+│   │   │   ├── README.md
+│   │   │   └── template_app_zabbix_proxy_remote.yaml
+│   │   ├── zabbix_server
+│   │   │   ├── README.md
+│   │   │   └── template_app_zabbix_server.yaml
+│   │   ├── zabbix_server_remote
+│   │   │   ├── README.md
+│   │   │   └── template_app_zabbix_server_remote.yaml
+│   │   └── zookeeper_http
+│   │       ├── README.md
+│   │       └── template_app_zookeeper_http.yaml
+│   ├── cctv
+│   │   └── hikvision
+│   │       ├── README.md
+│   │       └── template_cctv_hikvision.yaml
+│   ├── cloud
+│   │   ├── AWS
+│   │   │   ├── aws_cost_http
+│   │   │   ├── aws_ec2_http
+│   │   │   ├── aws_ecs_http
+│   │   │   ├── aws_ecs_serverless_http
+│   │   │   ├── aws_http
+│   │   │   ├── aws_rds_http
+│   │   │   └── aws_s3_http
+│   │   ├── azure_http
+│   │   │   ├── README.md
+│   │   │   └── template_cloud_azure_http.yaml
+│   │   ├── gcp
+│   │   │   ├── README.md
+│   │   │   └── template_cloud_gcp_http.yaml
+│   │   └── openstack
+│   │       ├── README.md
+│   │       └── template_cloud_openstack_http.yaml
+│   ├── db
+│   │   ├── cassandra_jmx
+│   │   │   ├── README.md
+│   │   │   └── template_db_cassandra_jmx.yaml
+│   │   ├── clickhouse_http
+│   │   │   ├── README.md
+│   │   │   └── template_db_clickhouse_http.yaml
+│   │   ├── cockroachdb_http
+│   │   │   ├── README.md
+│   │   │   └── template_db_cockroachdb_http.yaml
+│   │   ├── gridgain_jmx
+│   │   │   ├── README.md
+│   │   │   └── template_db_gridgain_jmx.yaml
+│   │   ├── ignite_jmx
+│   │   │   ├── README.md
+│   │   │   └── template_db_ignite_jmx.yaml
+│   │   ├── influxdb_http
+│   │   │   ├── README.md
+│   │   │   └── template_db_influxdb_http.yaml
+│   │   ├── mongodb
+│   │   │   ├── README.md
+│   │   │   └── template_db_mongodb.yaml
+│   │   ├── mongodb_cluster
+│   │   │   ├── README.md
+│   │   │   └── template_db_mongodb_cluster.yaml
+│   │   ├── mssql_odbc
+│   │   │   ├── README.md
+│   │   │   └── template_db_mssql_odbc.yaml
+│   │   ├── mysql_agent
+│   │   │   ├── README.md
+│   │   │   ├── template_db_mysql_agent.yaml
+│   │   │   └── template_db_mysql.conf
+│   │   ├── mysql_agent2
+│   │   │   ├── README.md
+│   │   │   └── template_db_mysql_agent2.yaml
+│   │   ├── mysql_odbc
+│   │   │   ├── README.md
+│   │   │   └── template_db_mysql_odbc.yaml
+│   │   ├── oracle_agent2
+│   │   │   ├── README.md
+│   │   │   └── template_db_oracle_agent2.yaml
+│   │   ├── oracle_odbc
+│   │   │   ├── README.md
+│   │   │   └── template_db_oracle_odbc.yaml
+│   │   ├── postgresql
+│   │   │   ├── postgresql
+│   │   │   ├── README.md
+│   │   │   ├── template_db_postgresql.conf
+│   │   │   └── template_db_postgresql.yaml
+│   │   ├── postgresql_agent2
+│   │   │   ├── README.md
+│   │   │   └── template_db_postgresql_agent2.yaml
+│   │   ├── postgresql_odbc
+│   │   │   ├── README.md
+│   │   │   └── template_db_postgresql_odbc.yaml
+│   │   ├── redis
+│   │   │   ├── README.md
+│   │   │   └── template_db_redis.yaml
+│   │   ├── tidb_http
+│   │   │   ├── tidb_pd_http
+│   │   │   ├── tidb_tidb_http
+│   │   │   └── tidb_tikv_http
+│   │   └── yugabytedb_http
+│   │       ├── README.md
+│   │       └── template_db_yugabyte_http.yaml
+│   ├── media
+│   │   ├── brevis.one
+│   │   │   ├── media_brevis.one.yaml
+│   │   │   └── README.md
+│   │   ├── discord
+│   │   │   ├── images
+│   │   │   ├── media_discord.yaml
+│   │   │   └── README.md
+│   │   ├── event_driven_ansible
+│   │   │   ├── images
+│   │   │   ├── media_event_driven_ansible.yaml
+│   │   │   └── README.md
+│   │   ├── express.ms
+│   │   │   ├── media_express_ms.yaml
+│   │   │   └── README.md
+│   │   ├── github
+│   │   │   ├── images
+│   │   │   ├── media_github.yaml
+│   │   │   └── README.md
+│   │   ├── glpi
+│   │   │   ├── images
+│   │   │   ├── media_glpi.yaml
+│   │   │   └── README.md
+│   │   ├── ilert
+│   │   │   ├── images
+│   │   │   ├── media_ilert.yaml
+│   │   │   └── README.md
+│   │   ├── itop
+│   │   │   ├── media_itop.yaml
+│   │   │   └── README.md
+│   │   ├── jira
+│   │   │   ├── images
+│   │   │   ├── media_jira.yaml
+│   │   │   └── README.md
+│   │   ├── jira_servicedesk
+│   │   │   ├── images
+│   │   │   ├── media_jira_servicedesk.yaml
+│   │   │   └── README.md
+│   │   ├── line
+│   │   │   ├── images
+│   │   │   ├── media_line.yaml
+│   │   │   └── README.md
+│   │   ├── manageengine_servicedesk
+│   │   │   ├── media_manageengine_servicedesk.yaml
+│   │   │   └── README.md
+│   │   ├── mantisbt
+│   │   │   ├── images
+│   │   │   ├── media_mantisbt.yaml
+│   │   │   └── README.md
+│   │   ├── mattermost
+│   │   │   ├── images
+│   │   │   ├── LICENSE
+│   │   │   ├── LICENSE-APACHE2
+│   │   │   ├── media_mattermost.yaml
+│   │   │   └── README.md
+│   │   ├── msteams
+│   │   │   ├── images
+│   │   │   ├── media_msteams.yaml
+│   │   │   └── README.md
+│   │   ├── opsgenie
+│   │   │   ├── images
+│   │   │   ├── media_opsgenie.yaml
+│   │   │   └── README.md
+│   │   ├── otrs_ce
+│   │   │   ├── images
+│   │   │   ├── media_otrs_ce.yaml
+│   │   │   ├── README.md
+│   │   │   └── ZabbixTicketConnector.yml
+│   │   ├── pagerduty
+│   │   │   ├── images
+│   │   │   ├── media_pagerduty.yaml
+│   │   │   └── README.md
+│   │   ├── pushover
+│   │   │   ├── images
+│   │   │   ├── media_pushover.yaml
+│   │   │   └── README.md
+│   │   ├── redmine
+│   │   │   ├── images
+│   │   │   ├── media_redmine.yaml
+│   │   │   └── README.md
+│   │   ├── rocketchat
+│   │   │   ├── media_rocketchat.yaml
+│   │   │   └── README.md
+│   │   ├── servicenow
+│   │   │   ├── images
+│   │   │   ├── media_servicenow.yaml
+│   │   │   └── README.md
+│   │   ├── signl4
+│   │   │   ├── images
+│   │   │   ├── media_signl4.yaml
+│   │   │   └── README.md
+│   │   ├── slack
+│   │   │   ├── images
+│   │   │   ├── media_slack.yaml
+│   │   │   └── README.md
+│   │   ├── solarwinds
+│   │   │   ├── images
+│   │   │   ├── media_solarwinds_servicedesk.yaml
+│   │   │   └── README.md
+│   │   ├── spiceworks
+│   │   │   ├── images
+│   │   │   └── README.md
+│   │   ├── sysaid
+│   │   │   ├── media_sysaid.yaml
+│   │   │   └── README.md
+│   │   ├── telegram
+│   │   │   ├── images
+│   │   │   ├── media_telegram.yaml
+│   │   │   └── README.md
+│   │   ├── topdesk
+│   │   │   ├── images
+│   │   │   ├── media_topdesk.yaml
+│   │   │   └── README.md
+│   │   ├── victorops
+│   │   │   ├── media_victorops.yaml
+│   │   │   └── README.md
+│   │   ├── zammad
+│   │   │   ├── images
+│   │   │   ├── media_zammad.yaml
+│   │   │   └── README.md
+│   │   └── zendesk
+│   │       ├── images
+│   │       ├── media_zendesk.yaml
+│   │       └── README.md
+│   ├── net
+│   │   ├── alcatel_timetra_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_net_alcatel_timetra_snmp.yaml
+│   │   ├── arista_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_net_arista_snmp.yaml
+│   │   ├── brocade_fc_sw_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_net_brocade_fc_sw_snmp.yaml
+│   │   ├── brocade_foundry_sw_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_net_brocade_foundry_sw_snmp.yaml
+│   │   ├── cisco
+│   │   │   ├── cisco_asav_snmp
+│   │   │   ├── cisco_catalyst_3750_24fs_snmp
+│   │   │   ├── cisco_catalyst_3750_24ps_snmp
+│   │   │   ├── cisco_catalyst_3750_24ts_snmp
+│   │   │   ├── cisco_catalyst_3750_48ps_snmp
+│   │   │   ├── cisco_catalyst_3750_48ts_snmp
+│   │   │   ├── cisco_nexus_9000_series_snmp
+│   │   │   ├── cisco_sdwan_http
+│   │   │   └── cisco_snmp
+│   │   ├── dell_force_s_series_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_net_dell_force_s_series_snmp.yaml
+│   │   ├── dlink_des7200_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_net_dlink_des7200_snmp.yaml
+│   │   ├── dlink_des_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_net_dlink_des_snmp.yaml
+│   │   ├── extreme_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_net_extreme_snmp.yaml
+│   │   ├── f5_bigip_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_net_f5_bigip_snmp.yaml
+│   │   ├── fortinet
+│   │   │   ├── fortigate_http
+│   │   │   └── fortigate_snmp
+│   │   ├── generic_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_net_generic_snmp.yaml
+│   │   ├── generic_snmp_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_module_generic_snmp_snmp.yaml
+│   │   ├── hp_hh3c_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_net_hp_hh3c_snmp.yaml
+│   │   ├── hp_hpn_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_net_hp_hpn_snmp.yaml
+│   │   ├── huawei_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_net_huawei_snmp.yaml
+│   │   ├── icmp_ping
+│   │   │   ├── README.md
+│   │   │   └── template_module_icmp_ping.yaml
+│   │   ├── intel_qlogic_infiniband_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_net_intel_qlogic_infiniband_snmp.yaml
+│   │   ├── juniper_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_net_juniper_snmp.yaml
+│   │   ├── mellanox_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_net_mellanox_snmp.yaml
+│   │   ├── meraki_http
+│   │   │   ├── README.md
+│   │   │   └── template_net_meraki_http.yaml
+│   │   ├── mikrotik
+│   │   │   ├── mikrotik_CCR1009-7G-1C-1S+PC_snmp
+│   │   │   ├── mikrotik_CCR1009-7G-1C-1S+_snmp
+│   │   │   ├── mikrotik_CCR1009-7G-1C-PC_snmp
+│   │   │   ├── mikrotik_CCR1016-12G_snmp
+│   │   │   ├── mikrotik_CCR1016-12S-1S+_snmp
+│   │   │   ├── mikrotik_CCR1036-12G-4S-EM_snmp
+│   │   │   ├── mikrotik_CCR1036-12G-4S_snmp
+│   │   │   ├── mikrotik_CCR1036-8G-2S+EM_snmp
+│   │   │   ├── mikrotik_CCR1036-8G-2S+_snmp
+│   │   │   ├── mikrotik_CCR1072-1G-8S+_snmp
+│   │   │   ├── mikrotik_CCR2004-16G-2S+_snmp
+│   │   │   ├── mikrotik_CCR2004-1G-12S+2XS_snmp
+│   │   │   ├── mikrotik_CRS106-1C-5S_snmp
+│   │   │   ├── mikrotik_CRS109-8G-1S-2HnD-IN_snmp
+│   │   │   ├── mikrotik_CRS112-8G-4S-IN_snmp
+│   │   │   ├── mikrotik_CRS112-8P-4S-IN_snmp
+│   │   │   ├── mikrotik_CRS125-24G-1S-2HnD-IN_snmp
+│   │   │   ├── mikrotik_CRS212-1G-10S-1S+IN_snmp
+│   │   │   ├── mikrotik_CRS305-1G-4S+IN_snmp
+│   │   │   ├── mikrotik_CRS309-1G-8S+IN_snmp
+│   │   │   ├── mikrotik_CRS312-4C+8XG-RM_snmp
+│   │   │   ├── mikrotik_CRS317-1G-16S+RM_snmp
+│   │   │   ├── mikrotik_CRS326-24G-2S+IN_snmp
+│   │   │   ├── mikrotik_CRS326-24G-2S+RM_snmp
+│   │   │   ├── mikrotik_CRS326-24S+2Q+RM_snmp
+│   │   │   ├── mikrotik_CRS328-24P-4S+RM_snmp
+│   │   │   ├── mikrotik_CRS328-4C-20S-4S+RM_snmp
+│   │   │   ├── mikrotik_CRS354-48G-4S+2Q+RM_snmp
+│   │   │   ├── mikrotik_CRS354-48P-4S+2Q+RM_snmp
+│   │   │   ├── mikrotik_CSS326-24G-2S+RM_snmp
+│   │   │   ├── mikrotik_CSS610-8G-2S+IN_snmp
+│   │   │   ├── mikrotik_FiberBox_snmp
+│   │   │   ├── mikrotik_hEX_lite_snmp
+│   │   │   ├── mikrotik_hEX_PoE_lite_snmp
+│   │   │   ├── mikrotik_hEX_PoE_snmp
+│   │   │   ├── mikrotik_hEX_snmp
+│   │   │   ├── mikrotik_hEX_S_snmp
+│   │   │   ├── mikrotik_netPower_15FR_snmp
+│   │   │   ├── mikrotik_netPower_16P_snmp
+│   │   │   ├── mikrotik_netPower_Lite_7R_snmp
+│   │   │   ├── mikrotik_PowerBox_Pro_snmp
+│   │   │   ├── mikrotik_PowerBox_snmp
+│   │   │   ├── mikrotik_RB1100AHx4_Dude_Edition_snmp
+│   │   │   ├── mikrotik_RB1100AHx4_snmp
+│   │   │   ├── mikrotik_RB2011iL-IN_snmp
+│   │   │   ├── mikrotik_RB2011iL-RM_snmp
+│   │   │   ├── mikrotik_RB2011iLS-IN_snmp
+│   │   │   ├── mikrotik_RB2011UiAS-IN_snmp
+│   │   │   ├── mikrotik_RB2011UiAS-RM_snmp
+│   │   │   ├── mikrotik_RB260GSP_snmp
+│   │   │   ├── mikrotik_RB260GS_snmp
+│   │   │   ├── mikrotik_RB3011UiAS-RM_snmp
+│   │   │   ├── mikrotik_RB4011iGS+RM_snmp
+│   │   │   ├── mikrotik_RB5009UG+S+IN_snmp
+│   │   │   └── mikrotik_snmp
+│   │   ├── morningstar
+│   │   │   ├── morningstar_prostar_mppt_snmp
+│   │   │   ├── morningstar_prostar_pwm_snmp
+│   │   │   ├── morningstar_sunsaver_mppt_snmp
+│   │   │   ├── morningstar_suresine_snmp
+│   │   │   ├── morningstar_tristar_mppt_600V_snmp
+│   │   │   ├── morningstar_tristar_mppt_snmp
+│   │   │   ├── morningstar_tristar_pwm_snmp
+│   │   │   └── README.md
+│   │   ├── netgear_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_net_netgear_snmp.yaml
+│   │   ├── qtech_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_net_qtech_snmp.yaml
+│   │   ├── tplink_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_net_tplink_snmp.yaml
+│   │   ├── ubiquiti_airos_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_net_ubiquiti_airos_snmp.yaml
+│   │   ├── velocloud_http
+│   │   │   ├── README.md
+│   │   │   └── template_net_velocloud_http.yaml
+│   │   └── zyxel_snmp
+│   │       ├── zyxel_aam1212-51_snmp
+│   │       ├── zyxel_es3500-8pd_snmp
+│   │       ├── zyxel_gs4012f_snmp
+│   │       ├── zyxel_ies1248-51_snmp
+│   │       ├── zyxel_ies-500x_snmp
+│   │       ├── zyxel_ies-6000_snmp
+│   │       ├── zyxel_mes3500-10_snmp
+│   │       ├── zyxel_mes3500-24_snmp
+│   │       ├── zyxel_mes-3528_snmp
+│   │       ├── zyxel_mgs3500-24s_snmp
+│   │       ├── zyxel_mgs3520-28x_snmp
+│   │       ├── zyxel_mgs-3712f_snmp
+│   │       ├── zyxel_mgs-3712_snmp
+│   │       └── zyxel_xgs-4728f_snmp
+│   ├── os
+│   │   ├── aix
+│   │   │   ├── README.md
+│   │   │   └── template_os_aix.yaml
+│   │   ├── freebsd
+│   │   │   ├── README.md
+│   │   │   └── template_os_freebsd.yaml
+│   │   ├── hp-ux
+│   │   │   ├── README.md
+│   │   │   └── template_os_hp-ux.yaml
+│   │   ├── linux
+│   │   │   ├── README.md
+│   │   │   └── template_os_linux.yaml
+│   │   ├── linux_active
+│   │   │   ├── README.md
+│   │   │   └── template_os_linux_active.yaml
+│   │   ├── linux_prom
+│   │   │   ├── README.md
+│   │   │   └── template_os_linux_prom.yaml
+│   │   ├── linux_snmp_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_os_linux_snmp_snmp.yaml
+│   │   ├── macos
+│   │   │   ├── README.md
+│   │   │   └── template_os_macos.yaml
+│   │   ├── openbsd
+│   │   │   ├── README.md
+│   │   │   └── template_os_openbsd.yaml
+│   │   ├── solaris
+│   │   │   ├── README.md
+│   │   │   └── template_os_solaris.yaml
+│   │   ├── windows_agent
+│   │   │   ├── README.md
+│   │   │   └── template_os_windows_agent.yaml
+│   │   ├── windows_agent_active
+│   │   │   ├── README.md
+│   │   │   └── template_os_windows_agent_active.yaml
+│   │   └── windows_snmp
+│   │       ├── README.md
+│   │       └── template_os_windows_snmp.yaml
+│   ├── power
+│   │   └── apc
+│   │       ├── apc_ups_galaxy_3500_snmp
+│   │       ├── apc_ups_smart_2200_rm_snmp
+│   │       ├── apc_ups_smart_3000_xlm_snmp
+│   │       ├── apc_ups_smart_rt_1000_rm_xl_snmp
+│   │       ├── apc_ups_smart_rt_1000_xl_snmp
+│   │       ├── apc_ups_smart_srt_5000_snmp
+│   │       ├── apc_ups_smart_srt_8000_snmp
+│   │       ├── apc_ups_snmp
+│   │       ├── apc_ups_symmetra_lx_snmp
+│   │       ├── apc_ups_symmetra_rm_snmp
+│   │       └── apc_ups_symmetra_rx_snmp
+│   ├── san
+│   │   ├── hpe_msa2040_http
+│   │   │   ├── README.md
+│   │   │   └── template_san_hpe_msa2040_http.yaml
+│   │   ├── hpe_msa2060_http
+│   │   │   ├── README.md
+│   │   │   └── template_san_hpe_msa2060_http.yaml
+│   │   ├── hpe_primera_http
+│   │   │   ├── README.md
+│   │   │   └── template_san_hpe_primera_http.yaml
+│   │   ├── huawei_5300v5_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_san_huawei_5300v5_snmp.yaml
+│   │   ├── netapp_aff_a700_http
+│   │   │   ├── README.md
+│   │   │   └── template_san_netapp_aff_a700_http.yaml
+│   │   └── netapp_fas3220_snmp
+│   │       ├── README.md
+│   │       └── template_san_netapp_fas3220_snmp.yaml
+│   ├── server
+│   │   ├── chassis_ipmi
+│   │   │   ├── README.md
+│   │   │   └── template_server_chassis_ipmi.yaml
+│   │   ├── cisco_ucs_manager_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_server_cisco_ucs_manager_snmp.yaml
+│   │   ├── cisco_ucs_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_server_cisco_ucs_snmp.yaml
+│   │   ├── dell
+│   │   │   ├── dell_r720_http
+│   │   │   ├── dell_r720_snmp
+│   │   │   ├── dell_r740_http
+│   │   │   ├── dell_r740_snmp
+│   │   │   ├── dell_r820_http
+│   │   │   ├── dell_r820_snmp
+│   │   │   ├── dell_r840_http
+│   │   │   └── dell_r840_snmp
+│   │   ├── dell_idrac_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_server_dell_idrac_snmp.yaml
+│   │   ├── hp
+│   │   │   ├── hp_bl460_snmp
+│   │   │   ├── hp_bl920_snmp
+│   │   │   ├── hp_dl360_snmp
+│   │   │   └── hp_dl380_snmp
+│   │   ├── hpe_ilo_http
+│   │   │   ├── README.md
+│   │   │   └── template_server_hpe_ilo_http.yaml
+│   │   ├── hpe_synergy_http
+│   │   │   ├── README.md
+│   │   │   └── template_server_hpe_synergy_http.yaml
+│   │   ├── hp_ilo_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_server_hp_ilo_snmp.yaml
+│   │   ├── ibm_imm_snmp
+│   │   │   ├── README.md
+│   │   │   └── template_server_ibm_imm_snmp.yaml
+│   │   ├── intel_sr1530_ipmi
+│   │   │   ├── README.md
+│   │   │   └── template_server_intel_sr1530_ipmi.yaml
+│   │   ├── intel_sr1630_ipmi
+│   │   │   ├── README.md
+│   │   │   └── template_server_intel_sr1630_ipmi.yaml
+│   │   ├── smart_agent2
+│   │   │   ├── README.md
+│   │   │   └── template_module_smart_agent2.yaml
+│   │   ├── smart_agent2_active
+│   │   │   ├── README.md
+│   │   │   └── template_module_smart_agent2_active.yaml
+│   │   └── supermicro_aten_snmp
+│   │       ├── README.md
+│   │       └── template_server_supermicro_aten_snmp.yaml
+│   └── tel
+│       └── asterisk_http
+│           ├── README.md
+│           └── template_tel_asterisk_http.yaml
+├── tests
+│   ├── conf_tests.m4
+│   ├── libs
+│   │   ├── Makefile.am
+│   │   ├── zbxalgo
+│   │   │   ├── evaluate.c
+│   │   │   ├── evaluate_unknown.c
+│   │   │   ├── evaluate_unknown.yaml
+│   │   │   ├── evaluate.yaml
+│   │   │   ├── list.c
+│   │   │   ├── list.yaml
+│   │   │   ├── Makefile.am
+│   │   │   ├── queue.c
+│   │   │   └── queue.yaml
+│   │   ├── zbxcommon
+│   │   │   ├── calculate_item_nextcheck.c
+│   │   │   ├── calculate_item_nextcheck_unreachable.c
+│   │   │   ├── calculate_item_nextcheck_unreachable.yaml
+│   │   │   ├── calculate_item_nextcheck.yaml
+│   │   │   ├── convert_to_utf8.c
+│   │   │   ├── convert_to_utf8.yaml
+│   │   │   ├── is_double.c
+│   │   │   ├── is_double_suffix.c
+│   │   │   ├── is_double_suffix.yaml
+│   │   │   ├── is_double.yaml
+│   │   │   ├── Makefile.am
+│   │   │   ├── parse_key.c
+│   │   │   ├── parse_key.yaml
+│   │   │   ├── replace_key_params_dyn.c
+│   │   │   ├── replace_key_params_dyn.yaml
+│   │   │   ├── zbx_common_trim_utf8.c
+│   │   │   ├── zbx_common_trim_utf8.h
+│   │   │   ├── zbx_dyn_escape_string.c
+│   │   │   ├── zbx_dyn_escape_string.yaml
+│   │   │   ├── zbx_function_find.c
+│   │   │   ├── zbx_function_find.yaml
+│   │   │   ├── zbx_function_get_param_dyn.c
+│   │   │   ├── zbx_function_get_param_dyn.yaml
+│   │   │   ├── zbx_function_param_parse_ext.c
+│   │   │   ├── zbx_function_param_parse_ext.yaml
+│   │   │   ├── zbx_get_report_nextcheck.c
+│   │   │   ├── zbx_get_report_nextcheck.yaml
+│   │   │   ├── zbx_get_week_number.c
+│   │   │   ├── zbx_get_week_number.yaml
+│   │   │   ├── zbx_interval_preproc.c
+│   │   │   ├── zbx_interval_preproc.yaml
+│   │   │   ├── zbx_json_to_xml.c
+│   │   │   ├── zbx_json_to_xml.yaml
+│   │   │   ├── zbx_ltrim_utf8.c
+│   │   │   ├── zbx_ltrim_utf8.yaml
+│   │   │   ├── zbx_rtrim_utf8.c
+│   │   │   ├── zbx_rtrim_utf8.yaml
+│   │   │   ├── zbx_str_extract.c
+│   │   │   ├── zbx_str_extract.yaml
+│   │   │   ├── zbx_tm_add.c
+│   │   │   ├── zbx_tm_add.yaml
+│   │   │   ├── zbx_tm_round_down.c
+│   │   │   ├── zbx_tm_round_down.yaml
+│   │   │   ├── zbx_tm_round_up.c
+│   │   │   ├── zbx_tm_round_up.yaml
+│   │   │   ├── zbx_tm_sub.c
+│   │   │   ├── zbx_tm_sub.yaml
+│   │   │   ├── zbx_token_find.c
+│   │   │   ├── zbx_token_find.yaml
+│   │   │   ├── zbx_trim_float.c
+│   │   │   ├── zbx_trim_float.yaml
+│   │   │   ├── zbx_trim_integer.c
+│   │   │   ├── zbx_trim_integer.yaml
+│   │   │   ├── zbx_truncate_itemkey.c
+│   │   │   ├── zbx_truncate_itemkey.yaml
+│   │   │   ├── zbx_truncate_value.c
+│   │   │   ├── zbx_truncate_value.yaml
+│   │   │   ├── zbx_user_macro_parse.c
+│   │   │   ├── zbx_user_macro_parse.yaml
+│   │   │   ├── zbx_validate_interval.c
+│   │   │   ├── zbx_validate_interval.yaml
+│   │   │   ├── zbx_variant_compare.c
+│   │   │   ├── zbx_variant_compare.yaml
+│   │   │   ├── zbx_xml_to_json.c
+│   │   │   └── zbx_xml_to_json.yaml
+│   │   ├── zbxcomms
+│   │   │   ├── Makefile.am
+│   │   │   ├── zbx_tcp_check_allowed_peers.c
+│   │   │   ├── zbx_tcp_check_allowed_peers_ipv4.c
+│   │   │   ├── zbx_tcp_check_allowed_peers_ipv4.yaml
+│   │   │   └── zbx_tcp_check_allowed_peers.yaml
+│   │   ├── zbxcommshigh
+│   │   │   ├── Makefile.am
+│   │   │   ├── zbx_tcp_recv_ext.c
+│   │   │   ├── zbx_tcp_recv_ext.yaml
+│   │   │   ├── zbx_tcp_recv_ext_zlib.yaml
+│   │   │   ├── zbx_tcp_recv_raw_ext.c
+│   │   │   └── zbx_tcp_recv_raw_ext.yaml
+│   │   ├── zbxconf
+│   │   │   ├── Makefile.am
+│   │   │   ├── parse_cfg_file.c
+│   │   │   └── parse_cfg_file.yaml
+│   │   ├── zbxdbcache
+│   │   │   ├── dbconfig_maintenance_test.c
+│   │   │   ├── dbconfig_maintenance_test.h
+│   │   │   ├── dc_check_maintenance_period.c
+│   │   │   ├── dc_check_maintenance_period.yaml
+│   │   │   ├── dc_expand_user_macros_in_func_params.c
+│   │   │   ├── dc_expand_user_macros_in_func_params.yaml
+│   │   │   ├── dc_function_calculate_nextcheck.c
+│   │   │   ├── dc_function_calculate_nextcheck_test.c
+│   │   │   ├── dc_function_calculate_nextcheck.yaml
+│   │   │   ├── dc_item_poller_type_update.c
+│   │   │   ├── dc_item_poller_type_update_test.c
+│   │   │   ├── dc_item_poller_type_update_test.h
+│   │   │   ├── dc_item_poller_type_update.yaml
+│   │   │   ├── dc_maintenance_match_tags.c
+│   │   │   ├── dc_maintenance_match_tags.yaml
+│   │   │   ├── is_item_processed_by_server.c
+│   │   │   ├── is_item_processed_by_server.yaml
+│   │   │   ├── Makefile.am
+│   │   │   ├── um_cache_mock.c
+│   │   │   ├── um_cache_mock.h
+│   │   │   ├── um_cache_resolve.c
+│   │   │   ├── um_cache_resolve_cont_01.inc.yaml
+│   │   │   ├── um_cache_resolve_cont_02.inc.yaml
+│   │   │   ├── um_cache_resolve_cont_03.inc.yaml
+│   │   │   ├── um_cache_resolve_cont_04.inc.yaml
+│   │   │   ├── um_cache_resolve_cont.c
+│   │   │   ├── um_cache_resolve_cont.yaml
+│   │   │   ├── um_cache_resolve.inc.yaml
+│   │   │   ├── um_cache_resolve.yaml
+│   │   │   ├── um_cache_sync_00.inc.yaml
+│   │   │   ├── um_cache_sync_01.inc.yaml
+│   │   │   ├── um_cache_sync_02.inc.yaml
+│   │   │   ├── um_cache_sync_03.inc.yaml
+│   │   │   ├── um_cache_sync_04.inc.yaml
+│   │   │   ├── um_cache_sync_05.inc.yaml
+│   │   │   ├── um_cache_sync_06.inc.yaml
+│   │   │   ├── um_cache_sync_07.inc.yaml
+│   │   │   ├── um_cache_sync_08.inc.yaml
+│   │   │   ├── um_cache_sync_09.inc.yaml
+│   │   │   ├── um_cache_sync_10.inc.yaml
+│   │   │   ├── um_cache_sync.c
+│   │   │   ├── um_cache_sync.yaml
+│   │   │   ├── valuecache_test.c
+│   │   │   ├── valuecache_test.h
+│   │   │   ├── zbx_vc_add_values.c
+│   │   │   ├── zbx_vc_add_values.yaml
+│   │   │   ├── zbx_vc_common.c
+│   │   │   ├── zbx_vc_common.h
+│   │   │   ├── zbx_vc_get_value.c
+│   │   │   ├── zbx_vc_get_values.c
+│   │   │   ├── zbx_vc_get_values.inc.yaml
+│   │   │   ├── zbx_vc_get_values.yaml
+│   │   │   └── zbx_vc_get_value.yaml
+│   │   ├── zbxdbhigh
+│   │   │   ├── DBadd_condition_alloc.c
+│   │   │   ├── DBadd_condition_alloc.yaml
+│   │   │   ├── dbhigh_test.c
+│   │   │   ├── dbhigh_test.h
+│   │   │   ├── DBselect_uint64.c
+│   │   │   ├── DBselect_uint64.yaml
+│   │   │   ├── Makefile.am
+│   │   │   ├── zbx_add_tags.c
+│   │   │   ├── zbx_add_tags.yaml
+│   │   │   ├── zbx_del_tags.c
+│   │   │   ├── zbx_del_tags.yaml
+│   │   │   ├── zbx_merge_tags.c
+│   │   │   └── zbx_merge_tags.yaml
+│   │   ├── zbxeval
+│   │   │   ├── Makefile.am
+│   │   │   ├── mock_eval.c
+│   │   │   ├── mock_eval.h
+│   │   │   ├── zbx_eval_compose_expression.c
+│   │   │   ├── zbx_eval_compose_expression.yaml
+│   │   │   ├── zbx_eval_execute.c
+│   │   │   ├── zbx_eval_execute_ext.c
+│   │   │   ├── zbx_eval_execute_ext.yaml
+│   │   │   ├── zbx_eval_execute.yaml
+│   │   │   ├── zbx_eval_get_constant.c
+│   │   │   ├── zbx_eval_get_constant.yaml
+│   │   │   ├── zbx_eval_get_group_filter.c
+│   │   │   ├── zbx_eval_get_group_filter.yaml
+│   │   │   ├── zbx_eval_parse_expression.c
+│   │   │   ├── zbx_eval_parse_expression.yaml
+│   │   │   ├── zbx_eval_parse_query.c
+│   │   │   ├── zbx_eval_parse_query.yaml
+│   │   │   ├── zbx_eval_prepare_filter.c
+│   │   │   ├── zbx_eval_prepare_filter.yaml
+│   │   │   ├── zbx_eval_serialize.c
+│   │   │   └── zbx_eval_serialize.yaml
+│   │   ├── zbxexpression
+│   │   │   ├── evaluate_function.c
+│   │   │   ├── evaluate_function.yaml
+│   │   │   ├── evaluate_percentage_deviations_in_remainder.c
+│   │   │   ├── evaluate_percentage_deviations_in_remainder.yaml
+│   │   │   ├── evaluate_stl.c
+│   │   │   ├── evaluate_stl.yaml
+│   │   │   ├── macro_fmttime.c
+│   │   │   ├── macro_fmttime.yaml
+│   │   │   ├── macro_functions.c
+│   │   │   ├── macro_functions.yaml
+│   │   │   ├── Makefile.am
+│   │   │   ├── substitute_lld_macros.c
+│   │   │   ├── substitute_lld_macros.yaml
+│   │   │   ├── valuemaps.c
+│   │   │   └── valuemaps.yaml
+│   │   ├── zbxfile
+│   │   │   ├── Makefile.am
+│   │   │   ├── zbx_buf_readln.c
+│   │   │   └── zbx_buf_readln.yaml
+│   │   ├── zbxhistory
+│   │   │   ├── Makefile.am
+│   │   │   ├── zbx_history_get_values.c
+│   │   │   └── zbx_history_get_values.yaml
+│   │   ├── zbxhttp
+│   │   │   ├── Makefile.am
+│   │   │   ├── zbx_determine_charset.c
+│   │   │   └── zbx_determine_charset.yaml
+│   │   ├── zbxicmpping
+│   │   │   └── Makefile.am
+│   │   ├── zbxjson
+│   │   │   ├── Makefile.am
+│   │   │   ├── mock_json.c
+│   │   │   ├── mock_json.h
+│   │   │   ├── zbx_json_decodevalue.c
+│   │   │   ├── zbx_json_decodevalue_dyn.c
+│   │   │   ├── zbx_json_decodevalue_dyn.yaml
+│   │   │   ├── zbx_json_decodevalue.yaml
+│   │   │   ├── zbx_jsonobj_query.c
+│   │   │   ├── zbx_jsonobj_query.inc.yaml
+│   │   │   ├── zbx_jsonobj_query.yaml
+│   │   │   ├── zbx_json_open_path.c
+│   │   │   ├── zbx_json_open_path.yaml
+│   │   │   ├── zbx_jsonpath_compile.c
+│   │   │   └── zbx_jsonpath_compile.yaml
+│   │   ├── zbxmodules
+│   │   │   ├── agent_module_load.yaml
+│   │   │   ├── generic_module_load.c
+│   │   │   ├── Makefile.am
+│   │   │   ├── proxy_module_load.yaml
+│   │   │   └── server_module_load.yaml
+│   │   ├── zbxpoller
+│   │   │   ├── Makefile.am
+│   │   │   ├── test_get_value_ssh.c
+│   │   │   ├── test_get_value_ssh.h
+│   │   │   ├── test_get_value_telnet.c
+│   │   │   ├── test_get_value_telnet.h
+│   │   │   ├── zbx_poller_test.c
+│   │   │   └── zbx_poller_test.yaml
+│   │   ├── zbxpreproc
+│   │   │   ├── configcache_mock.c
+│   │   │   ├── item_preproc_csv_to_json.c
+│   │   │   ├── item_preproc_csv_to_json.yaml
+│   │   │   ├── item_preproc_xpath.c
+│   │   │   ├── item_preproc_xpath.yaml
+│   │   │   ├── Makefile.am
+│   │   │   ├── zbx_item_preproc.c
+│   │   │   └── zbx_item_preproc.yaml
+│   │   ├── zbxprometheus
+│   │   │   ├── Makefile.am
+│   │   │   ├── prometheus_filter_init.c
+│   │   │   ├── prometheus_filter_init.yaml
+│   │   │   ├── prometheus_parse_row.c
+│   │   │   ├── prometheus_parse_row.yaml
+│   │   │   ├── prometheus_test.c
+│   │   │   ├── prometheus_test.h
+│   │   │   ├── zbx_prometheus_pattern.c
+│   │   │   ├── zbx_prometheus_pattern.yaml
+│   │   │   ├── zbx_prometheus_to_json.c
+│   │   │   └── zbx_prometheus_to_json.yaml
+│   │   ├── zbxregexp
+│   │   │   ├── Makefile.am
+│   │   │   ├── wildcard_match.c
+│   │   │   └── wildcard_match.yaml
+│   │   ├── zbxsysinfo
+│   │   │   ├── aix
+│   │   │   ├── check_get_fqdn.c
+│   │   │   ├── check_get_fqdn.yaml
+│   │   │   ├── check_key_access_rules.c
+│   │   │   ├── check_key_access_rules.yaml
+│   │   │   ├── check_service_test.c
+│   │   │   ├── check_service_test.yaml
+│   │   │   ├── common
+│   │   │   ├── freebsd
+│   │   │   ├── hpux
+│   │   │   ├── linux
+│   │   │   ├── Makefile.am
+│   │   │   ├── netbsd
+│   │   │   ├── openbsd
+│   │   │   ├── osf
+│   │   │   ├── osx
+│   │   │   ├── parse_item_key.c
+│   │   │   ├── parse_item_key.yaml
+│   │   │   ├── solaris
+│   │   │   ├── unknown
+│   │   │   ├── zbx_execute_agent_check.c
+│   │   │   ├── zbx_execute_agent_check_http.c
+│   │   │   ├── zbx_execute_agent_check_http.yaml
+│   │   │   └── zbx_execute_agent_check.yaml
+│   │   ├── zbxtagfilter
+│   │   │   ├── Makefile.am
+│   │   │   ├── tagfilter_match_tags.c
+│   │   │   └── tagfilter_match_tags.yaml
+│   │   ├── zbxtime
+│   │   │   ├── Makefile.am
+│   │   │   ├── zbx_iso8601_utc.c
+│   │   │   └── zbx_iso8601_utc.yaml
+│   │   └── zbxtrends
+│   │       ├── Makefile.am
+│   │       ├── zbx_baseline_get_data.c
+│   │       ├── zbx_baseline_get_data.yaml
+│   │       ├── zbx_trends_parse_range.c
+│   │       └── zbx_trends_parse_range.yaml
+│   ├── Makefile.am
+│   ├── mocks
+│   │   ├── configcache
+│   │   │   ├── configcache.c
+│   │   │   ├── configcache.h
+│   │   │   ├── configcache_mock.h
+│   │   │   ├── hosts.c
+│   │   │   ├── Makefile.am
+│   │   │   └── usermacros.c
+│   │   ├── Makefile.am
+│   │   └── valuecache
+│   │       ├── Makefile.am
+│   │       ├── valuecache_mock.c
+│   │       └── valuecache_mock.h
+│   ├── tests_run.pl
+│   ├── zabbix_server
+│   │   ├── lld
+│   │   │   ├── Makefile.am
+│   │   │   ├── zbx_lld_hgsets_test.c
+│   │   │   └── zbx_lld_hgsets_test.yaml
+│   │   ├── Makefile.am
+│   │   ├── pinger
+│   │   │   ├── Makefile.am
+│   │   │   ├── zbx_pinger_test.c
+│   │   │   └── zbx_pinger_test.yaml
+│   │   ├── service
+│   │   │   ├── Makefile.am
+│   │   │   ├── mock_service.c
+│   │   │   ├── mock_service.h
+│   │   │   ├── service_get_main_status.c
+│   │   │   ├── service_get_main_status.inc.yaml
+│   │   │   ├── service_get_main_status.yaml
+│   │   │   ├── service_get_rootcause_eventids.c
+│   │   │   ├── service_get_rootcause_eventids.inc.yaml
+│   │   │   ├── service_get_rootcause_eventids.yaml
+│   │   │   ├── service_get_rule_status.c
+│   │   │   ├── service_get_rule_status.inc.yaml
+│   │   │   ├── service_get_rule_status.yaml
+│   │   │   ├── service_get_status.c
+│   │   │   └── service_get_status.yaml
+│   │   └── trapper
+│   │       ├── Makefile.am
+│   │       ├── zbx_trapper_preproc_test_run.c
+│   │       └── zbx_trapper_preproc_test_run.yaml
+│   ├── zbxmockassert.c
+│   ├── zbxmockassert.h
+│   ├── zbxmockdata.c
+│   ├── zbxmockdata.h
+│   ├── zbxmockdb.c
+│   ├── zbxmockdb.h
+│   ├── zbxmockdir.c
+│   ├── zbxmockexit.c
+│   ├── zbxmockfile.c
+│   ├── zbxmockhelper.c
+│   ├── zbxmockhelper.h
+│   ├── zbxmockjson.c
+│   ├── zbxmockjson.h
+│   ├── zbxmocklog.c
+│   ├── zbxmocktest.c
+│   ├── zbxmocktest.h
+│   ├── zbxmocktime.c
+│   ├── zbxmockutil.c
+│   └── zbxmockutil.h
+├── ui
+│   ├── api_jsonrpc.php
+│   ├── api_scim.php
+│   ├── app
+│   │   ├── controllers
+│   │   │   ├── CControllerActionConditionCheck.php
+│   │   │   ├── CControllerActionCreate.php
+│   │   │   ├── CControllerActionDelete.php
+│   │   │   ├── CControllerActionDisable.php
+│   │   │   ├── CControllerActionEnable.php
+│   │   │   ├── CControllerActionList.php
+│   │   │   ├── CControllerActionLogList.php
+│   │   │   ├── CControllerActionOperationCheck.php
+│   │   │   ├── CControllerActionOperationConditionCheck.php
+│   │   │   ├── CControllerActionUpdate.php
+│   │   │   ├── CControllerAuditLogList.php
+│   │   │   ├── CControllerAuditSettingsEdit.php
+│   │   │   ├── CControllerAuditSettingsUpdate.php
+│   │   │   ├── CControllerAuthenticationEdit.php
+│   │   │   ├── CControllerAuthenticationUpdate.php
+│   │   │   ├── CControllerAutoregEdit.php
+│   │   │   ├── CControllerAutoregUpdate.php
+│   │   │   ├── CControllerCharts.php
+│   │   │   ├── CControllerChartsViewJson.php
+│   │   │   ├── CControllerChartsView.php
+│   │   │   ├── CControllerConnectorCreate.php
+│   │   │   ├── CControllerConnectorDelete.php
+│   │   │   ├── CControllerConnectorDisable.php
+│   │   │   ├── CControllerConnectorEdit.php
+│   │   │   ├── CControllerConnectorEnable.php
+│   │   │   ├── CControllerConnectorList.php
+│   │   │   ├── CControllerConnectorUpdate.php
+│   │   │   ├── CControllerCopyCreate.php
+│   │   │   ├── CControllerCopyEdit.php
+│   │   │   ├── CControllerCorrelationConditionCheck.php
+│   │   │   ├── CControllerCorrelationConditionEdit.php
+│   │   │   ├── CControllerCorrelationCreate.php
+│   │   │   ├── CControllerCorrelationDelete.php
+│   │   │   ├── CControllerCorrelationDisable.php
+│   │   │   ├── CControllerCorrelationEdit.php
+│   │   │   ├── CControllerCorrelationEnable.php
+│   │   │   ├── CControllerCorrelationList.php
+│   │   │   ├── CControllerCorrelationUpdate.php
+│   │   │   ├── CControllerDashboardConfigHash.php
+│   │   │   ├── CControllerDashboardDelete.php
+│   │   │   ├── CControllerDashboardList.php
+│   │   │   ├── CControllerDashboardPagePropertiesCheck.php
+│   │   │   ├── CControllerDashboardPagePropertiesEdit.php
+│   │   │   ├── CControllerDashboardPrint.php
+│   │   │   ├── CControllerDashboardPropertiesCheck.php
+│   │   │   ├── CControllerDashboardPropertiesEdit.php
+│   │   │   ├── CControllerDashboardShareUpdate.php
+│   │   │   ├── CControllerDashboardUpdate.php
+│   │   │   ├── CControllerDashboardView.php
+│   │   │   ├── CControllerDashboardWidgetCheck.php
+│   │   │   ├── CControllerDashboardWidgetEdit.php
+│   │   │   ├── CControllerDashboardWidgetRfRate.php
+│   │   │   ├── CControllerDashboardWidgetsSanitize.php
+│   │   │   ├── CControllerDashboardWidgetView.php
+│   │   │   ├── CControllerDiscoveryCheckCheck.php
+│   │   │   ├── CControllerDiscoveryCheckEdit.php
+│   │   │   ├── CControllerDiscoveryCreate.php
+│   │   │   ├── CControllerDiscoveryDelete.php
+│   │   │   ├── CControllerDiscoveryDisable.php
+│   │   │   ├── CControllerDiscoveryEdit.php
+│   │   │   ├── CControllerDiscoveryEnable.php
+│   │   │   ├── CControllerDiscoveryList.php
+│   │   │   ├── CControllerDiscoveryUpdate.php
+│   │   │   ├── CControllerDiscoveryView.php
+│   │   │   ├── CControllerExport.php
+│   │   │   ├── CControllerFavoriteCreate.php
+│   │   │   ├── CControllerFavoriteDelete.php
+│   │   │   ├── CControllerGeomapsEdit.php
+│   │   │   ├── CControllerGeomapsUpdate.php
+│   │   │   ├── CControllerGuiEdit.php
+│   │   │   ├── CControllerGuiUpdate.php
+│   │   │   ├── CControllerHintboxActionlist.php
+│   │   │   ├── CControllerHintboxEventlist.php
+│   │   │   ├── CControllerHostCreate.php
+│   │   │   ├── CControllerHostDashboardView.php
+│   │   │   ├── CControllerHostEdit.php
+│   │   │   ├── CControllerHostGroupCreate.php
+│   │   │   ├── CControllerHostGroupDelete.php
+│   │   │   ├── CControllerHostGroupDisable.php
+│   │   │   ├── CControllerHostGroupEdit.php
+│   │   │   ├── CControllerHostGroupEnable.php
+│   │   │   ├── CControllerHostGroupList.php
+│   │   │   ├── CControllerHostGroupUpdate.php
+│   │   │   ├── CControllerHostList.php
+│   │   │   ├── CControllerHostMacrosList.php
+│   │   │   ├── CControllerHostMassDelete.php
+│   │   │   ├── CControllerHost.php
+│   │   │   ├── CControllerHostUpdateGeneral.php
+│   │   │   ├── CControllerHostUpdate.php
+│   │   │   ├── CControllerHostView.php
+│   │   │   ├── CControllerHostViewRefresh.php
+│   │   │   ├── CControllerHousekeepingEdit.php
+│   │   │   ├── CControllerHousekeepingUpdate.php
+│   │   │   ├── CControllerIconMapCreate.php
+│   │   │   ├── CControllerIconMapDelete.php
+│   │   │   ├── CControllerIconMapEdit.php
+│   │   │   ├── CControllerIconMapList.php
+│   │   │   ├── CControllerIconMapUpdate.php
+│   │   │   ├── CControllerImageCreate.php
+│   │   │   ├── CControllerImageDelete.php
+│   │   │   ├── CControllerImageEdit.php
+│   │   │   ├── CControllerImageList.php
+│   │   │   ├── CControllerImageUpdate.php
+│   │   │   ├── CControllerItemClear.php
+│   │   │   ├── CControllerItemCreate.php
+│   │   │   ├── CControllerItemDelete.php
+│   │   │   ├── CControllerItemDisable.php
+│   │   │   ├── CControllerItemEdit.php
+│   │   │   ├── CControllerItemEnable.php
+│   │   │   ├── CControllerItemExecuteNow.php
+│   │   │   ├── CControllerItemList.php
+│   │   │   ├── CControllerItemMassupdate.php
+│   │   │   ├── CControllerItem.php
+│   │   │   ├── CControllerItemPrototypeCreate.php
+│   │   │   ├── CControllerItemPrototypeDelete.php
+│   │   │   ├── CControllerItemPrototypeDisable.php
+│   │   │   ├── CControllerItemPrototypeEdit.php
+│   │   │   ├── CControllerItemPrototypeEnable.php
+│   │   │   ├── CControllerItemPrototypeList.php
+│   │   │   ├── CControllerItemPrototype.php
+│   │   │   ├── CControllerItemPrototypeUpdate.php
+│   │   │   ├── CControllerItemTagsList.php
+│   │   │   ├── CControllerItemUpdate.php
+│   │   │   ├── CControllerLatest.php
+│   │   │   ├── CControllerLatestView.php
+│   │   │   ├── CControllerLatestViewRefresh.php
+│   │   │   ├── CControllerMacrosEdit.php
+│   │   │   ├── CControllerMacrosUpdate.php
+│   │   │   ├── CControllerMaintenanceCreate.php
+│   │   │   ├── CControllerMaintenanceDelete.php
+│   │   │   ├── CControllerMaintenanceEdit.php
+│   │   │   ├── CControllerMaintenanceList.php
+│   │   │   ├── CControllerMaintenanceTimePeriodCheck.php
+│   │   │   ├── CControllerMaintenanceTimePeriodEdit.php
+│   │   │   ├── CControllerMaintenanceUpdate.php
+│   │   │   ├── CControllerMapView.php
+│   │   │   ├── CControllerMediatypeCreate.php
+│   │   │   ├── CControllerMediatypeDelete.php
+│   │   │   ├── CControllerMediatypeDisable.php
+│   │   │   ├── CControllerMediatypeEdit.php
+│   │   │   ├── CControllerMediatypeEnable.php
+│   │   │   ├── CControllerMediatypeList.php
+│   │   │   ├── CControllerMediatypeMessageCheck.php
+│   │   │   ├── CControllerMediatypeMessageEdit.php
+│   │   │   ├── CControllerMediatypeTestEdit.php
+│   │   │   ├── CControllerMediatypeTestSend.php
+│   │   │   ├── CControllerMediatypeUpdate.php
+│   │   │   ├── CControllerMenuPopup.php
+│   │   │   ├── CControllerMiscConfigEdit.php
+│   │   │   ├── CControllerMiscConfigUpdate.php
+│   │   │   ├── CControllerModuleDisable.php
+│   │   │   ├── CControllerModuleEdit.php
+│   │   │   ├── CControllerModuleEnable.php
+│   │   │   ├── CControllerModuleList.php
+│   │   │   ├── CControllerModuleScan.php
+│   │   │   ├── CControllerModuleUpdate.php
+│   │   │   ├── CControllerNotificationsGet.php
+│   │   │   ├── CControllerNotificationsMute.php
+│   │   │   ├── CControllerNotificationsRead.php
+│   │   │   ├── CControllerPopupAcknowledgeCreate.php
+│   │   │   ├── CControllerPopupAcknowledgeEdit.php
+│   │   │   ├── CControllerPopupActionConditionEdit.php
+│   │   │   ├── CControllerPopupActionEdit.php
+│   │   │   ├── CControllerPopupActionOperationEdit.php
+│   │   │   ├── CControllerPopupActionOperationsList.php
+│   │   │   ├── CControllerPopupConditionOperations.php
+│   │   │   ├── CControllerPopupDashboardShareEdit.php
+│   │   │   ├── CControllerPopupGeneric.php
+│   │   │   ├── CControllerPopupImportCompare.php
+│   │   │   ├── CControllerPopupImport.php
+│   │   │   ├── CControllerPopupItemTestEdit.php
+│   │   │   ├── CControllerPopupItemTestGetValue.php
+│   │   │   ├── CControllerPopupItemTest.php
+│   │   │   ├── CControllerPopupItemTestSend.php
+│   │   │   ├── CControllerPopupLdapCheck.php
+│   │   │   ├── CControllerPopupLdapEdit.php
+│   │   │   ├── CControllerPopupLdapTestEdit.php
+│   │   │   ├── CControllerPopupLdapTestSend.php
+│   │   │   ├── CControllerPopupLldOperation.php
+│   │   │   ├── CControllerPopupLldOverride.php
+│   │   │   ├── CControllerPopupMassupdateAbstract.php
+│   │   │   ├── CControllerPopupMassupdateHost.php
+│   │   │   ├── CControllerPopupMassupdateService.php
+│   │   │   ├── CControllerPopupMedia.php
+│   │   │   ├── CControllerPopupMediaTypeMappingCheck.php
+│   │   │   ├── CControllerPopupMediaTypeMappingEdit.php
+│   │   │   ├── CControllerPopup.php
+│   │   │   ├── CControllerPopupProxyEdit.php
+│   │   │   ├── CControllerPopupScheduledReportCreate.php
+│   │   │   ├── CControllerPopupScheduledReportEdit.php
+│   │   │   ├── CControllerPopupScheduledReportList.php
+│   │   │   ├── CControllerPopupScheduledReportSubscriptionEdit.php
+│   │   │   ├── CControllerPopupScheduledReportTest.php
+│   │   │   ├── CControllerPopupScriptExec.php
+│   │   │   ├── CControllerPopupServiceEdit.php
+│   │   │   ├── CControllerPopupServices.php
+│   │   │   ├── CControllerPopupServiceStatusRuleEdit.php
+│   │   │   ├── CControllerPopupSlaEdit.php
+│   │   │   ├── CControllerPopupSlaExcludedDowntimeEdit.php
+│   │   │   ├── CControllerPopupTabFilterDelete.php
+│   │   │   ├── CControllerPopupTabFilterEdit.php
+│   │   │   ├── CControllerPopupTabFilterUpdate.php
+│   │   │   ├── CControllerPopupTestTriggerExpr.php
+│   │   │   ├── CControllerPopupTokenEdit.php
+│   │   │   ├── CControllerPopupTokenView.php
+│   │   │   ├── CControllerPopupTriggerExpr.php
+│   │   │   ├── CControllerPopupUserGroupMappingCheck.php
+│   │   │   ├── CControllerPopupUserGroupMappingEdit.php
+│   │   │   ├── CControllerPopupValueMapEdit.php
+│   │   │   ├── CControllerPopupValueMapUpdate.php
+│   │   │   ├── CControllerProblem.php
+│   │   │   ├── CControllerProblemView.php
+│   │   │   ├── CControllerProblemViewRefresh.php
+│   │   │   ├── CControllerProfileUpdate.php
+│   │   │   ├── CControllerProxyConfigRefresh.php
+│   │   │   ├── CControllerProxyCreate.php
+│   │   │   ├── CControllerProxyDelete.php
+│   │   │   ├── CControllerProxyHostDisable.php
+│   │   │   ├── CControllerProxyHostEnable.php
+│   │   │   ├── CControllerProxyList.php
+│   │   │   ├── CControllerProxyUpdate.php
+│   │   │   ├── CControllerQueueDetails.php
+│   │   │   ├── CControllerQueueOverview.php
+│   │   │   ├── CControllerQueueOverviewProxy.php
+│   │   │   ├── CControllerRegExCreate.php
+│   │   │   ├── CControllerRegExDelete.php
+│   │   │   ├── CControllerRegExEdit.php
+│   │   │   ├── CControllerRegExList.php
+│   │   │   ├── CControllerRegExTest.php
+│   │   │   ├── CControllerRegExUpdate.php
+│   │   │   ├── CControllerReportStatus.php
+│   │   │   ├── CControllerScheduledReportCreate.php
+│   │   │   ├── CControllerScheduledReportDelete.php
+│   │   │   ├── CControllerScheduledReportDisable.php
+│   │   │   ├── CControllerScheduledReportEdit.php
+│   │   │   ├── CControllerScheduledReportEnable.php
+│   │   │   ├── CControllerScheduledReportList.php
+│   │   │   ├── CControllerScheduledReportUpdate.php
+│   │   │   ├── CControllerScriptCreate.php
+│   │   │   ├── CControllerScriptDelete.php
+│   │   │   ├── CControllerScriptEdit.php
+│   │   │   ├── CControllerScriptList.php
+│   │   │   ├── CControllerScriptUpdate.php
+│   │   │   ├── CControllerScriptUserInputCheck.php
+│   │   │   ├── CControllerScriptUserInputEdit.php
+│   │   │   ├── CControllerSearch.php
+│   │   │   ├── CControllerServiceCreate.php
+│   │   │   ├── CControllerServiceDelete.php
+│   │   │   ├── CControllerServiceListEdit.php
+│   │   │   ├── CControllerServiceListEditRefresh.php
+│   │   │   ├── CControllerServiceListGeneral.php
+│   │   │   ├── CControllerServiceList.php
+│   │   │   ├── CControllerServiceListRefresh.php
+│   │   │   ├── CControllerServiceStatusRuleValidate.php
+│   │   │   ├── CControllerServiceUpdate.php
+│   │   │   ├── CControllerSlaCreate.php
+│   │   │   ├── CControllerSlaCreateUpdate.php
+│   │   │   ├── CControllerSlaDelete.php
+│   │   │   ├── CControllerSlaDisable.php
+│   │   │   ├── CControllerSlaEnable.php
+│   │   │   ├── CControllerSlaExcludedDowntimeValidate.php
+│   │   │   ├── CControllerSlaList.php
+│   │   │   ├── CControllerSlaReportList.php
+│   │   │   ├── CControllerSlaUpdate.php
+│   │   │   ├── CControllerSystemWarning.php
+│   │   │   ├── CControllerTabFilterProfileUpdate.php
+│   │   │   ├── CControllerTemplateCreate.php
+│   │   │   ├── CControllerTemplateDashboardDelete.php
+│   │   │   ├── CControllerTemplateDashboardEdit.php
+│   │   │   ├── CControllerTemplateDashboardList.php
+│   │   │   ├── CControllerTemplateDashboardUpdate.php
+│   │   │   ├── CControllerTemplateDelete.php
+│   │   │   ├── CControllerTemplateEdit.php
+│   │   │   ├── CControllerTemplateGroupCreate.php
+│   │   │   ├── CControllerTemplateGroupDelete.php
+│   │   │   ├── CControllerTemplateGroupEdit.php
+│   │   │   ├── CControllerTemplateGroupList.php
+│   │   │   ├── CControllerTemplateGroupUpdate.php
+│   │   │   ├── CControllerTemplateList.php
+│   │   │   ├── CControllerTemplateMassupdate.php
+│   │   │   ├── CControllerTemplateUpdate.php
+│   │   │   ├── CControllerTimeoutsEdit.php
+│   │   │   ├── CControllerTimeoutsUpdate.php
+│   │   │   ├── CControllerTimeSelectorCalc.php
+│   │   │   ├── CControllerTimeSelectorUpdate.php
+│   │   │   ├── CControllerTokenCreate.php
+│   │   │   ├── CControllerTokenDelete.php
+│   │   │   ├── CControllerTokenDisable.php
+│   │   │   ├── CControllerTokenEnable.php
+│   │   │   ├── CControllerTokenList.php
+│   │   │   ├── CControllerTokenUpdate.php
+│   │   │   ├── CControllerTopTriggersList.php
+│   │   │   ├── CControllerTrigDisplayEdit.php
+│   │   │   ├── CControllerTrigDisplayUpdate.php
+│   │   │   ├── CControllerTriggerCreate.php
+│   │   │   ├── CControllerTriggerDelete.php
+│   │   │   ├── CControllerTriggerDisable.php
+│   │   │   ├── CControllerTriggerEdit.php
+│   │   │   ├── CControllerTriggerEnable.php
+│   │   │   ├── CControllerTriggerExpressionConstructor.php
+│   │   │   ├── CControllerTriggerList.php
+│   │   │   ├── CControllerTriggerMassupdate.php
+│   │   │   ├── CControllerTriggerPrototypeCreate.php
+│   │   │   ├── CControllerTriggerPrototypeDelete.php
+│   │   │   ├── CControllerTriggerPrototypeDisable.php
+│   │   │   ├── CControllerTriggerPrototypeEdit.php
+│   │   │   ├── CControllerTriggerPrototypeEnable.php
+│   │   │   ├── CControllerTriggerPrototypeList.php
+│   │   │   ├── CControllerTriggerPrototypeUpdate.php
+│   │   │   ├── CControllerTriggerUpdate.php
+│   │   │   ├── CControllerUserCreate.php
+│   │   │   ├── CControllerUserDelete.php
+│   │   │   ├── CControllerUserEditGeneral.php
+│   │   │   ├── CControllerUserEdit.php
+│   │   │   ├── CControllerUsergroupCreate.php
+│   │   │   ├── CControllerUsergroupDelete.php
+│   │   │   ├── CControllerUsergroupEdit.php
+│   │   │   ├── CControllerUsergroupList.php
+│   │   │   ├── CControllerUsergroupMassUpdate.php
+│   │   │   ├── CControllerUsergroupTagFilterCheck.php
+│   │   │   ├── CControllerUsergroupTagFilterEdit.php
+│   │   │   ├── CControllerUsergroupTagFilterList.php
+│   │   │   ├── CControllerUsergroupUpdate.php
+│   │   │   ├── CControllerUserList.php
+│   │   │   ├── CControllerUserProfileEdit.php
+│   │   │   ├── CControllerUserProfileUpdate.php
+│   │   │   ├── CControllerUserProvision.php
+│   │   │   ├── CControllerUserroleCreate.php
+│   │   │   ├── CControllerUserroleDelete.php
+│   │   │   ├── CControllerUserroleEditGeneral.php
+│   │   │   ├── CControllerUserroleEdit.php
+│   │   │   ├── CControllerUserroleList.php
+│   │   │   ├── CControllerUserroleUpdate.php
+│   │   │   ├── CControllerUserTokenList.php
+│   │   │   ├── CControllerUserUnblock.php
+│   │   │   ├── CControllerUserUpdateGeneral.php
+│   │   │   ├── CControllerUserUpdate.php
+│   │   │   ├── CControllerWebScenarioStepCheck.php
+│   │   │   ├── CControllerWebScenarioStepEdit.php
+│   │   │   ├── CControllerWebView.php
+│   │   │   └── CControllerWidgetIterator.php
+│   │   ├── partials
+│   │   │   ├── action.operations.php
+│   │   │   ├── action.recovery.operations.php
+│   │   │   ├── action.update.operations.php
+│   │   │   ├── administration.ha.nodes.php
+│   │   │   ├── administration.system.info.php
+│   │   │   ├── configuration.host.edit.html.php
+│   │   │   ├── configuration.hostgroup.edit.html.php
+│   │   │   ├── configuration.host.interface.row.php
+│   │   │   ├── configuration.tags.tab.php
+│   │   │   ├── configuration.templategroup.edit.html.php
+│   │   │   ├── configuration.valuemap.php
+│   │   │   ├── hostmacros.inherited.list.html.php
+│   │   │   ├── hostmacros.list.html.php
+│   │   │   ├── item.edit.item.tab.php
+│   │   │   ├── item.edit.preprocessing.tab.php
+│   │   │   ├── item.list.filter.php
+│   │   │   ├── js
+│   │   │   ├── layout.htmlpage.aside.php
+│   │   │   ├── layout.htmlpage.footer.php
+│   │   │   ├── layout.htmlpage.header.php
+│   │   │   ├── massupdate.macros.tab.php
+│   │   │   ├── massupdate.valuemaps.tab.php
+│   │   │   ├── monitoring.charts.subfilter.php
+│   │   │   ├── monitoring.host.filter.php
+│   │   │   ├── monitoring.host.view.html.php
+│   │   │   ├── monitoring.latest.filter.php
+│   │   │   ├── monitoring.latest.subfilter.php
+│   │   │   ├── monitoring.latest.view.html.php
+│   │   │   ├── monitoring.problem.filter.php
+│   │   │   ├── monitoring.problem.view.html.php
+│   │   │   ├── scheduledreport.formgrid.html.php
+│   │   │   ├── scheduledreport.subscription.php
+│   │   │   ├── scheduledreport.table.html.php
+│   │   │   ├── service.info.php
+│   │   │   ├── service.list.edit.php
+│   │   │   ├── service.list.php
+│   │   │   ├── tags.list.html.php
+│   │   │   ├── timeselector.filter.php
+│   │   │   ├── trigger.edit.dependencies.tab.php
+│   │   │   ├── trigger.edit.trigger.tab.php
+│   │   │   └── usergroup.tagfilters.php
+│   │   └── views
+│   │       ├── action.list.php
+│   │       ├── administration.audit.settings.edit.php
+│   │       ├── administration.authentication.edit.php
+│   │       ├── administration.autoreg.edit.php
+│   │       ├── administration.geomaps.edit.php
+│   │       ├── administration.gui.edit.php
+│   │       ├── administration.housekeeping.edit.php
+│   │       ├── administration.iconmap.edit.php
+│   │       ├── administration.iconmap.list.php
+│   │       ├── administration.image.edit.php
+│   │       ├── administration.image.list.php
+│   │       ├── administration.macros.edit.php
+│   │       ├── administration.mediatype.edit.php
+│   │       ├── administration.miscconfig.edit.php
+│   │       ├── administration.proxy.list.php
+│   │       ├── administration.queue.details.php
+│   │       ├── administration.queue.overview.php
+│   │       ├── administration.queue.overview.proxy.php
+│   │       ├── administration.regex.edit.php
+│   │       ├── administration.regex.list.php
+│   │       ├── administration.script.edit.php
+│   │       ├── administration.script.list.php
+│   │       ├── administration.timeouts.edit.php
+│   │       ├── administration.token.list.php
+│   │       ├── administration.trigdisplay.edit.php
+│   │       ├── administration.user.edit.php
+│   │       ├── administration.user.list.php
+│   │       ├── administration.userrole.edit.php
+│   │       ├── administration.userrole.list.php
+│   │       ├── administration.user.token.list.php
+│   │       ├── configuration.dashboard.edit.php
+│   │       ├── configuration.dashboard.list.php
+│   │       ├── configuration.discovery.edit.php
+│   │       ├── configuration.discovery.list.php
+│   │       ├── configuration.host.edit.php
+│   │       ├── configuration.hostgroup.edit.php
+│   │       ├── configuration.hostgroup.list.php
+│   │       ├── configuration.host.list.php
+│   │       ├── configuration.templategroup.edit.php
+│   │       ├── configuration.templategroup.list.php
+│   │       ├── connector.edit.php
+│   │       ├── connector.list.php
+│   │       ├── copy.edit.php
+│   │       ├── correlation.condition.edit.php
+│   │       ├── correlation.edit.php
+│   │       ├── correlation.list.php
+│   │       ├── dashboard.page.properties.edit.php
+│   │       ├── dashboard.properties.edit.php
+│   │       ├── discovery.check.edit.php
+│   │       ├── hintbox.actionlist.php
+│   │       ├── hintbox.eventlist.php
+│   │       ├── hostmacros.list.php
+│   │       ├── item.edit.php
+│   │       ├── item.list.php
+│   │       ├── item.massupdate.php
+│   │       ├── item.prototype.edit.php
+│   │       ├── item.prototype.list.php
+│   │       ├── item.tags.list.php
+│   │       ├── js
+│   │       ├── layout.csv.php
+│   │       ├── layout.export.php
+│   │       ├── layout.htmlpage.php
+│   │       ├── layout.javascript.php
+│   │       ├── layout.json.php
+│   │       ├── layout.print.php
+│   │       ├── layout.warning.php
+│   │       ├── layout.widget.php
+│   │       ├── maintenance.edit.php
+│   │       ├── maintenance.list.php
+│   │       ├── maintenance.timeperiod.edit.php
+│   │       ├── mediatype.edit.php
+│   │       ├── mediatype.list.php
+│   │       ├── mediatype.message.edit.php
+│   │       ├── mediatype.test.edit.php
+│   │       ├── module.edit.php
+│   │       ├── module.list.php
+│   │       ├── monitoring.charts.view.json.php
+│   │       ├── monitoring.charts.view.php
+│   │       ├── monitoring.dashboard.list.php
+│   │       ├── monitoring.dashboard.print.php
+│   │       ├── monitoring.dashboard.view.php
+│   │       ├── monitoring.discovery.view.php
+│   │       ├── monitoring.host.dashboard.view.php
+│   │       ├── monitoring.host.view.php
+│   │       ├── monitoring.host.view.refresh.php
+│   │       ├── monitoring.latest.view.php
+│   │       ├── monitoring.latest.view.refresh.php
+│   │       ├── monitoring.map.view.php
+│   │       ├── monitoring.problem.view.php
+│   │       ├── monitoring.problem.view.refresh.php
+│   │       ├── monitoring.web.view.php
+│   │       ├── popup.acknowledge.edit.php
+│   │       ├── popup.action.edit.php
+│   │       ├── popup.action.operations.list.php
+│   │       ├── popup.condition.edit.php
+│   │       ├── popup.dashboard.share.edit.php
+│   │       ├── popup.discovery.check.php
+│   │       ├── popup.generic.php
+│   │       ├── popup.host.edit.php
+│   │       ├── popup.hostgroup.edit.php
+│   │       ├── popup.import.compare.php
+│   │       ├── popup.import.php
+│   │       ├── popup.itemtestedit.view.php
+│   │       ├── popup.ldap.edit.php
+│   │       ├── popup.ldap.test.edit.php
+│   │       ├── popup.lldoperation.php
+│   │       ├── popup.lldoverride.php
+│   │       ├── popup.massupdate.host.php
+│   │       ├── popup.massupdate.service.php
+│   │       ├── popup.media.php
+│   │       ├── popup.mediatypemapping.edit.php
+│   │       ├── popup.mediatype.message.php
+│   │       ├── popup.operation.edit.php
+│   │       ├── popup.proxy.edit.php
+│   │       ├── popup.scheduledreport.edit.php
+│   │       ├── popup.scheduledreport.list.php
+│   │       ├── popup.scheduledreport.subscription.php
+│   │       ├── popup.scheduledreport.test.php
+│   │       ├── popup.scriptexec.php
+│   │       ├── popup.service.edit.php
+│   │       ├── popup.services.php
+│   │       ├── popup.service.statusrule.edit.php
+│   │       ├── popup.sla.edit.php
+│   │       ├── popup.sla.excludeddowntime.edit.php
+│   │       ├── popup.tabfilter.edit.php
+│   │       ├── popup.templategroup.edit.php
+│   │       ├── popup.testtriggerexpr.php
+│   │       ├── popup.token.edit.php
+│   │       ├── popup.token.view.php
+│   │       ├── popup.triggerexpr.php
+│   │       ├── popup.usergroupmapping.edit.php
+│   │       ├── popup.valuemap.edit.php
+│   │       ├── popup.view.php
+│   │       ├── reports.actionlog.list.csv.php
+│   │       ├── reports.actionlog.list.php
+│   │       ├── reports.auditlog.list.php
+│   │       ├── reports.scheduledreport.edit.php
+│   │       ├── reports.scheduledreport.list.php
+│   │       ├── report.status.php
+│   │       ├── reports.toptriggers.list.php
+│   │       ├── script.userinput.edit.php
+│   │       ├── search.php
+│   │       ├── service.list.edit.php
+│   │       ├── service.list.edit.refresh.php
+│   │       ├── service.list.php
+│   │       ├── service.list.refresh.php
+│   │       ├── sla.list.php
+│   │       ├── slareport.list.php
+│   │       ├── system.warning.php
+│   │       ├── template.edit.php
+│   │       ├── template.list.php
+│   │       ├── template.massupdate.php
+│   │       ├── trigger.edit.php
+│   │       ├── trigger.expression.constructor.php
+│   │       ├── trigger.list.php
+│   │       ├── trigger.massupdate.php
+│   │       ├── trigger.prototype.edit.php
+│   │       ├── trigger.prototype.list.php
+│   │       ├── usergroup.edit.php
+│   │       ├── usergroup.list.php
+│   │       ├── usergroup.tagfilter.edit.php
+│   │       ├── usergroup.tagfilter.list.php
+│   │       ├── webscenario.step.edit.php
+│   │       ├── widget.edit.php
+│   │       └── widget.view.php
+│   ├── assets
+│   │   ├── fonts
+│   │   │   ├── DejaVuSans.ttf
+│   │   │   ├── zabbix-icons.svg
+│   │   │   ├── zabbix-icons.ttf
+│   │   │   ├── zabbix-icons.woff
+│   │   │   └── zabbix-icons.woff2
+│   │   ├── img
+│   │   │   ├── apple-touch-icon-120x120-precomposed.png
+│   │   │   ├── apple-touch-icon-152x152-precomposed.png
+│   │   │   ├── apple-touch-icon-180x180-precomposed.png
+│   │   │   ├── apple-touch-icon-76x76-precomposed.png
+│   │   │   ├── browser-sprite.png
+│   │   │   ├── ms-tile-144x144.png
+│   │   │   └── touch-icon-192x192.png
+│   │   └── styles
+│   │       ├── blue-theme.css
+│   │       ├── dark-theme.css
+│   │       ├── hc-dark.css
+│   │       ├── hc-light.css
+│   │       └── vendors
+│   ├── audio
+│   │   ├── alarm_average.mp3
+│   │   ├── alarm_disaster.mp3
+│   │   ├── alarm_high.mp3
+│   │   ├── alarm_information.mp3
+│   │   ├── alarm_ok.mp3
+│   │   ├── alarm_warning.mp3
+│   │   └── no_sound.mp3
+│   ├── browserwarning.php
+│   ├── chart2.php
+│   ├── chart3.php
+│   ├── chart4.php
+│   ├── chart6.php
+│   ├── chart7.php
+│   ├── chart.php
+│   ├── composer.json
+│   ├── composer.lock
+│   ├── conf
+│   │   ├── certs
+│   │   ├── maintenance.inc.php
+│   │   └── zabbix.conf.php.example
+│   ├── data
+│   │   └── top_passwords.txt
+│   ├── favicon.ico
+│   ├── graphs.php
+│   ├── history.php
+│   ├── host_discovery.php
+│   ├── hostinventoriesoverview.php
+│   ├── hostinventories.php
+│   ├── host_prototypes.php
+│   ├── httpconf.php
+│   ├── httpdetails.php
+│   ├── image.php
+│   ├── imgstore.php
+│   ├── include
+│   │   ├── actions.inc.php
+│   │   ├── blocks.inc.php
+│   │   ├── classes
+│   │   │   ├── api
+│   │   │   ├── core
+│   │   │   ├── data
+│   │   │   ├── db
+│   │   │   ├── debug
+│   │   │   ├── export
+│   │   │   ├── graph
+│   │   │   ├── graphdraw
+│   │   │   ├── helpers
+│   │   │   ├── html
+│   │   │   ├── import
+│   │   │   ├── ldap
+│   │   │   ├── macros
+│   │   │   ├── mvc
+│   │   │   ├── parsers
+│   │   │   ├── regexp
+│   │   │   ├── routing
+│   │   │   ├── scim
+│   │   │   ├── screens
+│   │   │   ├── server
+│   │   │   ├── services
+│   │   │   ├── setup
+│   │   │   ├── user
+│   │   │   ├── validators
+│   │   │   ├── vaults
+│   │   │   ├── widgets
+│   │   │   └── xml
+│   │   ├── config.inc.php
+│   │   ├── db.inc.php
+│   │   ├── debug.inc.php
+│   │   ├── defines.inc.php
+│   │   ├── discovery.inc.php
+│   │   ├── draw.inc.php
+│   │   ├── events.inc.php
+│   │   ├── forms.inc.php
+│   │   ├── func.inc.php
+│   │   ├── gettextwrapper.inc.php
+│   │   ├── graphs.inc.php
+│   │   ├── hostgroups.inc.php
+│   │   ├── hosts.inc.php
+│   │   ├── html.inc.php
+│   │   ├── httptest.inc.php
+│   │   ├── images.inc.php
+│   │   ├── items.inc.php
+│   │   ├── js.inc.php
+│   │   ├── locales.inc.php
+│   │   ├── maps.inc.php
+│   │   ├── page_footer.php
+│   │   ├── page_header.php
+│   │   ├── perm.inc.php
+│   │   ├── schema.inc.php
+│   │   ├── sounds.inc.php
+│   │   ├── translateDefines.inc.php
+│   │   ├── triggers.inc.php
+│   │   ├── users.inc.php
+│   │   ├── validate.inc.php
+│   │   └── views
+│   │       ├── configuration.graph.edit.php
+│   │       ├── configuration.graph.list.php
+│   │       ├── configuration.host.discovery.edit.php
+│   │       ├── configuration.host.discovery.list.php
+│   │       ├── configuration.host.prototype.edit.php
+│   │       ├── configuration.host.prototype.list.php
+│   │       ├── configuration.httpconf.edit.php
+│   │       ├── configuration.httpconf.list.php
+│   │       ├── general.browserwarning.php
+│   │       ├── general.login.php
+│   │       ├── general.warning.php
+│   │       ├── inventory.host.list.php
+│   │       ├── inventory.host.view.php
+│   │       ├── js
+│   │       ├── monitoring.history.php
+│   │       ├── monitoring.sysmap.constructor.php
+│   │       ├── monitoring.sysmap.edit.php
+│   │       └── monitoring.sysmap.list.php
+│   ├── index_http.php
+│   ├── index.php
+│   ├── index_sso.php
+│   ├── js
+│   │   ├── browsers.js
+│   │   ├── chkbxrange.js
+│   │   ├── class.base-component.js
+│   │   ├── class.browsertab.js
+│   │   ├── class.calendar.js
+│   │   ├── class.cdate.js
+│   │   ├── class.cdebug.js
+│   │   ├── class.cmap.js
+│   │   ├── class.cnavtree.js
+│   │   ├── class.cookie.js
+│   │   ├── class.coverride.js
+│   │   ├── class.crangecontrol.js
+│   │   ├── class.csuggest.js
+│   │   ├── class.csvggraph.js
+│   │   ├── class.curl.js
+│   │   ├── class.cverticalaccordion.js
+│   │   ├── class.cviewswitcher.js
+│   │   ├── class.dashboard.js
+│   │   ├── class.dashboard.page.js
+│   │   ├── class.dashboard.print.js
+│   │   ├── class.dashboard.widget.placeholder.js
+│   │   ├── class.event-hub.js
+│   │   ├── class.expandable.subfilter.js
+│   │   ├── class.form.fieldset.collapsible.js
+│   │   ├── class.geomaps.js
+│   │   ├── class.localstorage.js
+│   │   ├── class.menu-item.js
+│   │   ├── class.menu.js
+│   │   ├── class.notification.collection.js
+│   │   ├── class.notification.js
+│   │   ├── class.notifications.audio.js
+│   │   ├── class.notifications.js
+│   │   ├── class.overlaycollection.js
+│   │   ├── class.overlay.js
+│   │   ├── class.rpc.js
+│   │   ├── class.script.js
+│   │   ├── class.scrollable.js
+│   │   ├── class.sidebar.js
+│   │   ├── class.sortable.js
+│   │   ├── class.tabfilteritem.js
+│   │   ├── class.tabfilter.js
+│   │   ├── class.tab-indicators.js
+│   │   ├── class.tagfilteritem.js
+│   │   ├── class.template.js
+│   │   ├── class.widget-base.js
+│   │   ├── class.widget-field.checkbox-list.js
+│   │   ├── class.widget-field.multiselect.js
+│   │   ├── class.widget-field.time-period.js
+│   │   ├── class.widget.inaccessible.js
+│   │   ├── class.widget.iterator.js
+│   │   ├── class.widget.js
+│   │   ├── class.widget.misconfigured.js
+│   │   ├── class.widget.paste-placeholder.js
+│   │   ├── class.widget-select.popup.js
+│   │   ├── colorpicker.js
+│   │   ├── common.js
+│   │   ├── component.z-bar-gauge.js
+│   │   ├── component.z-select.js
+│   │   ├── defines.js
+│   │   ├── flickerfreescreen.js
+│   │   ├── functions.js
+│   │   ├── gtlc.js
+│   │   ├── hostinterfacemanager.js
+│   │   ├── hostmacrosmanager.js
+│   │   ├── init.js
+│   │   ├── inputsecret.js
+│   │   ├── layout.mode.js
+│   │   ├── macrovalue.js
+│   │   ├── main.js
+│   │   ├── menupopup.js
+│   │   ├── multilineinput.js
+│   │   ├── multiselect.js
+│   │   ├── pages
+│   │   │   ├── items.js
+│   │   │   ├── report2.js
+│   │   │   ├── report4.js
+│   │   │   └── setup.js
+│   │   ├── servercheck.js
+│   │   ├── textareaflexible.js
+│   │   ├── vector
+│   │   │   ├── class.svg.canvas.js
+│   │   │   └── class.svg.map.js
+│   │   └── vendors
+│   │       ├── d3.v7.min.js
+│   │       ├── jquery.js
+│   │       ├── jquery-ui.js
+│   │       └── Leaflet
+│   ├── jsLoader.php
+│   ├── jsrpc.php
+│   ├── local
+│   │   ├── app
+│   │   │   ├── controllers
+│   │   │   ├── partials
+│   │   │   └── views
+│   │   ├── conf
+│   │   └── README
+│   ├── locale
+│   │   ├── add_new_language.sh
+│   │   ├── bg
+│   │   │   └── LC_MESSAGES
+│   │   ├── ca
+│   │   │   └── LC_MESSAGES
+│   │   ├── cs
+│   │   │   └── LC_MESSAGES
+│   │   ├── da
+│   │   │   └── LC_MESSAGES
+│   │   ├── de
+│   │   │   └── LC_MESSAGES
+│   │   ├── el
+│   │   │   └── LC_MESSAGES
+│   │   ├── en
+│   │   │   └── LC_MESSAGES
+│   │   ├── en_GB
+│   │   │   └── LC_MESSAGES
+│   │   ├── es
+│   │   │   └── LC_MESSAGES
+│   │   ├── fa
+│   │   │   └── LC_MESSAGES
+│   │   ├── fi
+│   │   │   └── LC_MESSAGES
+│   │   ├── fr
+│   │   │   └── LC_MESSAGES
+│   │   ├── he
+│   │   │   └── LC_MESSAGES
+│   │   ├── hr
+│   │   │   └── LC_MESSAGES
+│   │   ├── hu
+│   │   │   └── LC_MESSAGES
+│   │   ├── id
+│   │   │   └── LC_MESSAGES
+│   │   ├── it
+│   │   │   └── LC_MESSAGES
+│   │   ├── ja
+│   │   │   └── LC_MESSAGES
+│   │   ├── ka
+│   │   │   └── LC_MESSAGES
+│   │   ├── kk
+│   │   │   └── LC_MESSAGES
+│   │   ├── ko
+│   │   │   └── LC_MESSAGES
+│   │   ├── lt
+│   │   │   └── LC_MESSAGES
+│   │   ├── lv
+│   │   │   └── LC_MESSAGES
+│   │   ├── make_mo.sh
+│   │   ├── nb_NO
+│   │   │   └── LC_MESSAGES
+│   │   ├── nl
+│   │   │   └── LC_MESSAGES
+│   │   ├── pl
+│   │   │   └── LC_MESSAGES
+│   │   ├── pt_BR
+│   │   │   └── LC_MESSAGES
+│   │   ├── pt_PT
+│   │   │   └── LC_MESSAGES
+│   │   ├── README
+│   │   ├── ro
+│   │   │   └── LC_MESSAGES
+│   │   ├── ru
+│   │   │   └── LC_MESSAGES
+│   │   ├── sk
+│   │   │   └── LC_MESSAGES
+│   │   ├── sv_SE
+│   │   │   └── LC_MESSAGES
+│   │   ├── tr
+│   │   │   └── LC_MESSAGES
+│   │   ├── uk
+│   │   │   └── LC_MESSAGES
+│   │   ├── update_po.sh
+│   │   ├── vi
+│   │   │   └── LC_MESSAGES
+│   │   ├── zh_CN
+│   │   │   └── LC_MESSAGES
+│   │   └── zh_TW
+│   │       └── LC_MESSAGES
+│   ├── map.php
+│   ├── modules
+│   ├── report2.php
+│   ├── report4.php
+│   ├── robots.txt
+│   ├── setup.php
+│   ├── sysmap.php
+│   ├── sysmaps.php
+│   ├── tests
+│   │   ├── api_json
+│   │   │   ├── ApiJsonTests.php
+│   │   │   ├── common
+│   │   │   ├── data
+│   │   │   ├── testAction.php
+│   │   │   ├── testAPIInfo.php
+│   │   │   ├── testAuditlogAction.php
+│   │   │   ├── testAuditlogAutoregistration.php
+│   │   │   ├── testAuditlogDashboard.php
+│   │   │   ├── testAuditlogEventCorrelation.php
+│   │   │   ├── testAuditlogIconMap.php
+│   │   │   ├── testAuditlogMaintenance.php
+│   │   │   ├── testAuditlogMediaType.php
+│   │   │   ├── testAuditlogProxy.php
+│   │   │   ├── testAuditlogScheduledReport.php
+│   │   │   ├── testAuditlogSettings.php
+│   │   │   ├── testAuditlogToken.php
+│   │   │   ├── testAuditlogUserGroups.php
+│   │   │   ├── testAuditlogUser.php
+│   │   │   ├── testAuthentication.php
+│   │   │   ├── testConfiguration.php
+│   │   │   ├── testConnector.php
+│   │   │   ├── testCorrelation.php
+│   │   │   ├── testDependentItems.php
+│   │   │   ├── testDiscoveryRule.php
+│   │   │   ├── testDRule.php
+│   │   │   ├── testGraphPrototype.php
+│   │   │   ├── testHaNode.php
+│   │   │   ├── testHistory.php
+│   │   │   ├── testHostGroup.php
+│   │   │   ├── testHostImport.php
+│   │   │   ├── testHostInventory.php
+│   │   │   ├── testHost.php
+│   │   │   ├── testHostPrototypeInventory.php
+│   │   │   ├── testHostPrototype.php
+│   │   │   ├── testIconMap.php
+│   │   │   ├── testItem.php
+│   │   │   ├── testItemPreprocessing.php
+│   │   │   ├── testItemPrototype.php
+│   │   │   ├── testJSONRPC.php
+│   │   │   ├── testMaintenance.php
+│   │   │   ├── testMap.php
+│   │   │   ├── testProxy.php
+│   │   │   ├── testRole.php
+│   │   │   ├── testScimGroup.php
+│   │   │   ├── testScimServiceProviderConfig.php
+│   │   │   ├── testScimUser.php
+│   │   │   ├── testScripts.php
+│   │   │   ├── testServices.php
+│   │   │   ├── testTagFiltering.php
+│   │   │   ├── testTaskCreate.php
+│   │   │   ├── testTemplateGroup.php
+│   │   │   ├── testTemplate.php
+│   │   │   ├── testToken.php
+│   │   │   ├── testTriggerPermissions.php
+│   │   │   ├── testTriggerPrototypes.php
+│   │   │   ├── testTriggers.php
+│   │   │   ├── testTriggerValidation.php
+│   │   │   ├── testUserDirectory.php
+│   │   │   ├── testUserGroup.php
+│   │   │   ├── testUserMacro.php
+│   │   │   ├── testUsers.php
+│   │   │   ├── testValuemap.php
+│   │   │   ├── testWebScenarioPermissions.php
+│   │   │   ├── testWebScenario.php
+│   │   │   └── xml
+│   │   ├── bootstrap.php.template
+│   │   ├── browser.php
+│   │   ├── frontend.php
+│   │   ├── general
+│   │   │   ├── APITest.php
+│   │   │   ├── class_CDescription.php
+│   │   │   ├── dbConditionIdTest.php
+│   │   │   ├── dbConditionIntTest.php
+│   │   │   ├── dbConditionStringTest.php
+│   │   │   ├── function_DBclose.php
+│   │   │   ├── function_DBconnect.php
+│   │   │   ├── function_DBselect.php
+│   │   │   ├── GeneralTests.php
+│   │   │   ├── makeSqlTest.php
+│   │   │   ├── testHistoryManager.php
+│   │   │   ├── urlParamTest.php
+│   │   │   └── zbx_dbcast_2bigintTest.php
+│   │   ├── images
+│   │   │   └── image.png
+│   │   ├── include
+│   │   │   ├── CAPITest.php
+│   │   │   ├── CBehavior.php
+│   │   │   ├── CIntegrationTest.php
+│   │   │   ├── CLegacyWebTest.php
+│   │   │   ├── CTest.php
+│   │   │   ├── CWebTest.php
+│   │   │   ├── CZabbixClient.php
+│   │   │   ├── helpers
+│   │   │   └── web
+│   │   ├── integration
+│   │   │   ├── data
+│   │   │   ├── IntegrationTests.php
+│   │   │   ├── testActiveAvailability.php
+│   │   │   ├── testAgentItems.php
+│   │   │   ├── testAgentJsonProtocol.php
+│   │   │   ├── testAlertingForServices.php
+│   │   │   ├── testAutoregistration.php
+│   │   │   ├── testBinaryValueTypeDataCollection.php
+│   │   │   ├── testComplexServiceStatus.php
+│   │   │   ├── testConfigTestOption.php
+│   │   │   ├── testCustomOnFail.php
+│   │   │   ├── testDataCollection.php
+│   │   │   ├── testDiagnosticDataTask.php
+│   │   │   ├── testDiscoveryRules.php
+│   │   │   ├── testEscalations.php
+│   │   │   ├── testEventsCauseAndSymptoms.php
+│   │   │   ├── testExpressionMacros.php
+│   │   │   ├── testExpressionTriggerMacros.php
+│   │   │   ├── testFunctionChangeCount.php
+│   │   │   ├── testGoAgentDataCollection.php
+│   │   │   ├── testGraphLinking.php
+│   │   │   ├── testHighAvailability.php
+│   │   │   ├── testHistoryPush.php
+│   │   │   ├── testHistoryValueDuplicates.php
+│   │   │   ├── testInitialConfSync.php
+│   │   │   ├── testItemRate.php
+│   │   │   ├── testItemState.php
+│   │   │   ├── testItemTimeouts.php
+│   │   │   ├── testLowLevelDiscovery.php
+│   │   │   ├── testPermissions.php
+│   │   │   ├── testProxyConfSync.php
+│   │   │   ├── testScriptManualInput.php
+│   │   │   ├── testServiceRoles.php
+│   │   │   ├── testSnmpTrapsInHa.php
+│   │   │   ├── testTimescaleDb.php
+│   │   │   ├── testTriggerLinking.php
+│   │   │   ├── testTriggerState.php
+│   │   │   ├── testUserMacrosInItemNames.php
+│   │   │   ├── testUserParametersReload.php
+│   │   │   └── testValuemaps.php
+│   │   ├── phpunit.xml
+│   │   ├── selenium
+│   │   │   ├── actions
+│   │   │   ├── apiTokens
+│   │   │   ├── authentication
+│   │   │   ├── behaviors
+│   │   │   ├── common
+│   │   │   ├── connectors
+│   │   │   ├── dashboard
+│   │   │   ├── data
+│   │   │   ├── eventCorrelation
+│   │   │   ├── filterTabs
+│   │   │   ├── geomaps
+│   │   │   ├── graphs
+│   │   │   ├── hostAndTemplateGroups
+│   │   │   ├── hosts
+│   │   │   ├── iconMapping
+│   │   │   ├── items
+│   │   │   ├── lld
+│   │   │   ├── macros
+│   │   │   ├── maintenance
+│   │   │   ├── maps
+│   │   │   ├── mediaTypes
+│   │   │   ├── modules
+│   │   │   ├── monitoring
+│   │   │   ├── multiselects
+│   │   │   ├── networkDiscovery
+│   │   │   ├── permissions
+│   │   │   ├── preprocessing
+│   │   │   ├── problems
+│   │   │   ├── proxies
+│   │   │   ├── regexp
+│   │   │   ├── reports
+│   │   │   ├── roles
+│   │   │   ├── scripts
+│   │   │   ├── SeleniumTests.php
+│   │   │   ├── services
+│   │   │   ├── sla
+│   │   │   ├── tags
+│   │   │   ├── templates
+│   │   │   ├── testDocumentationLinks.php
+│   │   │   ├── testExecuteNow.php
+│   │   │   ├── testExpandExpressionMacros.php
+│   │   │   ├── testFormAdministrationGeneralAuditLog.php
+│   │   │   ├── testFormAdministrationGeneralAutoregistration.php
+│   │   │   ├── testFormAdministrationGeneralGUI.php
+│   │   │   ├── testFormAdministrationGeneralImages.php
+│   │   │   ├── testFormAdministrationGeneralOtherParams.php
+│   │   │   ├── testFormAdministrationGeneralTimeouts.php
+│   │   │   ├── testFormAdministrationGeneralTrigDisplOptions.php
+│   │   │   ├── testFormAdministrationHousekeeper.php
+│   │   │   ├── testFormAdministrationUserGroups.php
+│   │   │   ├── testFormLogin.php
+│   │   │   ├── testFormSetup.php
+│   │   │   ├── testFormTabIndicators.php
+│   │   │   ├── testGeneric.php
+│   │   │   ├── testInheritanceHostPrototype.php
+│   │   │   ├── testInheritanceTrigger.php
+│   │   │   ├── testInheritanceTriggerPrototype.php
+│   │   │   ├── testLanguage.php
+│   │   │   ├── testPageAdministrationGeneralImages.php
+│   │   │   ├── testPageAdministrationGeneralModules.php
+│   │   │   ├── testPageBrowserWarning.php
+│   │   │   ├── testPageHistory.php
+│   │   │   ├── testPageInventory.php
+│   │   │   ├── testPageQueueDetails.php
+│   │   │   ├── testPageQueueOverviewByProxy.php
+│   │   │   ├── testPageQueueOverview.php
+│   │   │   ├── testPageSearch.php
+│   │   │   ├── testPageStatusOfZabbix.php
+│   │   │   ├── testPageUserGroups.php
+│   │   │   ├── testSidebarMenu.php
+│   │   │   ├── testTimezone.php
+│   │   │   ├── testUrlParameters.php
+│   │   │   ├── testZBX6648.php
+│   │   │   ├── testZBX6663.php
+│   │   │   ├── timeouts
+│   │   │   ├── triggerDependencies
+│   │   │   ├── triggers
+│   │   │   ├── users
+│   │   │   ├── valueMapping
+│   │   │   └── webScenarios
+│   │   ├── templates
+│   │   │   └── zabbix.conf.php
+│   │   └── unit
+│   │       ├── bootstrap.php
+│   │       ├── include
+│   │       └── phpunit.xml
+│   ├── tr_events.php
+│   ├── vendor
+│   │   ├── autoload.php
+│   │   ├── bin
+│   │   │   ├── yaml-lint
+│   │   │   └── yaml-lint.bat
+│   │   ├── composer
+│   │   │   ├── autoload_classmap.php
+│   │   │   ├── autoload_files.php
+│   │   │   ├── autoload_namespaces.php
+│   │   │   ├── autoload_psr4.php
+│   │   │   ├── autoload_real.php
+│   │   │   ├── autoload_static.php
+│   │   │   ├── ClassLoader.php
+│   │   │   ├── installed.json
+│   │   │   └── LICENSE
+│   │   ├── onelogin
+│   │   │   └── php-saml
+│   │   ├── robrichards
+│   │   │   └── xmlseclibs
+│   │   └── symfony
+│   │       ├── deprecation-contracts
+│   │       ├── polyfill-ctype
+│   │       └── yaml
+│   ├── widgets
+│   │   ├── actionlog
+│   │   │   ├── actions
+│   │   │   ├── assets
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── clock
+│   │   │   ├── actions
+│   │   │   ├── assets
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── dataover
+│   │   │   ├── actions
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── partials
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── discovery
+│   │   │   ├── actions
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── favgraphs
+│   │   │   ├── actions
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── favmaps
+│   │   │   ├── actions
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── gauge
+│   │   │   ├── actions
+│   │   │   ├── assets
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── geomap
+│   │   │   ├── actions
+│   │   │   ├── assets
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── graph
+│   │   │   ├── actions
+│   │   │   ├── assets
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── graphprototype
+│   │   │   ├── actions
+│   │   │   ├── assets
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── hostavail
+│   │   │   ├── actions
+│   │   │   ├── assets
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── item
+│   │   │   ├── actions
+│   │   │   ├── assets
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── map
+│   │   │   ├── actions
+│   │   │   ├── assets
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── navtree
+│   │   │   ├── actions
+│   │   │   ├── assets
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── piechart
+│   │   │   ├── actions
+│   │   │   ├── assets
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── plaintext
+│   │   │   ├── actions
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── problemhosts
+│   │   │   ├── actions
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── problems
+│   │   │   ├── actions
+│   │   │   ├── assets
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── problemsbysv
+│   │   │   ├── actions
+│   │   │   ├── assets
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── slareport
+│   │   │   ├── actions
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── svggraph
+│   │   │   ├── actions
+│   │   │   ├── assets
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── systeminfo
+│   │   │   ├── actions
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── tophosts
+│   │   │   ├── actions
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── toptriggers
+│   │   │   ├── actions
+│   │   │   ├── assets
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── trigover
+│   │   │   ├── actions
+│   │   │   ├── assets
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── partials
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   ├── url
+│   │   │   ├── actions
+│   │   │   ├── assets
+│   │   │   ├── includes
+│   │   │   ├── manifest.json
+│   │   │   ├── views
+│   │   │   └── Widget.php
+│   │   └── web
+│   │       ├── actions
+│   │       ├── includes
+│   │       ├── manifest.json
+│   │       ├── views
+│   │       └── Widget.php
+│   └── zabbix.php
+└── zabbix-dir-layout.txt
+
+1011 directories, 3241 files
